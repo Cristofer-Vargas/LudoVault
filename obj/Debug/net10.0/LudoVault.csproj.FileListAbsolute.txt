@@ -1,0 +1,61 @@
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\bin\Debug\net10.0\appsettings.Development.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\bin\Debug\net10.0\appsettings.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\bin\Debug\net10.0\LudoVault.staticwebassets.endpoints.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\bin\Debug\net10.0\LudoVault.exe
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\bin\Debug\net10.0\LudoVault.deps.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\bin\Debug\net10.0\LudoVault.runtimeconfig.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\bin\Debug\net10.0\LudoVault.dll
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\bin\Debug\net10.0\LudoVault.pdb
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\LudoVault.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\LudoVault.AssemblyInfoInputs.cache
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\LudoVault.AssemblyInfo.cs
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\LudoVault.csproj.CoreCompileInputs.cache
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\LudoVault.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\rjimswa.dswa.cache.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\scopedcss\bundle\LudoVault.styles.css
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\staticwebassets.build.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\staticwebassets.build.json.cache
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\staticwebassets.development.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\swae.build.ex.cache
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\LudoVault.dll
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\refint\LudoVault.dll
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\LudoVault.pdb
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\LudoVault.genruntimeconfig.cache
+C:\Users\varga\Meu Drive\[Home] Cristofer\Tecnologia da Informação\C Sharp\LudoVault\obj\Debug\net10.0\ref\LudoVault.dll
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.GeneratedMSBuildEditorConfig.editorconfig
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.AssemblyInfoInputs.cache
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.AssemblyInfo.cs
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.csproj.CoreCompileInputs.cache
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.MvcApplicationPartsAssemblyInfo.cache
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.dll
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\refint\LudoVault.dll
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.pdb
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\appsettings.Development.json
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\appsettings.json
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\LudoVault.staticwebassets.endpoints.json
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\LudoVault.exe
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\LudoVault.deps.json
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\LudoVault.runtimeconfig.json
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\LudoVault.dll
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\LudoVault.pdb
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\rjimswa.dswa.cache.json
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\scopedcss\bundle\LudoVault.styles.css
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\staticwebassets.build.json
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\staticwebassets.build.json.cache
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\staticwebassets.development.json
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\swae.build.ex.cache
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.genruntimeconfig.cache
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\ref\LudoVault.dll
+C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\BCrypt.Net-Core.dll
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.csproj.AssemblyReference.cache
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.csproj.Up2Date

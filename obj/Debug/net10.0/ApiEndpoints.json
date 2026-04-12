@@ -1,0 +1,34 @@
+[
+  {
+    "ContainingType": "LudoVault.Controllers.LoginController",
+    "Method": "CreatUser",
+    "RelativePath": "Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "LudoVault.Model.UserModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "LudoVault.Controllers.ProfileController",
+    "Method": "BurcarUsuarioPorId",
+    "RelativePath": "Profile/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

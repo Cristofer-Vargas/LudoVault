@@ -1,0 +1,6 @@
+@LudoVault_HostAddress = http://localhost:5026
+
+GET {{LudoVault_HostAddress}}/
+Accept: application/json
+
+###
