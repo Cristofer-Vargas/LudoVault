@@ -59,3 +59,4 @@ C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\ref\LudoVault.dll
 C:\Cristofer\Programação\.NET\LudoVault\bin\Debug\net10.0\BCrypt.Net-Core.dll
 C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.csproj.AssemblyReference.cache
 C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.csproj.Up2Date
+C:\Cristofer\Programação\.NET\LudoVault\obj\Debug\net10.0\LudoVault.sourcelink.json

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LudoVault")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ce6d75ddf6fdc5cbf9ea7e8a4e17c046b7caae4")]
 [assembly: System.Reflection.AssemblyProductAttribute("LudoVault")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LudoVault")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
