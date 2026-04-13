@@ -13,7 +13,7 @@ namespace LudoVault.Model
         public long PublisherId { get; set; }
         public DateTime CreateAt { get; set; }
 
-        //public PublisherModel publisher { get; set; } // Trás model de Publisher como referência a GameModel 
+        public required PublisherModel Publisher { get; set; } // Trás model de Publisher como referência a GameModel 
 
     }
 }
