@@ -6,7 +6,7 @@ namespace LudoVault.Services.Requests
     {
         public string Name { get; set; } = string.Empty;
         public string Image_url { get; set; } = "/caminhoImagem.jpg";
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; }
         public long PublisherId { get; set; }
     }
 }
