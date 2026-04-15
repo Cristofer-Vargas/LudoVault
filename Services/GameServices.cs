@@ -13,29 +13,29 @@ namespace LudoVault.Services
             _gameRepository = gameRepo;
         }
 
-        public List<GameModel> BuscarGames()
+        public async Task<List<GameModel>> BuscarGames()
         {
-            return _gameRepository.BuscarTodos();
+            return await _gameRepository.BuscarTodos();
         }
 
-        public GameModel BuscarGamePorId(long id)
+        public async Task<GameModel> BuscarGamePorId(long id)
         {
-            return _gameRepository.BuscarPorId(id);
+            return await _gameRepository.BuscarPorId(id);
         }
 
 
-        public GameModel CriarGame(GameModel game)
+        public async Task<GameModel> CriarGame(GameModel game)
         {
-            return _gameRepository.Criar(game);
+            return await _gameRepository.Criar(game);
         }
 
-        public bool RemoverGame(long id)
+        public async Task<bool> RemoverGame(long id)
         {
-            return _gameRepository.Deletar(id);
+            return await _gameRepository.Deletar(id);
         }
-        public GameModel AtualizarGame(GameModel game)
+        public async Task<GameModel> AtualizarGame(GameModel game)
         {
-            return _gameRepository.Atualizar(game);
+            return await _gameRepository.Atualizar(game);
         }
     }
 }

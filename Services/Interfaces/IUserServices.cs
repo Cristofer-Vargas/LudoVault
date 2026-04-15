@@ -5,9 +5,9 @@ namespace LudoVault.Services.Interfaces
     public interface IUserServices
     {
         // Manda Criar no Repository (banco de dados, por enquanto, mockado)
-        UserModel BuscarUsuarioPorId(long id);
-        bool VerificarUserId(long id);
-        UserModel CriarUsuario(UserModel user);
-        bool VerificarEmailEmUso(string email);
+        public Task<UserModel> BuscarUsuarioPorId(long id);
+        public Task<bool> VerificarUserId(long id);
+        public Task<UserModel> CriarUsuario(UserModel user);
+        public Task<bool> VerificarEmailEmUso(string email);
     }
 }

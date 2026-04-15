@@ -27,12 +27,12 @@ namespace LudoVault.Repositories
             }
         };
 
-        public UserModel Atualizar(UserModel user)
+        public async Task<UserModel> Atualizar(UserModel user)
         {
             throw new NotImplementedException();
         }
 
-        public UserModel BuscarUsuarioPorId(long id)
+        public async Task<UserModel> BuscarUsuarioPorId(long id)
         {
             var user = UserMock.FirstOrDefault(x => x.Id == id);
             if (user == null) throw new InvalidOperationException($"Não foi possivel encontrar Usuário com ID: {id}");
@@ -40,7 +40,7 @@ namespace LudoVault.Repositories
             return user;
         }
 
-        public UserModel CriarUsuario(UserModel user)
+        public async Task<UserModel> CriarUsuario(UserModel user)
         {
             var lastPerson = UserMock.Last();
             user.Id = lastPerson.Id + 1;
@@ -49,14 +49,14 @@ namespace LudoVault.Repositories
             return user;
         }
 
-        public bool VerificarEmailExistente(string email)
+        public async Task<bool> VerificarEmailExistente(string email)
         {
             var userWithMail = UserMock.FirstOrDefault(e => e.Email.Trim() == email.Trim());
             if (userWithMail == null) return false;
             return true;
         }
 
-        public bool VerificarIdExistente(long id)
+        public async Task<bool> VerificarIdExistente(long id)
         {
             var user = UserMock.FirstOrDefault(x => x.Id == id);
             if (user == null) return false;

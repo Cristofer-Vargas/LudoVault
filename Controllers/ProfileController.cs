@@ -15,12 +15,12 @@ namespace LudoVault.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult BurcarUsuarioPorId(int id)
+        public async Task<IActionResult> BurcarUsuarioPorId(int id)
         {
-            var idExiste = _userServices.VerificarUserId(id);
+            var idExiste = await _userServices.VerificarUserId(id);
             if (idExiste == false) return BadRequest("Não foi encontrado usuário no sistema!");
 
-            var user = _userServices.BuscarUsuarioPorId(id);
+            var user = await _userServices.BuscarUsuarioPorId(id);
             return Ok(user);
         }
     }

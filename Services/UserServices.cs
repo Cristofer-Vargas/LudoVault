@@ -15,30 +15,30 @@ namespace LudoVault.Services
             _securityService = securityService;
         }
 
-        public UserModel BuscarUsuarioPorId(long id)
+        public async Task<UserModel> BuscarUsuarioPorId(long id)
         {
-            return _userRepository.BuscarUsuarioPorId(id);
+            return await _userRepository.BuscarUsuarioPorId(id);
         }
 
-        public UserModel CriarUsuario(UserModel user)
+        public async Task<UserModel> CriarUsuario(UserModel user)
         {
             // Hash na senha passada pelo usuário
-            user.PasswordHash = _securityService.EncryptPassword(user.PasswordHash);
-            UserModel newUser = _userRepository.CriarUsuario(user);
+            user.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
+            UserModel newUser = await _userRepository.CriarUsuario(user);
             return newUser;
         }
 
-        public bool VerificarEmailEmUso(string email)
+        public async Task<bool> VerificarEmailEmUso(string email)
         {
             // Verificar se há usuario com email existente
-            bool emailJaExiste = _userRepository.VerificarEmailExistente(email);
+            bool emailJaExiste = await _userRepository.VerificarEmailExistente(email);
             if (emailJaExiste) return true;
             return false;
         }
 
-        public bool VerificarUserId(long id)
+        public async Task<bool> VerificarUserId(long id)
         {
-            bool idExistente = _userRepository.VerificarIdExistente(id);
+            bool idExistente = await _userRepository.VerificarIdExistente(id);
             if (idExistente) return true;
             return false;
         }

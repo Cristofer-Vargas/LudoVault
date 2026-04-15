@@ -16,17 +16,18 @@ namespace LudoVault.Controllers
         }
 
         [HttpGet]
-        public IActionResult BuscarGames()
+        public async Task<IActionResult> BuscarGames()
         {
-            return Ok(_gameServices.BuscarGames());
+            var games = await _gameServices.BuscarGames();
+            return Ok(games);
         }
 
         [HttpGet("{id}")]
-        public IActionResult BuscarGamePorId(long id)
+        public async Task<IActionResult> BuscarGamePorId(long id)
         {
             try
             {
-                var game = _gameServices.BuscarGamePorId(id);
+                var game = await _gameServices.BuscarGamePorId(id);
                 if (game == null) return BadRequest("Jogo não encontrado!");
 
                 return Ok(game);
@@ -38,17 +39,18 @@ namespace LudoVault.Controllers
         }
 
         [HttpPost]
-        public IActionResult CriarGame([FromBody] GameModel game)
+        public async Task<IActionResult> CriarGame([FromBody] GameModel game)
         {
-            return Ok(_gameServices.CriarGame(game));
+            var g = await _gameServices.CriarGame(game);
+            return Ok(g);
         }
 
         [HttpPut]
-        public IActionResult AtualizarGame([FromBody] GameModel game)
+        public async Task<IActionResult> AtualizarGame([FromBody] GameModel game)
         {
             try
             {
-                var g = _gameServices.AtualizarGame(game);
+                var g = await _gameServices.AtualizarGame(game);
                 return Ok(g);
             } catch (Exception e)
             {
@@ -57,9 +59,9 @@ namespace LudoVault.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletarGame(long id)
+        public async Task<IActionResult> DeletarGame(long id)
         {
-            var isDel = _gameServices.RemoverGame(id);
+            var isDel = await _gameServices.RemoverGame(id);
             if (isDel) return Ok("Jogo excluído com êxito!");
 
             return BadRequest("Jogo inexistente em nosso banco de dados!");

@@ -18,7 +18,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatUser([FromBody] UserModel user)
+        public async Task<IActionResult> CreatUser([FromBody] UserModel user)
         {
             bool emailEmUso = _userServices.VerificarEmailEmUso(user.Email);
             if (emailEmUso) return BadRequest("Esse email ja esta cadastrado em nosso sistema!");

@@ -4,10 +4,10 @@ namespace LudoVault.Services.Interfaces
 {
     public interface IGameServices
     {
-        public GameModel CriarGame(GameModel game);
-        public GameModel AtualizarGame(GameModel game);
-        public List<GameModel> BuscarGames();
-        public GameModel BuscarGamePorId(long id);
-        public bool RemoverGame(long id);
+        public Task<GameModel> CriarGame(GameModel game);
+        public Task<GameModel> AtualizarGame(GameModel game);
+        public Task<List<GameModel>> BuscarGames();
+        public Task<GameModel> BuscarGamePorId(long id);
+        public Task<bool> RemoverGame(long id);
     }
 }
