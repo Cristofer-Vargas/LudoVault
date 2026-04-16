@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LudoVault.Model
 {
-    [Table("user.user")]
+    [Table("user")]
     public class UserModel
     {
         public long Id { get; set; }

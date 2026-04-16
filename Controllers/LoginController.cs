@@ -1,5 +1,5 @@
-﻿using LudoVault.Model;
-using LudoVault.Services.Interfaces;
+﻿using LudoVault.Services.Interfaces;
+using LudoVault.Services.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LudoVault.Controllers
@@ -18,15 +18,14 @@ namespace LudoVault.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatUser([FromBody] UserModel user)
+        public async Task<IActionResult> CreatUser([FromBody] UserRequest user)
         {
-            bool emailEmUso = _userServices.VerificarEmailEmUso(user.Email);
+            bool emailEmUso = await _userServices.VerificarEmailEmUso(user.Email);
             if (emailEmUso) return BadRequest("Esse email ja esta cadastrado em nosso sistema!");
             if (user.Name == "") return BadRequest("Nome de usuário não deve ser vazio!");
             if (user.Email == "") return BadRequest("Email de usuário não deve ser vazio!");
 
-            var userCreated = _userServices.CriarUsuario(user);
-            return Ok(user);
+            return Ok(await _userServices.CriarUsuario(user));
         }
     }
 }

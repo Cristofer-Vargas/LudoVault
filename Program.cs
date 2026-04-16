@@ -1,3 +1,4 @@
+using LudoVault.Configurations;
 using LudoVault.Repositories;
 using LudoVault.Repositories.Interfaces;
 using LudoVault.Services;
@@ -14,9 +15,10 @@ builder.Services.AddScoped<ISecurityService, SecurityService>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IGameServices, GameServices>();
 
-builder.Services.AddSingleton<IUserRepository, UserRepository>();   // Singleton para quando os dados são mockados
-builder.Services.AddSingleton<IGameReposiroty, GameRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
 
+builder.Services.AddDatabaseConfiguration(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,5 +1,6 @@
-﻿using LudoVault.Model;
-using LudoVault.Services.Interfaces;
+﻿using LudoVault.Services.Interfaces;
+using LudoVault.Services.Requests;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LudoVault.Controllers
@@ -18,53 +19,39 @@ namespace LudoVault.Controllers
         [HttpGet]
         public async Task<IActionResult> BuscarGames()
         {
-            var games = await _gameServices.BuscarGames();
-            return Ok(games);
+            try
+            {
+                var games = await _gameServices.BuscarGames();
+                return Ok(games);
+
+            } catch(Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> BuscarGamePorId(long id)
         {
-            try
-            {
-                var game = await _gameServices.BuscarGamePorId(id);
-                if (game == null) return BadRequest("Jogo não encontrado!");
-
-                return Ok(game);
-            } catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-
+            throw new NotImplementedException();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CriarGame([FromBody] GameModel game)
+        public async Task<IActionResult> CriarGame([FromBody] GameRequest game)
         {
-            var g = await _gameServices.CriarGame(game);
-            return Ok(g);
+            throw new NotImplementedException();
         }
 
         [HttpPut]
-        public async Task<IActionResult> AtualizarGame([FromBody] GameModel game)
+        public async Task<IActionResult> AtualizarGame([FromBody] GameRequest game)
         {
-            try
-            {
-                var g = await _gameServices.AtualizarGame(game);
-                return Ok(g);
-            } catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            throw new NotImplementedException();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarGame(long id)
         {
-            var isDel = await _gameServices.RemoverGame(id);
-            if (isDel) return Ok("Jogo excluído com êxito!");
-
-            return BadRequest("Jogo inexistente em nosso banco de dados!");
+            throw new NotImplementedException();
         }
     }
 }

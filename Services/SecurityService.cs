@@ -5,22 +5,22 @@ namespace LudoVault.Services
 {
     public class SecurityService : ISecurityService
     {
-        public Task<bool> ComparePassword(string pass, string confirmPass)
+        public async Task<bool> ComparePassword(string pass, string confirmPass)
         {
             var isEqual = pass.Trim().Equals(confirmPass.Trim());
-            return Task.FromResult(true);
+            return true;
         }
 
-        public Task<string> EncryptPassword(string pass)
+        public async Task<string> EncryptPassword(string pass)
         {
             var passHash = BCrypt.Net.BCrypt.HashPassword(pass);
-            return Task.FromResult(passHash);
+            return passHash;
         }
 
-        public Task<bool> VerifyPassword(string pass,UserModel user)
+        public async Task<bool> VerifyPassword(string pass,UserModel user)
         {
             bool password = BCrypt.Net.BCrypt.Verify(pass, user.PasswordHash);
-            return Task.FromResult(password);
+            return password;
         }
     }
 }

@@ -3,14 +3,33 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LudoVault.Model
 {
-    [Table("game.game")]
+    [Table("game")]
     public class GameModel
     {
+        [Key]
+        [Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
+
+        [Required]
+        [Column("name", TypeName = "varchar(100)")]
+        [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [Column("image_url", TypeName = "varchar(255)")]
+        [MaxLength(255)]
         public string Image_url { get; set; } = "/caminhoImagem.jpg";
+
+        [Column("description", TypeName = "text")]
         public string? Description { get; set; }
+
+        [Required]
+        [Column("publisher_id", TypeName = "int")]
         public long PublisherId { get; set; }
+
+        [Required]
+        [Column("created_at", TypeName = "timestamp")]
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
 
         public required PublisherModel Publisher { get; set; } // Trás model de Publisher como referência a GameModel 

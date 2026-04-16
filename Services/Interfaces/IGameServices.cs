@@ -1,13 +1,14 @@
-﻿using LudoVault.Model;
+﻿using LudoVault.Services.Requests;
+using LudoVault.Services.Responses;
 
 namespace LudoVault.Services.Interfaces
 {
     public interface IGameServices
     {
-        public Task<GameModel> CriarGame(GameModel game);
-        public Task<GameModel> AtualizarGame(GameModel game);
-        public Task<List<GameModel>> BuscarGames();
-        public Task<GameModel> BuscarGamePorId(long id);
+        public Task<GameResponse> CriarGame(GameRequest game);
+        public Task<GameResponse> AtualizarGame(GameRequest game);
+        public Task<List<GameResponse>> BuscarGames();
+        public Task<GameResponse> BuscarGamePorId(long id);
         public Task<bool> RemoverGame(long id);
     }
 }

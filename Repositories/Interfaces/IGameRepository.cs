@@ -2,11 +2,11 @@
 
 namespace LudoVault.Repositories.Interfaces
 {
-    public interface IGameReposiroty
+    public interface IGameRepository
     {
         public Task<GameModel> Criar(GameModel game);
         public Task<List<GameModel>> BuscarTodos();
-        public Task<GameModel >BuscarPorId(long id);
+        public Task<GameModel> BuscarPorId(long id);
         public Task<GameModel> Atualizar(GameModel game);
         public Task<bool> Deletar(long id);
     }

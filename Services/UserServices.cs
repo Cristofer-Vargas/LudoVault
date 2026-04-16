@@ -1,6 +1,9 @@
 ﻿using LudoVault.Model;
 using LudoVault.Repositories.Interfaces;
 using LudoVault.Services.Interfaces;
+using LudoVault.Services.Mapper;
+using LudoVault.Services.Requests;
+using LudoVault.Services.Responses;
 
 namespace LudoVault.Services
 {
@@ -15,17 +18,18 @@ namespace LudoVault.Services
             _securityService = securityService;
         }
 
-        public async Task<UserModel> BuscarUsuarioPorId(long id)
+        public async Task<UserResponse> BuscarUsuarioPorId(long id)
         {
-            return await _userRepository.BuscarUsuarioPorId(id);
+            throw new NotImplementedException();
         }
 
-        public async Task<UserModel> CriarUsuario(UserModel user)
+        public async Task<UserResponse> CriarUsuario(UserRequest user)
         {
-            // Hash na senha passada pelo usuário
             user.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
-            UserModel newUser = await _userRepository.CriarUsuario(user);
-            return newUser;
+            var userModel = UserMapper.ToModel(user, user.PasswordHash);
+
+            UserResponse userResponse = UserMapper.ToResponse(await _userRepository.CriarUsuario(userModel));
+            return userResponse;
         }
 
         public async Task<bool> VerificarEmailEmUso(string email)
@@ -38,9 +42,7 @@ namespace LudoVault.Services
 
         public async Task<bool> VerificarUserId(long id)
         {
-            bool idExistente = await _userRepository.VerificarIdExistente(id);
-            if (idExistente) return true;
-            return false;
+            throw new NotImplementedException();
         }
     }
 }
