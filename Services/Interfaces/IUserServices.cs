@@ -8,8 +8,8 @@ namespace LudoVault.Services.Interfaces
     {
         // Manda Criar no Repository (banco de dados, por enquanto, mockado)
         public Task<UserResponse> BuscarUsuarioPorId(long id);
-        public Task<bool> VerificarUserId(long id);
         public Task<UserResponse> CriarUsuario(UserRequest user);
+        public Task<UserResponse> AtualizarUsuario(UserRequest user, long id);
         public Task<bool> VerificarEmailEmUso(string email);
     }
 }

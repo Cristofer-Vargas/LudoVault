@@ -20,7 +20,8 @@ namespace LudoVault.Services
 
         public async Task<UserResponse> BuscarUsuarioPorId(long id)
         {
-            throw new NotImplementedException();
+            var userResponse = UserMapper.ToResponse(await _userRepository.BuscarUsuarioPorId(id));
+            return userResponse;
         }
 
         public async Task<UserResponse> CriarUsuario(UserRequest user)
@@ -32,17 +33,25 @@ namespace LudoVault.Services
             return userResponse;
         }
 
+        public async Task<UserResponse> AtualizarUsuario(UserRequest user, long id)
+        {
+            var userExisted = await _userRepository.BuscarUsuarioPorId(id);
+
+            userExisted.Name = user.Name;
+            userExisted.Email = user.Email;
+            userExisted.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
+            userExisted.Bio = user.Bio;
+
+            UserResponse userRes =  UserMapper.ToResponse(await _userRepository.Atualizar(userExisted, id));
+            return userRes;
+        }
+
         public async Task<bool> VerificarEmailEmUso(string email)
         {
-            // Verificar se há usuario com email existente
             bool emailJaExiste = await _userRepository.VerificarEmailExistente(email);
             if (emailJaExiste) return true;
             return false;
         }
 
-        public async Task<bool> VerificarUserId(long id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -5,6 +5,7 @@ CREATE TABLE user (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(40) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
+    passwordHash VARCHAR(255) NOT NULL,
     bio TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX(name)
@@ -105,3 +106,29 @@ CREATE TABLE user_list_items (
     FOREIGN KEY(game_id)
     REFERENCES game(id)
 );
+
+USE LudoVault;
+SELECT * FROM game;
+
+SELECT * FROM publisher;
+
+SELECT * FROM publisher 
+LEFT JOIN game 
+ON publisher.id = game.id;
+
+SELECT * FROM user;
+
+# Proposital para resetar o banco para novos testes
+DELETE FROM publisher WHERE id > 0;
+
+INSERT INTO publisher (name) VALUES ("Rockstar");
+INSERT INTO publisher (name) VALUES ("Square Enix");
+INSERT INTO publisher (name) VALUES ("Ubsoft");
+INSERT INTO publisher (name) VALUES ("Mojang");
+
+INSERT INTO game (name, image_url, description, publisher_id) 
+VALUES ("Grand Theft Auto V", "wwwroot/uploads/games/caminhoimagem.jpg", "GTAV é bom demaaaaais", 4);
+INSERT INTO game (name, image_url, description, publisher_id) 
+VALUES ("Read Dead Redemption 2", "wwwroot/uploads/games/caminhoimagem.jpg", "Jogo do Ano!!", 4);
+
+

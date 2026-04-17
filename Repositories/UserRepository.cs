@@ -2,6 +2,8 @@
 using LudoVault.Data;
 using LudoVault.Model;
 using LudoVault.Repositories.Interfaces;
+using LudoVault.Services.Requests;
+using Microsoft.EntityFrameworkCore;
 
 namespace LudoVault.Repositories
 {
@@ -12,29 +14,48 @@ namespace LudoVault.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<UserModel> Atualizar(UserModel user)
+        
+        public async Task<UserModel> Atualizar(UserModel userUpdate, long id)
         {
-            throw new NotImplementedException();
+            // Futuramente fazer verificação com autenticação para Edições a usuários autorizados (dono do perfil)
+            var userExisted = await BuscarUsuarioPorId(userUpdate.Id);
+            _dbContext.Users.Entry(userExisted).CurrentValues.SetValues(userUpdate);
+            await _dbContext.SaveChangesAsync();
+
+            var userNew = await _dbContext.Users
+                .FindAsync(userExisted.Id);
+            if (userExisted == null) throw new ArgumentException("Não foi encontrado usuário com id passado!");
+
+            return userExisted;
         }
 
         public async Task<UserModel> BuscarUsuarioPorId(long id)
         {
-            throw new NotImplementedException();
+            var user = await _dbContext.Users
+                .FindAsync(id);
+            if (user == null) throw new ArgumentException("Nenhum usuário encontrado!");
+            
+            return user;
         }
 
         public async Task<UserModel> CriarUsuario(UserModel user)
         {
-            throw new NotImplementedException();
+            await _dbContext.Users
+                .AddAsync(user);
+            await _dbContext.SaveChangesAsync();
+
+            return user;
         }
 
         public async Task<bool> VerificarEmailExistente(string email)
         {
-            throw new NotImplementedException();
-        }
+            var userWithExistedEmail = await _dbContext.Users
+                .Where(u => u.Email == email)
+                .ToListAsync();
 
-        public async Task<bool> VerificarIdExistente(long id)
-        {
-            throw new NotImplementedException();
+            if (userWithExistedEmail.Count != 0) return true;
+
+            return false; // Se a lista de users nao houver dados, significa que ninguem esta usando esse email. VerificarEmailExistente retorna false para nao usado
         }
     }
 }

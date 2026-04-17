@@ -14,9 +14,11 @@ builder.Services.AddScoped<ISecurityService, SecurityService>();
 
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IGameServices, GameServices>();
+builder.Services.AddScoped<IPublisherServices, PublisherServices>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
 var app = builder.Build();
