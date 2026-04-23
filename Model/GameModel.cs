@@ -34,6 +34,7 @@ namespace LudoVault.Model
 
         public required PublisherModel Publisher { get; set; } // Trás model de Publisher como referência a GameModel 
         public List<GamePlatformModel> GamePlatforms { get; set; } = [];
+        public List<GameGenreModel> GameGenres { get; set; } = [];
 
     }
 }

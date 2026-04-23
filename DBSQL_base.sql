@@ -32,7 +32,7 @@ CREATE TABLE publisher (
 
 CREATE TABLE genre (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(20) NOT NULL
+    name VARCHAR(40) UNIQUE NOT NULL
 );
 
 CREATE TABLE platform (
@@ -154,6 +154,18 @@ INSERT INTO platform (name) VALUES
 ('Xbox (Original)');
 
 # ---
+SELECT * FROM genre;
+
+INSERT INTO genre (name) VALUES 
+('Ação'),('Aventura'),('RPG (Role-Playing Game)'),('FPS (First-Person Shooter)'),('TPS (Third-Person Shooter)'),('Estratégia'),('Simulação'),('Esporte'),
+('Corrida'),('Luta'),('Terror/Survival Horror'),('Plataforma'),('Puzzle'),('MMORPG'),('Roguelike'),('Metroidvania'),('Hack and Slash'),('Stealth'),('Visual Novel'),
+('Battle Royale'),('Mundo Aberto'),('Indie'),('Casual'),('Musical/Ritmo');
+
+# ---
+INSERT INTO game_genre (game_id, genre_id) VALUES
+(3, 73), (3, 74), (3, 81), (3, 93), (3, 77);
+
+# ---
 
 INSERT INTO game_platform (game_id, platform_id) VALUES (3, 1);
 INSERT INTO game_platform (game_id, platform_id) VALUES (4, 1);
@@ -179,5 +191,3 @@ INSERT INTO game (name, image_url, description, publisher_id)
 VALUES ("Genshin Impact", "wwwroot/uploads/games/caminhoimagem.jpg", "Joguinho Gasha!", 9);
 INSERT INTO game (name, image_url, description, publisher_id) 
 VALUES ("Minecraft", "wwwroot/uploads/games/caminhoimagem.jpg", "Jogo Quadrado", 7);
-
-

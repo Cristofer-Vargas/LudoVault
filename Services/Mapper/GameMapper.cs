@@ -15,7 +15,8 @@ namespace LudoVault.Services.Mapper
                 Description = gameRequest.Description,
                 PublisherId = gameRequest.PublisherId,
                 Publisher = publisherModel,
-                GamePlatforms = []
+                GamePlatforms = [],
+                GameGenres = []
             };
         }
 
@@ -33,6 +34,13 @@ namespace LudoVault.Services.Mapper
                     {
                         Id = gp.Platform.Id.ToString(),
                         Name = gp.Platform.Name
+                    })
+                    .ToList(),
+                Genres = game.GameGenres
+                    .Select(gg => new GenreResponse
+                    {
+                        Id = gg.Genre.Id.ToString(),
+                        Name = gg.Genre.Name
                     })
                     .ToList()
             };

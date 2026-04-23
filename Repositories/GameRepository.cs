@@ -34,6 +34,8 @@ namespace LudoVault.Repositories
             .Include(g => g.Publisher)
             .Include(g => g.GamePlatforms)
                 .ThenInclude(gp => gp.Platform)
+            .Include(g => g.GameGenres)
+                .ThenInclude(gg => gg.Genre)
             .ToListAsync();
             return games;
         }
