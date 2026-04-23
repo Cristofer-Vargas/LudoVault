@@ -14,11 +14,11 @@ namespace LudoVault.Model
         [Required]
         [Column("game_id", TypeName = "int")]
         public long GameId { get; set; }
-        public required GameModel Game { get; set; }
+        public GameModel? Game { get; set; }
 
         [Required]
         [Column("genre_id", TypeName = "int")]
         public long GenreId { get; set; }
-        public required GenreModel Genre { get; set; }
+        public GenreModel? Genre { get; set; }
     }
 }

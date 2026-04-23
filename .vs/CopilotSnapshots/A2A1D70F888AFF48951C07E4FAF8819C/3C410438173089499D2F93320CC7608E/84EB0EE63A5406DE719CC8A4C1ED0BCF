@@ -1,0 +1,87 @@
+﻿using LudoVault.Data;
+using LudoVault.Model;
+using LudoVault.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace LudoVault.Repositories
+{
+    public class GameRepository : IGameRepository
+    {
+        public readonly MysqlContext _dbContext;
+        public GameRepository(MysqlContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+       public async Task<GameModel> Criar(GameModel game)
+        {
+            // Atribui o GameId às entidades intermediárias ANTES de adicionar
+            foreach (var platform in game.GamePlatforms)
+            {
+                platform.GameId = game.Id == 0 ? 0 : game.Id; // Será preenchido após SaveChanges
+            }
+
+            foreach (var genre in game.GameGenres)
+            {
+                genre.GameId = game.Id == 0 ? 0 : game.Id; // Será preenchido após SaveChanges
+            }
+
+            // Adiciona o game e os relacionamentos ao contexto
+            await _dbContext.AddAsync(game);
+
+            // Adiciona explicitamente as entidades intermediárias
+            if (game.GamePlatforms.Count > 0)
+            {
+                await _dbContext.GamePlatforms.AddRangeAsync(game.GamePlatforms);
+            }
+
+            if (game.GameGenres.Count > 0)
+            {
+                await _dbContext.GameGenres.AddRangeAsync(game.GameGenres);
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return game;
+        }
+
+        public async Task<GameModel> Atualizar(GameModel game)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<GameModel> BuscarPorId(long id)
+        {
+            var game = await _dbContext.Games
+            .Where(g => g.Id == id)
+            .Include(g => g.Publisher)
+            .Include(g => g.GamePlatforms)
+                .ThenInclude(gp => gp.Platform)
+            .Include(g => g.GameGenres)
+                .ThenInclude(gg => gg.Genre)
+            .FirstOrDefaultAsync(g => g.Id == id);
+
+            if (game == null) 
+                throw new ArgumentException("Nenhum Jogo encontrado!");
+
+            return game;
+        }
+
+        public async Task<List<GameModel>> BuscarTodos()
+        {
+            List<GameModel> games = await _dbContext.Games
+            .Include(g => g.Publisher)
+            .Include(g => g.GamePlatforms)
+                .ThenInclude(gp => gp.Platform)
+            .Include(g => g.GameGenres)
+                .ThenInclude(gg => gg.Genre)
+            .ToListAsync();
+            return games;
+        }
+
+        public async Task<bool> Deletar(long id)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

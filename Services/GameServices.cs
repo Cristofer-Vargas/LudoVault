@@ -1,4 +1,5 @@
-﻿using LudoVault.Repositories.Interfaces;
+﻿using LudoVault.Model;
+using LudoVault.Repositories.Interfaces;
 using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
 using LudoVault.Services.Requests;
@@ -9,16 +10,18 @@ namespace LudoVault.Services
     public class GameServices : IGameServices
     {
         private readonly IGameRepository _gameRepository;
+        private readonly IPublisherRepository _publisherRepository;
 
-        public GameServices(IGameRepository gameRepo)
+        public GameServices(IGameRepository gameRepo, IPublisherRepository publisherRepo)
         {
             _gameRepository = gameRepo;
+            _publisherRepository = publisherRepo;
         }
 
         public async Task<List<GameResponse>> BuscarGames()
         {
             var gamesModel = await _gameRepository.BuscarTodos();
-            if (gamesModel == null || gamesModel.Count() == 0) 
+            if (gamesModel == null || gamesModel.Count == 0) 
                 throw new Exception("Nenhum Jogo cadastrado!");
 
             return gamesModel
@@ -28,13 +31,27 @@ namespace LudoVault.Services
 
         public async Task<GameResponse> BuscarGamePorId(long id)
         {
-            throw new NotImplementedException();
+            var gameModel = await _gameRepository.BuscarPorId(id);
+            if (gameModel == null)
+                throw new Exception("Nenhum Jogo encontrado!");
+
+            return GameMapper.ToResponse(gameModel);
         }
 
 
-        public async Task<GameResponse> CriarGame(GameRequest game)
+        public async Task<GameResponse> CriarGame(GameRequest request)
         {
-            throw new NotImplementedException();
+            var publisherModel = await _publisherRepository.BuscarPorId(request.PublisherId);
+
+            var gameModel = GameMapper.ToModel(
+                request, 
+                publisherModel,
+                request.PlatformIds,                
+                request.GenreIds);
+
+            await _gameRepository.Criar(gameModel);
+
+            return GameMapper.ToResponse(gameModel);
         }
 
         public async Task<GameResponse> AtualizarGame(GameRequest game)

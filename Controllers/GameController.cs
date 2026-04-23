@@ -33,13 +33,29 @@ namespace LudoVault.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> BuscarGamePorId(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var game = await _gameServices.BuscarGamePorId(id);
+                return Ok(game);
+
+            } catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> CriarGame([FromBody] GameRequest game)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var newGame = await _gameServices.CriarGame(game);
+                return Ok(newGame);
+
+            } catch (Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         [HttpPut]

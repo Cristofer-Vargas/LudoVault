@@ -14,7 +14,7 @@ namespace LudoVault.Model
         [Required]
         [Column("name", TypeName = "varchar(20)")]
         [MaxLength(20)]
-        public string Name { get; set; } = String.Empty;
+        public string Name { get; set; } = string.Empty;
 
         public List<GameGenreModel> GameGenres { get; set; } = [];
     }

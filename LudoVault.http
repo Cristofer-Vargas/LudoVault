@@ -1,6 +1,16 @@
 @LudoVault_HostAddress = http://localhost:5026
 
-GET {{LudoVault_HostAddress}}/
+GET {{LudoVault_HostAddress}}/profile/1
+Accept: application/json
+
+###
+
+GET {{LudoVault_HostAddress}}/publisher
+Accept: application/json
+
+###
+
+GET {{LudoVault_HostAddress}}/game
 Accept: application/json
 
 ###
