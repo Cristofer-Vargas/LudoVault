@@ -37,7 +37,7 @@ CREATE TABLE genre (
 
 CREATE TABLE platform (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(20)
+    name VARCHAR(20) UNIQUE
 );
 
 
@@ -108,27 +108,76 @@ CREATE TABLE user_list_items (
 );
 
 USE LudoVault;
-SELECT * FROM game;
 
+# ---
 SELECT * FROM publisher;
 
 SELECT * FROM publisher 
 LEFT JOIN game 
 ON publisher.id = game.id;
 
-SELECT * FROM user;
-
-# Proposital para resetar o banco para novos testes
-DELETE FROM publisher WHERE id > 0;
-
 INSERT INTO publisher (name) VALUES ("Rockstar");
 INSERT INTO publisher (name) VALUES ("Square Enix");
 INSERT INTO publisher (name) VALUES ("Ubsoft");
 INSERT INTO publisher (name) VALUES ("Mojang");
+INSERT INTO publisher (name) VALUES ("miHoYo");
+
+# ---
+DELETE FROM platform WHERE id = 13;
+SELECT * FROM platform ORDER BY name;
+
+INSERT INTO platform (name) VALUES ("PC");
+INSERT INTO platform (name) VALUES ("Xbox Series S");
+INSERT INTO platform (name) VALUES ("Mobile");
+INSERT INTO platform (name) VALUES ("Nintendo switch");
+
+INSERT INTO platform (name) VALUES 
+('PlayStation 5'),
+('PlayStation 4'),
+('PlayStation 3'),
+('Xbox Series X/S'),
+('Xbox One'),
+('Xbox 360'),
+('Nintendo Switch'),
+('Nintendo Wii U'),
+('Nintendo 3DS'),
+('Android'),
+('iOS'),
+('Linux'),
+('macOS'),
+('Web Browser'),
+('PlayStation Vita'),
+('Nintendo DS'),
+('PlayStation 2'),
+('GameCube'),
+('Dreamcast'),
+('Xbox (Original)');
+
+# ---
+
+INSERT INTO game_platform (game_id, platform_id) VALUES (3, 1);
+INSERT INTO game_platform (game_id, platform_id) VALUES (4, 1);
+INSERT INTO game_platform (game_id, platform_id) VALUES (5, 1);
+INSERT INTO game_platform (game_id, platform_id) VALUES (5, 3);
+INSERT INTO game_platform (game_id, platform_id) VALUES (5, 4);
+
+SELECT g.name, p.name
+FROM 
+	game AS g, 
+	platform AS p,
+    game_platform AS gp
+WHERE gp.game_id = g.id;
+
+# ---
+SELECT * FROM game;
 
 INSERT INTO game (name, image_url, description, publisher_id) 
 VALUES ("Grand Theft Auto V", "wwwroot/uploads/games/caminhoimagem.jpg", "GTAV é bom demaaaaais", 4);
 INSERT INTO game (name, image_url, description, publisher_id) 
 VALUES ("Read Dead Redemption 2", "wwwroot/uploads/games/caminhoimagem.jpg", "Jogo do Ano!!", 4);
+INSERT INTO game (name, image_url, description, publisher_id) 
+VALUES ("Genshin Impact", "wwwroot/uploads/games/caminhoimagem.jpg", "Joguinho Gasha!", 9);
+INSERT INTO game (name, image_url, description, publisher_id) 
+VALUES ("Minecraft", "wwwroot/uploads/games/caminhoimagem.jpg", "Jogo Quadrado", 7);
 
 

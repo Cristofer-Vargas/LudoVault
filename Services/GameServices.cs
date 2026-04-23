@@ -18,14 +18,12 @@ namespace LudoVault.Services
         public async Task<List<GameResponse>> BuscarGames()
         {
             var gamesModel = await _gameRepository.BuscarTodos();
-            if (gamesModel == null || gamesModel.Count() == 0) throw new Exception("Nenhum Jogo cadastrado!");
+            if (gamesModel == null || gamesModel.Count() == 0) 
+                throw new Exception("Nenhum Jogo cadastrado!");
 
-            List<GameResponse> gameRes = [];
-            foreach (var game in gamesModel)
-            {
-                gameRes.Add(GameMapper.ToResponse(game));
-            }
-            return gameRes;
+            return gamesModel
+                .Select(game => GameMapper.ToResponse(game))
+                .ToList();
         }
 
         public async Task<GameResponse> BuscarGamePorId(long id)

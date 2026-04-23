@@ -33,6 +33,7 @@ namespace LudoVault.Model
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
 
         public required PublisherModel Publisher { get; set; } // Trás model de Publisher como referência a GameModel 
+        public List<GamePlatformModel> GamePlatforms { get; set; } = [];
 
     }
 }

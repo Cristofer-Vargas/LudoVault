@@ -31,8 +31,10 @@ namespace LudoVault.Repositories
         public async Task<List<GameModel>> BuscarTodos()
         {
             List<GameModel> games = await _dbContext.Games
-                .Include(g => g.Publisher)
-                .ToListAsync();
+            .Include(g => g.Publisher)
+            .Include(g => g.GamePlatforms)
+                .ThenInclude(gp => gp.Platform)
+            .ToListAsync();
             return games;
         }
 

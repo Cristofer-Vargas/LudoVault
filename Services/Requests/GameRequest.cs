@@ -8,5 +8,6 @@ namespace LudoVault.Services.Requests
         public string Image_url { get; set; } = "/caminhoImagem.jpg";
         public string? Description { get; set; }
         public long PublisherId { get; set; }
+        public List<PlatformModel> Platforms { get; set; } = [];
     }
 }
