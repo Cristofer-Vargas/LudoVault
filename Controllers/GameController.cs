@@ -54,20 +54,37 @@ namespace LudoVault.Controllers
 
             } catch (Exception e)
             {
-                return NotFound(e.Message);
+                return BadRequest(e.Message);
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> AtualizarGame([FromBody] GameRequest game)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> AtualizarGame([FromBody] GameRequest game, long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var gameUp = await _gameServices.AtualizarGame(game, id);
+                return Ok(gameUp);
+
+            } catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletarGame(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _gameServices.RemoverGame(id);
+                return Ok("Excluido com sucesso!");
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

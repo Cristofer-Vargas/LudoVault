@@ -31,9 +31,28 @@ namespace LudoVault.Repositories
             return await BuscarPorId(game.Id) ?? throw new Exception("Erro ao recuperar o Jogo recém criado!");
         }
 
-        public async Task<GameModel> Atualizar(GameModel game)
+        public async Task<GameModel> Atualizar(GameModel game, long id)
         {
-            throw new NotImplementedException();
+            var currentGame = await BuscarPorId(id);
+
+            currentGame.Name = game.Name;
+            currentGame.Description = game.Description;
+            currentGame.Image_url = game.Image_url;
+            currentGame.PublisherId = game.PublisherId;
+            currentGame.Publisher = game.Publisher;
+
+            // Remove Relações para limpar tabela intermediaria
+            _dbContext.GamePlatforms.RemoveRange(currentGame.GamePlatforms);
+            _dbContext.GameGenres.RemoveRange(currentGame.GameGenres);
+
+            // Adiciona relações
+            currentGame.GamePlatforms = game.GamePlatforms;
+            currentGame.GameGenres = game.GameGenres;
+
+            _dbContext.Games.Update(currentGame);
+            await _dbContext.SaveChangesAsync();
+
+            return currentGame;
         }
 
         public async Task<GameModel> BuscarPorId(long id)
@@ -45,6 +64,7 @@ namespace LudoVault.Repositories
                 .ThenInclude(gp => gp.Platform)
             .Include(g => g.GameGenres)
                 .ThenInclude(gg => gg.Genre)
+            .AsSplitQuery()
             .FirstOrDefaultAsync(g => g.Id == id);
 
             if (game == null) 
@@ -67,7 +87,12 @@ namespace LudoVault.Repositories
 
         public async Task<bool> Deletar(long id)
         {
-            throw new NotImplementedException();
+            var currentGame = await BuscarPorId(id);
+            if (currentGame == null) throw new ArgumentException("Nenhum Jogo encontrado!");
+            _dbContext.Games.RemoveRange(currentGame);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

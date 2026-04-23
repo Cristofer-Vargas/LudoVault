@@ -54,14 +54,25 @@ namespace LudoVault.Services
             return GameMapper.ToResponse(gameModel);
         }
 
-        public async Task<GameResponse> AtualizarGame(GameRequest game)
+        public async Task<GameResponse> AtualizarGame(GameRequest game, long id)
         {
-            throw new NotImplementedException();
+            var publisher = await _publisherRepository.BuscarPorId(game.PublisherId);
+
+            var gameModel = GameMapper.ToModel(
+                game,
+                publisher,
+                game.PlatformIds,
+                game.GenreIds
+                );
+
+            var newGame = await _gameRepository.Atualizar(gameModel, id);
+            return GameMapper.ToResponse(newGame);
         }
 
         public async Task<bool> RemoverGame(long id)
         {
-            throw new NotImplementedException();
+            await _gameRepository.Deletar(id);
+            return true;
         }
     }
 }
