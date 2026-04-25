@@ -38,6 +38,17 @@ namespace LudoVault.Repositories
             return user;
         }
 
+        public async Task<List<GameRatingModel>> BuscarGamesComUserRatings(long id)
+        {
+            var gamesRatings = await _dbContext.GameRatings
+                .Include(gr => gr.Game)
+                .Include(gr => gr.User)
+                .Where(gr => gr.UserId == id)
+                .ToListAsync();
+
+            return gamesRatings;
+        }
+
         public async Task<UserModel> CriarUsuario(UserModel user)
         {
             await _dbContext.Users

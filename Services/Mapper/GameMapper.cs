@@ -11,7 +11,7 @@ namespace LudoVault.Services.Mapper
             return new GameModel()
             {
                 Name = gameRequest.Name,
-                Image_url = gameRequest.Image_url,
+                ImageUrl = gameRequest.ImageUrl,
                 Description = gameRequest.Description,
                 PublisherId = gameRequest.PublisherId,
                 Publisher = publisherModel,
@@ -30,7 +30,7 @@ namespace LudoVault.Services.Mapper
             {
                 Id = game.Id.ToString(),
                 Name = game.Name,
-                Image_url = game.Image_url,
+                ImageUrl = game.ImageUrl,
                 Description = game.Description ?? "",
                 PublisherName = game.Publisher.Name,
                 Platforms = game.GamePlatforms
@@ -49,6 +49,16 @@ namespace LudoVault.Services.Mapper
                         Name = gg.Genre.Name
                     })
                     .ToList() ?? []
+            };
+        }
+
+        public static GameInfoResponse ToInfoResponse(GameModel game)
+        {
+            return new GameInfoResponse()
+            {
+                Id = game.Id.ToString(),
+                Name = game.Name,
+                ImageUrl = game.ImageUrl
             };
         }
     }

@@ -24,6 +24,14 @@ namespace LudoVault.Services
             return userResponse;
         }
 
+        public async Task<List<UserRatingResponse>> BuscarUserRatings(long id)
+        {
+            var userRatings = await _userRepository.BuscarGamesComUserRatings(id);
+            if (userRatings.Count == 0) throw new ArgumentException("Nenhuma avaliação desse usuário!");
+
+            return userRatings.Select(ur => GameRatingsMapper.ToUserResponse(ur)).ToList();
+        }
+
         public async Task<UserResponse> CriarUsuario(UserRequest user)
         {
             user.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);

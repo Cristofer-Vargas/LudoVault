@@ -16,6 +16,20 @@ namespace LudoVault.Controllers
             _gameServices = gameServices;
         }
 
+        [HttpGet("{id}/ratings")]
+        public async Task<IActionResult> BuscarRatingsDeGame(long id)
+        {
+             try
+             {
+                var gameRatings = await _gameServices.BuscarRatingsPorIdGame(id);
+                return Ok(gameRatings);
+
+             } catch (Exception e)
+             {
+                return NotFound(e.Message);
+             }
+        }
+
         [HttpGet]
         public async Task<IActionResult> BuscarGames()
         {

@@ -37,7 +37,7 @@ namespace LudoVault.Repositories
 
             currentGame.Name = game.Name;
             currentGame.Description = game.Description;
-            currentGame.Image_url = game.Image_url;
+            currentGame.ImageUrl = game.ImageUrl;
             currentGame.PublisherId = game.PublisherId;
             currentGame.Publisher = game.Publisher;
 
@@ -93,6 +93,22 @@ namespace LudoVault.Repositories
             await _dbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<List<GameRatingModel>> BuscarRatings(long id)
+        {
+            List<GameRatingModel> gameRatings = await _dbContext.GameRatings
+                .Include(gr => gr.Game)
+                    .ThenInclude(g => g.GamePlatforms)
+                        .ThenInclude(gp => gp.Platform)
+                .Include(gr => gr.Game.GameGenres)
+                    .ThenInclude(gg => gg.Genre)
+                .Include(gr => gr.Game.Publisher)
+                .Where(gr => gr.GameId == id)
+                .Include(gr => gr.User)
+                .ToListAsync();
+
+            return gameRatings;
         }
     }
 }

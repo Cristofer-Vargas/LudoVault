@@ -19,7 +19,7 @@ namespace LudoVault.Model
         [Required]
         [Column("image_url", TypeName = "varchar(255)")]
         [MaxLength(255)]
-        public string Image_url { get; set; } = "/caminhoImagem.jpg";
+        public string ImageUrl { get; set; } = "/caminhoImagem.jpg";
 
         [Column("description", TypeName = "text")]
         public string? Description { get; set; }
@@ -35,6 +35,7 @@ namespace LudoVault.Model
         public required PublisherModel Publisher { get; set; } // Trás model de Publisher como referência a GameModel 
         public List<GamePlatformModel> GamePlatforms { get; set; } = [];
         public List<GameGenreModel> GameGenres { get; set; } = [];
+        public List<GameRatingModel> GameRatings { get; set; } = [];
 
     }
 }

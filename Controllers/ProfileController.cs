@@ -6,22 +6,36 @@ namespace LudoVault.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProfileController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
 
-        public ProfileController(IUserServices userServices)
+        public UserController(IUserServices userServices)
         {
             _userServices = userServices;
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> BurcarUsuarioPorId(int id)
+        public async Task<IActionResult> BurcarUsuarioPorId(long id)
         {
             try
             {
                 var user = await _userServices.BuscarUsuarioPorId(id);
                 return Ok(user);
+
+            } catch (Exception e)
+            {
+                return BadRequest($"Erro: {e.Message}");
+            }
+        }
+
+        [HttpGet("{id}/ratings")]
+        public async Task<IActionResult> BuscarUserRatings(long id)
+        {
+            try
+            {
+                var userRatings = await _userServices.BuscarUserRatings(id);
+                return Ok(userRatings);
 
             } catch (Exception e)
             {

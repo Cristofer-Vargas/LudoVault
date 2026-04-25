@@ -1,5 +1,4 @@
-﻿using LudoVault.Model;
-using LudoVault.Repositories.Interfaces;
+﻿using LudoVault.Repositories.Interfaces;
 using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
 using LudoVault.Services.Requests;
@@ -73,6 +72,14 @@ namespace LudoVault.Services
         {
             await _gameRepository.Deletar(id);
             return true;
+        }
+
+        public async Task<List<GameRatingResponse>> BuscarRatingsPorIdGame(long id)
+        {
+            var gameRatings = await _gameRepository.BuscarRatings(id);
+            if (gameRatings.Count == 0) throw new ArgumentException("Nenhuma avaliação desse Jogo!");
+
+            return gameRatings.Select(gr => GameRatingsMapper.ToGameResponse(gr)).ToList();
         }
     }
 }
