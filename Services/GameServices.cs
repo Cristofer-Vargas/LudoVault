@@ -74,12 +74,25 @@ namespace LudoVault.Services
             return true;
         }
 
-        public async Task<List<GameRatingResponse>> BuscarRatingsPorIdGame(long id)
+        public async Task<GameRatingListUsersResponse> BuscarRatingsPorIdGame(long id)
         {
             var gameRatings = await _gameRepository.BuscarRatings(id);
-            if (gameRatings.Count == 0) throw new ArgumentException("Nenhuma avaliação desse Jogo!");
+            if (gameRatings.Count == 0) throw new ArgumentException("Nenhuma avaliação encontrada!");
 
-            return gameRatings.Select(gr => GameRatingsMapper.ToGameResponse(gr)).ToList();
+            var avgRatings = gameRatings.Select(gr => gr.Rating).Average();
+            var totalRatings = gameRatings.Count;
+
+            var gameRatingListUsersResponse = new GameRatingListUsersResponse
+            {
+                UsersRatings = gameRatings
+                .Select(gr => GameRatingMapper.ToGameUserResponse(gr))
+                .ToList(),
+                AvgRatings = Math.Round(Convert.ToDouble(avgRatings), 1),
+                TotalRatings = totalRatings
+            };
+
+
+            return gameRatingListUsersResponse;
         }
     }
 }

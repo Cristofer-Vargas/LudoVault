@@ -24,12 +24,21 @@ namespace LudoVault.Services
             return userResponse;
         }
 
-        public async Task<List<UserRatingResponse>> BuscarUserRatings(long id)
+        public async Task<UserRatingListGamesResponse> BuscarUserRatings(long id)
         {
             var userRatings = await _userRepository.BuscarGamesComUserRatings(id);
             if (userRatings.Count == 0) throw new ArgumentException("Nenhuma avaliação desse usuário!");
 
-            return userRatings.Select(ur => GameRatingsMapper.ToUserResponse(ur)).ToList();
+            var totalRatings = userRatings.Count;
+
+            var userRatingsResponse = new UserRatingListGamesResponse
+            {
+                GamesRatings = userRatings
+                .Select(ur => GameRatingMapper.ToUserGameResponse(ur)).ToList(),
+                TotalRatings = totalRatings
+            };
+
+            return userRatingsResponse;
         }
 
         public async Task<UserResponse> CriarUsuario(UserRequest user)

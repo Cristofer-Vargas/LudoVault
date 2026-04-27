@@ -99,11 +99,6 @@ namespace LudoVault.Repositories
         {
             List<GameRatingModel> gameRatings = await _dbContext.GameRatings
                 .Include(gr => gr.Game)
-                    .ThenInclude(g => g.GamePlatforms)
-                        .ThenInclude(gp => gp.Platform)
-                .Include(gr => gr.Game.GameGenres)
-                    .ThenInclude(gg => gg.Genre)
-                .Include(gr => gr.Game.Publisher)
                 .Where(gr => gr.GameId == id)
                 .Include(gr => gr.User)
                 .ToListAsync();

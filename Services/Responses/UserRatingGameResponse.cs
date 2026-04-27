@@ -1,11 +1,12 @@
 ﻿namespace LudoVault.Services.Responses
 {
-    public class UserRatingResponse
+    public class UserRatingGameResponse
     {
         public string? Id { get; set; }
+        public string? Name { get; set; }
+        public string? ImageUrl { get; set; }
         public decimal Rating { get; set; }
         public string? Comment { get; set; }
-        public GameInfoResponse? Game { get; set; }   // GameResponse reduzido apenas para o contexto de Avaliações
         public string? CreatedAt { get; set; }
     }
 }

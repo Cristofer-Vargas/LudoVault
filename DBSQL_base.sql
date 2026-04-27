@@ -115,9 +115,13 @@ USE LudoVault;
 SELECT * FROM game_rating;
 
 INSERT INTO game_rating (rating, game_id, user_id, comment) VALUES 
+(4.2, 7, 1, "Joguinho de herói com poderzin Online. Viciante demais HAHAHA!");
+INSERT INTO game_rating (rating, game_id, user_id, comment) VALUES 
 (5, 4, 1, "Que jogasso maravilhoso senhoras e senhores. Recomendo demaaaais!!");
 INSERT INTO game_rating (rating, game_id, user_id, comment) VALUES 
 (4.5, 4, 18, "Jogo cawboyzeiro, top demais. No final ainda da pra trabalhar com a propria fazenda!");
+INSERT INTO game_rating (rating, game_id, user_id, comment) VALUES 
+(3, 4, 19, "Não achei tudo isso, jogo bem básico.");
 
 # ---
 SELECT * FROM user;

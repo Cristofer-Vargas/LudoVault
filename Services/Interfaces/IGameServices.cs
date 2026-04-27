@@ -10,6 +10,6 @@ namespace LudoVault.Services.Interfaces
         public Task<List<GameResponse>> BuscarGames();
         public Task<GameResponse> BuscarGamePorId(long id);
         public Task<bool> RemoverGame(long id);
-        public Task<List<GameRatingResponse>> BuscarRatingsPorIdGame(long id);
+        public Task<GameRatingListUsersResponse> BuscarRatingsPorIdGame(long id);
     }
 }
