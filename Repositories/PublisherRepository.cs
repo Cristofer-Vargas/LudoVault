@@ -1,4 +1,4 @@
-﻿using LudoVault.Data;
+﻿﻿using LudoVault.Data;
 using LudoVault.Model;
 using LudoVault.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +33,7 @@ namespace LudoVault.Repositories
             return currentPublisher;
         }
 
-        public async Task<PublisherModel> BuscarPorId(long id)
+        public async Task<PublisherModel> BuscarPorId(int id)
         {
             var publisher = await _dbContext.Publishers
                 .Include(p => p.Games)
@@ -57,7 +57,7 @@ namespace LudoVault.Repositories
             return publishers;
         }
 
-        public async Task<bool> Excluir(long id)
+        public async Task<bool> Excluir(int id)
         {
             var publisher = await BuscarPorId(id);
             _dbContext.Publishers.Remove(publisher);

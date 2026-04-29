@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LudoVault.Model
@@ -9,7 +9,7 @@ namespace LudoVault.Model
         [Key]
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column("name", TypeName = "varchar(100)")]
@@ -26,12 +26,13 @@ namespace LudoVault.Model
 
         [Required]
         [Column("publisher_id", TypeName = "int")]
-        public long PublisherId { get; set; }
+        public int PublisherId { get; set; }
 
         [Required]
         [Column("created_at", TypeName = "timestamp")]
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
 
+        [ForeignKey("PublisherId")]
         public required PublisherModel Publisher { get; set; } // Trás model de Publisher como referência a GameModel 
         public List<GamePlatformModel> GamePlatforms { get; set; } = [];
         public List<GameGenreModel> GameGenres { get; set; } = [];

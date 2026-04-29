@@ -1,4 +1,4 @@
-﻿using LudoVault.Repositories.Interfaces;
+﻿﻿using LudoVault.Repositories.Interfaces;
 using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
 using LudoVault.Services.Requests;
@@ -28,7 +28,7 @@ namespace LudoVault.Services
                 .ToList();
         }
 
-        public async Task<GameResponse> BuscarGamePorId(long id)
+        public async Task<GameResponse> BuscarGamePorId(int id)
         {
             var gameModel = await _gameRepository.BuscarPorId(id);
             if (gameModel == null)
@@ -53,7 +53,7 @@ namespace LudoVault.Services
             return GameMapper.ToResponse(gameModel);
         }
 
-        public async Task<GameResponse> AtualizarGame(GameRequest game, long id)
+        public async Task<GameResponse> AtualizarGame(GameRequest game, int id)
         {
             var publisher = await _publisherRepository.BuscarPorId(game.PublisherId);
 
@@ -68,13 +68,13 @@ namespace LudoVault.Services
             return GameMapper.ToResponse(newGame);
         }
 
-        public async Task<bool> RemoverGame(long id)
+        public async Task<bool> RemoverGame(int id)
         {
             await _gameRepository.Deletar(id);
             return true;
         }
 
-        public async Task<GameRatingListUsersResponse> BuscarRatingsPorIdGame(long id)
+        public async Task<GameRatingListUsersResponse> BuscarRatingsPorIdGame(int id)
         {
             var gameRatings = await _gameRepository.BuscarRatings(id);
             if (gameRatings.Count == 0) throw new ArgumentException("Nenhuma avaliação encontrada!");

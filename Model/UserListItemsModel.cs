@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LudoVault.Model
 {
-    [Table("game_genre")]
-    public class GameGenreModel
+    [Table("user_list_items")]
+    public class UserListItemsModel
     {
         [Key]
         [Column("id")]
@@ -12,15 +12,18 @@ namespace LudoVault.Model
         public int Id { get; set; }
 
         [Required]
-        [Column("game_id", TypeName = "int")]
+        [Column("list_id")]
+        public int ListId { get; set; }
+        [ForeignKey("ListId")]
+        public UserListModel? UserList { get; set; }
+
+        [Required]
+        [Column("game_id")]
         public int GameId { get; set; }
         [ForeignKey("GameId")]
         public GameModel? Game { get; set; }
 
-        [Required]
-        [Column("genre_id", TypeName = "int")]
-        public int GenreId { get; set; }
-        [ForeignKey("GenreId")]
-        public GenreModel? Genre { get; set; }
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

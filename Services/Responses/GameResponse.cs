@@ -1,8 +1,8 @@
-﻿namespace LudoVault.Services.Responses
+﻿﻿namespace LudoVault.Services.Responses
 {
     public class GameResponse
     {
-        public string? Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = "/caminhoImagem.jpg";
         public string Description { get; set; } = string.Empty;

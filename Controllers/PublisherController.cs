@@ -1,4 +1,4 @@
-﻿using LudoVault.Services;
+﻿﻿using LudoVault.Services;
 using LudoVault.Services.Interfaces;
 using LudoVault.Services.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +31,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> BuscarPublisher(long id)
+        public async Task<IActionResult> BuscarPublisher(int id)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> AtualizarPublisher(long id, [FromBody] PublisherRequest publisher)
+        public async Task<IActionResult> AtualizarPublisher(int id, [FromBody] PublisherRequest publisher)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> ExcluirPublisher(long id)
+        public async Task<IActionResult> ExcluirPublisher(int id)
         {
             try
             {

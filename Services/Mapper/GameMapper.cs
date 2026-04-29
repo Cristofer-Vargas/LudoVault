@@ -6,7 +6,7 @@ namespace LudoVault.Services.Mapper
 {
     public static class GameMapper
     {
-        public static GameModel ToModel(GameRequest gameRequest, PublisherModel publisherModel, List<long> platformIds, List<long> genreIds)
+        public static GameModel ToModel(GameRequest gameRequest, PublisherModel publisherModel, List<int> platformIds, List<int> genreIds)
         {
             return new GameModel()
             {
@@ -28,7 +28,7 @@ namespace LudoVault.Services.Mapper
         {
             return new GameResponse()
             {
-                Id = game.Id.ToString(),
+                Id = game.Id,
                 Name = game.Name,
                 ImageUrl = game.ImageUrl,
                 Description = game.Description ?? "",
@@ -37,7 +37,7 @@ namespace LudoVault.Services.Mapper
                     .Where(gp => gp.Platform != null)
                     .Select(gp => new PlatformResponse
                     {
-                        Id = gp.Platform.Id.ToString(),
+                        Id = gp.Platform.Id,
                         Name = gp.Platform.Name
                     })
                     .ToList() ?? [],
@@ -45,7 +45,7 @@ namespace LudoVault.Services.Mapper
                     .Where(gg => gg.Genre != null)
                     .Select(gg => new GenreResponse
                     {
-                        Id = gg.Genre.Id.ToString(),
+                        Id = gg.Genre.Id,
                         Name = gg.Genre.Name
                     })
                     .ToList() ?? []
@@ -56,7 +56,7 @@ namespace LudoVault.Services.Mapper
         {
             return new GameInfoResponse()
             {
-                Id = game.Id.ToString(),
+                Id = game.Id,
                 Name = game.Name,
                 ImageUrl = game.ImageUrl
             };

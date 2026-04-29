@@ -16,7 +16,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> BurcarUsuarioPorId(long id)
+        public async Task<IActionResult> BurcarUsuarioPorId(int id)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpGet("{id}/ratings")]
-        public async Task<IActionResult> BuscarUserRatings(long id)
+        public async Task<IActionResult> BuscarUserRatings(int id)
         {
             try
             {
@@ -43,8 +43,23 @@ namespace LudoVault.Controllers
             }
         }
 
+        [HttpGet("{id}/lists")]
+        public async Task<IActionResult> BuscarUserLists(int id)
+        {
+            try
+            {
+                var userLists = await _userServices.BuscarUserLists(id);
+                return Ok(userLists);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> AtualizarUsuario([FromBody]UserRequest user, long id)
+        public async Task<IActionResult> AtualizarUsuario([FromBody]UserRequest user, int id)
         {
             try
             {

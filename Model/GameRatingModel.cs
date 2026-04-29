@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LudoVault.Model
@@ -9,7 +9,7 @@ namespace LudoVault.Model
         [Key]
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Column("rating", TypeName = "decimal(2,1)")]
@@ -17,12 +17,14 @@ namespace LudoVault.Model
 
         [Required]
         [Column("game_id", TypeName = "int")]
-        public long GameId { get; set; }
+        public int GameId { get; set; }
+        [ForeignKey("GameId")]
         public required GameModel Game { get; set; }
 
         [Required]
         [Column("user_id", TypeName = "int")]
-        public long UserId { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
         public required UserModel User { get; set; }
 
         [Column("comment", TypeName = "text")]

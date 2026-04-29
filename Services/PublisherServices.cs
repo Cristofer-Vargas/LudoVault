@@ -24,7 +24,7 @@ namespace LudoVault.Services
                 publisherModel.Games.Select(GameMapper.ToResponse).ToList());
         }
 
-        public async Task<PublisherResponse> AtualizarPublisher(PublisherRequest publisher, long id)
+        public async Task<PublisherResponse> AtualizarPublisher(PublisherRequest publisher, int id)
         {
             var publisherModel = PublisherMapper.ToModel(publisher);
             publisherModel.Id = id;
@@ -45,7 +45,7 @@ namespace LudoVault.Services
             .ToList())).ToList();
         }
 
-        public async Task<PublisherResponse> BuscarPublisherPorId(long id)
+        public async Task<PublisherResponse> BuscarPublisherPorId(int id)
         {
             var publisherModel = await _publisherRepository.BuscarPorId(id);
             return PublisherMapper.ToResponse(
@@ -54,7 +54,7 @@ namespace LudoVault.Services
                 );
         }
 
-        public async Task<bool> ExcluirPublisher(long id)
+        public async Task<bool> ExcluirPublisher(int id)
         {
             bool publisherExcluded = await _publisherRepository.Excluir(id);
             if (publisherExcluded) return true;

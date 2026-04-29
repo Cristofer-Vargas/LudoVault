@@ -1,4 +1,4 @@
-﻿using LudoVault.Model;
+﻿﻿using LudoVault.Model;
 using LudoVault.Services.Requests;
 using LudoVault.Services.Responses;
 
@@ -21,7 +21,7 @@ namespace LudoVault.Services.Mapper
         {
             return new UserResponse()
             {
-                Id = user.Id.ToString(),
+                Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
                 Bio = user.Bio ?? "",
@@ -35,7 +35,7 @@ namespace LudoVault.Services.Mapper
         {
             return new UserInfoResponse()
             {
-                Id = user.Id.ToString(),
+                Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
                 AvatarUrl = user.AvatarUrl

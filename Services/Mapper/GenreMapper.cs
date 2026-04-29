@@ -1,4 +1,4 @@
-﻿using LudoVault.Model;
+﻿﻿using LudoVault.Model;
 using LudoVault.Services.Responses;
 
 namespace LudoVault.Services.Mapper
@@ -9,7 +9,7 @@ namespace LudoVault.Services.Mapper
         {
             return new GenreResponse
             {
-                Id = genre.Id.ToString(),
+                Id = genre.Id,
                 Name = genre.Name,
             };
         }

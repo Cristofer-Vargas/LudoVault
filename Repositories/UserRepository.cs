@@ -15,7 +15,7 @@ namespace LudoVault.Repositories
             _dbContext = dbContext;
         }
         
-        public async Task<UserModel> Atualizar(UserModel userUpdate, long id)
+        public async Task<UserModel> Atualizar(UserModel userUpdate, int id)
         {
             // Futuramente fazer verificação com autenticação para Edições a usuários autorizados (dono do perfil)
             var userExisted = await BuscarUsuarioPorId(userUpdate.Id);
@@ -29,7 +29,7 @@ namespace LudoVault.Repositories
             return userExisted;
         }
 
-        public async Task<UserModel> BuscarUsuarioPorId(long id)
+        public async Task<UserModel> BuscarUsuarioPorId(int id)
         {
             var user = await _dbContext.Users
                 .FindAsync(id);
@@ -38,7 +38,7 @@ namespace LudoVault.Repositories
             return user;
         }
 
-        public async Task<List<GameRatingModel>> BuscarGamesComUserRatings(long id)
+        public async Task<List<GameRatingModel>> BuscarGamesComUserRatings(int id)
         {
             var gamesRatings = await _dbContext.GameRatings
                 .Include(gr => gr.Game)
@@ -47,6 +47,20 @@ namespace LudoVault.Repositories
                 .ToListAsync();
 
             return gamesRatings;
+        }
+
+        public async Task<List<UserListModel>> BuscarUserLists(int id)
+        {
+            var userList = await _dbContext.UserLists
+                .AsNoTracking()
+                .Include(ul => ul.ListItems)
+                    .ThenInclude(uli => uli.Game)
+                        .ThenInclude(g => g.Publisher)
+                .Where(ul => ul.UserId == id)
+                .AsSplitQuery()
+                .ToListAsync();
+
+            return userList;
         }
 
         public async Task<UserModel> CriarUsuario(UserModel user)

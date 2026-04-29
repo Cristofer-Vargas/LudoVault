@@ -108,6 +108,31 @@ CREATE TABLE user_list_items (
     REFERENCES game(id)
 );
 
+CREATE TABLE user_library (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(60) NOT NULL,
+    user_id INT NOT NULL,
+    
+    CONSTRAINT fk_user_library_user
+    FOREIGN KEY(user_id)
+    REFERENCES user(id)
+);
+
+CREATE TABLE user_library_game (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    list_id INT NOT NULL,
+    game_id INT NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+	CONSTRAINT fk_user_library_library
+    FOREIGN KEY(list_id)
+    REFERENCES user_library(id),
+    CONSTRAINT fk_user_library_game
+    FOREIGN KEY(game_id)
+    REFERENCES game(id)
+);
+
+
 USE LudoVault;
 
 # ---
@@ -211,3 +236,13 @@ INSERT INTO game (name, image_url, description, publisher_id)
 VALUES ("Genshin Impact", "wwwroot/uploads/games/caminhoimagem.jpg", "Joguinho Gasha!", 9);
 INSERT INTO game (name, image_url, description, publisher_id) 
 VALUES ("Minecraft", "wwwroot/uploads/games/caminhoimagem.jpg", "Jogo Quadrado", 7);
+
+#---
+SELECT * FROM user_list_items WHERE list_id = 1;
+
+INSERT INTO user_list (name, user_id) VALUES("Meus Favoritos", 18);
+INSERT INTO user_list (name, user_id) VALUES("Meus Favoritos", 1);
+INSERT INTO user_list_items (list_id, game_id) VALUES(1, 4);
+INSERT INTO user_list_items (list_id, game_id) VALUES(1, 7),(1, 3),(1, 6);
+INSERT INTO user_list (name, user_id) VALUES("Zerados", 1);
+INSERT INTO user_list_items (list_id, game_id) VALUES(2, 3), (2, 4), (2, 6);

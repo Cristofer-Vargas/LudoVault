@@ -1,5 +1,4 @@
-﻿using LudoVault.Model;
-using LudoVault.Repositories.Interfaces;
+﻿using LudoVault.Repositories.Interfaces;
 using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
 using LudoVault.Services.Requests;
@@ -18,16 +17,17 @@ namespace LudoVault.Services
             _securityService = securityService;
         }
 
-        public async Task<UserResponse> BuscarUsuarioPorId(long id)
+        public async Task<UserResponse> BuscarUsuarioPorId(int id)
         {
             var userResponse = UserMapper.ToResponse(await _userRepository.BuscarUsuarioPorId(id));
             return userResponse;
         }
 
-        public async Task<UserRatingListGamesResponse> BuscarUserRatings(long id)
+        public async Task<UserRatingListGamesResponse> BuscarUserRatings(int id)
         {
             var userRatings = await _userRepository.BuscarGamesComUserRatings(id);
-            if (userRatings.Count == 0) throw new ArgumentException("Nenhuma avaliação desse usuário!");
+            if (userRatings.Count == 0) 
+                throw new ArgumentException("Nenhuma avaliação desse usuário!");
 
             var totalRatings = userRatings.Count;
 
@@ -41,6 +41,24 @@ namespace LudoVault.Services
             return userRatingsResponse;
         }
 
+        public async Task<UserListResponse> BuscarUserLists(int id)
+        {
+            await _userRepository.BuscarUsuarioPorId(id);
+
+            var userLists = await _userRepository.BuscarUserLists(id);
+
+            var totalLists = userLists.Count;
+
+            var userListsResponse = new UserListResponse
+            {
+                Lists = userLists
+                    .Select(ul => UserListMapper.ToListResponse(ul)).ToList(),
+                TotalLists = totalLists
+            };
+
+            return userListsResponse;
+        }
+
         public async Task<UserResponse> CriarUsuario(UserRequest user)
         {
             user.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
@@ -50,7 +68,7 @@ namespace LudoVault.Services
             return userResponse;
         }
 
-        public async Task<UserResponse> AtualizarUsuario(UserRequest user, long id)
+        public async Task<UserResponse> AtualizarUsuario(UserRequest user, int id)
         {
             var userExisted = await _userRepository.BuscarUsuarioPorId(id);
 

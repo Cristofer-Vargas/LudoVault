@@ -7,12 +7,12 @@ namespace LudoVault.Services.Requests
         public string Name { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = "/caminhoImagem.jpg";
         public string? Description { get; set; }
-        public long PublisherId { get; set; }
+        public int PublisherId { get; set; }
 
         [JsonPropertyName("platforms")]
-        public List<long> PlatformIds { get; set; } = [];
+        public List<int> PlatformIds { get; set; } = [];
 
         [JsonPropertyName("genres")]
-        public List<long> GenreIds { get; set; } = [];
+        public List<int> GenreIds { get; set; } = [];
     }
 }

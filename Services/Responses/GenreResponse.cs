@@ -1,8 +1,8 @@
-﻿namespace LudoVault.Services.Responses
+﻿﻿namespace LudoVault.Services.Responses
 {
     public class GenreResponse
     {
-        public string? Id { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
     }
 }

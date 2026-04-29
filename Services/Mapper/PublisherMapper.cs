@@ -1,4 +1,4 @@
-﻿using LudoVault.Model;
+﻿﻿using LudoVault.Model;
 using LudoVault.Services.Requests;
 using LudoVault.Services.Responses;
 
@@ -18,7 +18,7 @@ namespace LudoVault.Services.Mapper
         {
             return new PublisherResponse()
             {
-                Id = publisherModel.Id.ToString(),
+                Id = publisherModel.Id,
                 Name = publisherModel.Name,
                 Games = games
             };

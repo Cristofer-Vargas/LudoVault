@@ -1,4 +1,4 @@
-﻿using LudoVault.Services.Interfaces;
+﻿﻿using LudoVault.Services.Interfaces;
 using LudoVault.Services.Requests;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpGet("{id}/ratings")]
-        public async Task<IActionResult> BuscarRatingsDeGame(long id)
+        public async Task<IActionResult> BuscarRatingsDeGame(int id)
         {
              try
              {
@@ -45,7 +45,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> BuscarGamePorId(long id)
+        public async Task<IActionResult> BuscarGamePorId(int id)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> AtualizarGame([FromBody] GameRequest game, long id)
+        public async Task<IActionResult> AtualizarGame([FromBody] GameRequest game, int id)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace LudoVault.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletarGame(long id)
+        public async Task<IActionResult> DeletarGame(int id)
         {
             try
             {

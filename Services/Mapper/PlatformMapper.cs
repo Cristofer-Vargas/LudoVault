@@ -1,4 +1,4 @@
-﻿using LudoVault.Model;
+﻿﻿using LudoVault.Model;
 using LudoVault.Services.Requests;
 using LudoVault.Services.Responses;
 
@@ -10,7 +10,7 @@ namespace LudoVault.Services.Mapper
         {
             return new PlatformResponse()
             {
-                Id = platform.Id.ToString(),
+                Id = platform.Id,
                 Name = platform.Name
             };
         }
