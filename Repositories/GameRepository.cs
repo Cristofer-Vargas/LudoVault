@@ -1,4 +1,4 @@
-﻿﻿using LudoVault.Data;
+﻿﻿﻿﻿using LudoVault.Data;
 using LudoVault.Model;
 using LudoVault.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,7 @@ namespace LudoVault.Repositories
             _dbContext = dbContext;
         }
 
-       public async Task<GameModel> Criar(GameModel game)
+       public async Task<GameModel> CriarGameAsync(GameModel game)
         {
             // Salva o Game para gerar o ID
             await _dbContext.AddAsync(game);
@@ -28,12 +28,12 @@ namespace LudoVault.Repositories
 
             await _dbContext.SaveChangesAsync();
 
-            return await BuscarPorId(game.Id) ?? throw new Exception("Erro ao recuperar o Jogo recém criado!");
+            return await BuscarGamePorIdAsync(game.Id) ?? throw new Exception("Erro ao recuperar o Jogo recém criado!");
         }
 
-        public async Task<GameModel> Atualizar(GameModel game, int id)
+        public async Task<GameModel> AtualizarGameAsync(GameModel game, int id)
         {
-            var currentGame = await BuscarPorId(id);
+            var currentGame = await BuscarGamePorIdAsync(id);
 
             currentGame.Name = game.Name;
             currentGame.Description = game.Description;
@@ -55,7 +55,7 @@ namespace LudoVault.Repositories
             return currentGame;
         }
 
-        public async Task<GameModel> BuscarPorId(int id)
+        public async Task<GameModel> BuscarGamePorIdAsync(int id)
         {
             var game = await _dbContext.Games
             .Where(g => g.Id == id)
@@ -73,7 +73,7 @@ namespace LudoVault.Repositories
             return game;
         }
 
-        public async Task<List<GameModel>> BuscarTodos()
+        public async Task<List<GameModel>> BuscarTodosGamesAsync()
         {
             List<GameModel> games = await _dbContext.Games
             .Include(g => g.Publisher)
@@ -85,9 +85,9 @@ namespace LudoVault.Repositories
             return games;
         }
 
-        public async Task<bool> Deletar(int id)
+        public async Task<bool> DeletarGameAsync(int id)
         {
-            var currentGame = await BuscarPorId(id);
+            var currentGame = await BuscarGamePorIdAsync(id);
             if (currentGame == null) throw new ArgumentException("Nenhum Jogo encontrado!");
             _dbContext.Games.Remove(currentGame);
             await _dbContext.SaveChangesAsync();
@@ -95,7 +95,7 @@ namespace LudoVault.Repositories
             return true;
         }
 
-        public async Task<List<GameRatingModel>> BuscarRatings(int id)
+        public async Task<List<GameRatingModel>> BuscarAvaliacoesDoJogoAsync(int id)
         {
             List<GameRatingModel> gameRatings = await _dbContext.GameRatings
                 .Include(gr => gr.Game)

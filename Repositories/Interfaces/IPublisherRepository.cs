@@ -1,13 +1,13 @@
-﻿using LudoVault.Model;
+﻿﻿using LudoVault.Model;
 
 namespace LudoVault.Repositories.Interfaces
 {
     public interface IPublisherRepository
     {
-        public Task<PublisherModel> Criar(PublisherModel publisher);
-        public Task<PublisherModel> Atualizar(PublisherModel publisher);
-        public Task<List<PublisherModel>> BuscarTodos();
-        public Task<PublisherModel> BuscarPorId(int id);
-        public Task<bool> Excluir(int id);
+        public Task<PublisherModel> CriarPublisherAsync(PublisherModel publisher);
+        public Task<PublisherModel> AtualizarPublisherAsync(PublisherModel publisher);
+        public Task<List<PublisherModel>> BuscarTodasPublishersAsync();
+        public Task<PublisherModel> BuscarPublisherPorIdAsync(int id);
+        public Task<bool> ExcluirPublisherAsync(int id);
     }
 }

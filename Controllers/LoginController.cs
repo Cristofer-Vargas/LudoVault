@@ -20,10 +20,10 @@ namespace LudoVault.Controllers
         {
             try
             {
-                bool emailEmUso = await _userServices.VerificarEmailEmUso(user.Email);
+                bool emailEmUso = await _userServices.VerificarEmailEmUsoAsync(user.Email);
                 if (emailEmUso) return BadRequest("Esse email ja esta cadastrado em nosso sistema!");
 
-                return Ok(await _userServices.CriarUsuario(user));
+                return Ok(await _userServices.CriarUsuarioAsync(user));
 
             } catch(Exception e)
             {

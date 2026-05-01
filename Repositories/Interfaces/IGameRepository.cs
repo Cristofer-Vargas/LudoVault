@@ -1,14 +1,14 @@
-﻿using LudoVault.Model;
+﻿﻿using LudoVault.Model;
 
 namespace LudoVault.Repositories.Interfaces
 {
     public interface IGameRepository
     {
-        public Task<GameModel> Criar(GameModel game);
-        public Task<List<GameModel>> BuscarTodos();
-        public Task<GameModel> BuscarPorId(int id);
-        public Task<GameModel> Atualizar(GameModel game, int id);
-        public Task<bool> Deletar(int id);
-        public Task<List<GameRatingModel>> BuscarRatings(int id);
+        public Task<GameModel> CriarGameAsync(GameModel game);
+        public Task<List<GameModel>> BuscarTodosGamesAsync();
+        public Task<GameModel> BuscarGamePorIdAsync(int id);
+        public Task<GameModel> AtualizarGameAsync(GameModel game, int id);
+        public Task<bool> DeletarGameAsync(int id);
+        public Task<List<GameRatingModel>> BuscarAvaliacoesDoJogoAsync(int id);
     }
 }

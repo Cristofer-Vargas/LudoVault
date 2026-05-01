@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace LudoVault.Model
 {
     [Table("user_list_items")]
-    public class UserListItemsModel
+    public class UserListGameModel
     {
         [Key]
         [Column("id")]

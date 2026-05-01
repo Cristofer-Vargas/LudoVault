@@ -1,4 +1,4 @@
-﻿﻿using LudoVault.Repositories.Interfaces;
+﻿﻿﻿﻿using LudoVault.Repositories.Interfaces;
 using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
 using LudoVault.Services.Requests;
@@ -17,9 +17,9 @@ namespace LudoVault.Services
             _publisherRepository = publisherRepo;
         }
 
-        public async Task<List<GameResponse>> BuscarGames()
+        public async Task<List<GameResponse>> BuscarTodosGamesAsync()
         {
-            var gamesModel = await _gameRepository.BuscarTodos();
+            var gamesModel = await _gameRepository.BuscarTodosGamesAsync();
             if (gamesModel == null || gamesModel.Count == 0) 
                 throw new Exception("Nenhum Jogo cadastrado!");
 
@@ -28,9 +28,9 @@ namespace LudoVault.Services
                 .ToList();
         }
 
-        public async Task<GameResponse> BuscarGamePorId(int id)
+        public async Task<GameResponse> BuscarGamePorIdAsync(int id)
         {
-            var gameModel = await _gameRepository.BuscarPorId(id);
+            var gameModel = await _gameRepository.BuscarGamePorIdAsync(id);
             if (gameModel == null)
                 throw new Exception("Nenhum Jogo encontrado!");
 
@@ -38,9 +38,9 @@ namespace LudoVault.Services
         }
 
 
-        public async Task<GameResponse> CriarGame(GameRequest request)
+        public async Task<GameResponse> CriarGameAsync(GameRequest request)
         {
-            var publisherModel = await _publisherRepository.BuscarPorId(request.PublisherId);
+            var publisherModel = await _publisherRepository.BuscarPublisherPorIdAsync(request.PublisherId);
 
             var gameModel = GameMapper.ToModel(
                 request, 
@@ -48,14 +48,14 @@ namespace LudoVault.Services
                 request.PlatformIds,                
                 request.GenreIds);
 
-            await _gameRepository.Criar(gameModel);
+            await _gameRepository.CriarGameAsync(gameModel);
 
             return GameMapper.ToResponse(gameModel);
         }
 
-        public async Task<GameResponse> AtualizarGame(GameRequest game, int id)
+        public async Task<GameResponse> AtualizarGameAsync(GameRequest game, int id)
         {
-            var publisher = await _publisherRepository.BuscarPorId(game.PublisherId);
+            var publisher = await _publisherRepository.BuscarPublisherPorIdAsync(game.PublisherId);
 
             var gameModel = GameMapper.ToModel(
                 game,
@@ -64,19 +64,19 @@ namespace LudoVault.Services
                 game.GenreIds
                 );
 
-            var newGame = await _gameRepository.Atualizar(gameModel, id);
+            var newGame = await _gameRepository.AtualizarGameAsync(gameModel, id);
             return GameMapper.ToResponse(newGame);
         }
 
-        public async Task<bool> RemoverGame(int id)
+        public async Task<bool> RemoverGameAsync(int id)
         {
-            await _gameRepository.Deletar(id);
+            await _gameRepository.DeletarGameAsync(id);
             return true;
         }
 
-        public async Task<GameRatingListUsersResponse> BuscarRatingsPorIdGame(int id)
+        public async Task<GameRatingListUsersResponse> BuscarAvaliacoesPorJogoAsync(int id)
         {
-            var gameRatings = await _gameRepository.BuscarRatings(id);
+            var gameRatings = await _gameRepository.BuscarAvaliacoesDoJogoAsync(id);
             if (gameRatings.Count == 0) throw new ArgumentException("Nenhuma avaliação encontrada!");
 
             var avgRatings = gameRatings.Select(gr => gr.Rating).Average();

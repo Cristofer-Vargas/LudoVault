@@ -5,10 +5,10 @@ namespace LudoVault.Services.Interfaces
 {
     public interface IPublisherServices
     {
-        public Task<PublisherResponse> CriarPublisher(PublisherRequest publisher);
-        public Task<PublisherResponse> AtualizarPublisher(PublisherRequest publisher, int id);
-        public Task<List<PublisherResponse>> BuscarPublishers();
-        public Task<PublisherResponse> BuscarPublisherPorId(int id);
-        public Task<bool> ExcluirPublisher(int id);
+        public Task<PublisherResponse> CriarPublisherAsync(PublisherRequest publisher);
+        public Task<PublisherResponse> AtualizarPublisherAsync(PublisherRequest publisher, int id);
+        public Task<List<PublisherResponse>> BuscarTodasPublishersAsync();
+        public Task<PublisherResponse> BuscarPublisherPorIdAsync(int id);
+        public Task<bool> ExcluirPublisherAsync(int id);
     }
 }

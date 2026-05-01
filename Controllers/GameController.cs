@@ -21,7 +21,7 @@ namespace LudoVault.Controllers
         {
              try
              {
-                var gameRatings = await _gameServices.BuscarRatingsPorIdGame(id);
+                var gameRatings = await _gameServices.BuscarAvaliacoesPorJogoAsync(id);
                 return Ok(gameRatings);
 
              } catch (Exception e)
@@ -35,7 +35,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                var games = await _gameServices.BuscarGames();
+                var games = await _gameServices.BuscarTodosGamesAsync();
                 return Ok(games);
 
             } catch(Exception e)
@@ -49,7 +49,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                var game = await _gameServices.BuscarGamePorId(id);
+                var game = await _gameServices.BuscarGamePorIdAsync(id);
                 return Ok(game);
 
             } catch (Exception e)
@@ -63,7 +63,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                var newGame = await _gameServices.CriarGame(game);
+                var newGame = await _gameServices.CriarGameAsync(game);
                 return Ok(newGame);
 
             } catch (Exception e)
@@ -77,7 +77,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                var gameUp = await _gameServices.AtualizarGame(game, id);
+                var gameUp = await _gameServices.AtualizarGameAsync(game, id);
                 return Ok(gameUp);
 
             } catch (Exception e)
@@ -91,7 +91,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                await _gameServices.RemoverGame(id);
+                await _gameServices.RemoverGameAsync(id);
                 return Ok("Excluido com sucesso!");
 
             }

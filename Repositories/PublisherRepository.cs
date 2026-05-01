@@ -1,4 +1,4 @@
-﻿﻿using LudoVault.Data;
+﻿﻿﻿﻿using LudoVault.Data;
 using LudoVault.Model;
 using LudoVault.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +13,14 @@ namespace LudoVault.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<PublisherModel> Criar(PublisherModel publisher)
+        public async Task<PublisherModel> CriarPublisherAsync(PublisherModel publisher)
         {
             await _dbContext.Publishers.AddAsync(publisher);
             await _dbContext.SaveChangesAsync();
             return publisher;
         }
 
-        public async Task<PublisherModel> Atualizar(PublisherModel publisher)
+        public async Task<PublisherModel> AtualizarPublisherAsync(PublisherModel publisher)
         {
             var currentPublisher = await _dbContext.Publishers.FindAsync(publisher.Id);
             if (currentPublisher == null)
@@ -33,7 +33,7 @@ namespace LudoVault.Repositories
             return currentPublisher;
         }
 
-        public async Task<PublisherModel> BuscarPorId(int id)
+        public async Task<PublisherModel> BuscarPublisherPorIdAsync(int id)
         {
             var publisher = await _dbContext.Publishers
                 .Include(p => p.Games)
@@ -45,10 +45,9 @@ namespace LudoVault.Repositories
             return publisher;
         }
 
-        public async Task<List<PublisherModel>> BuscarTodos()
+        public async Task<List<PublisherModel>> BuscarTodasPublishersAsync()
         {
             List<PublisherModel> publishers = await _dbContext.Publishers
-                .FromSql($"SELECT * FROM publisher")
                 .Include(p => p.Games)
                 .ToListAsync();
 
@@ -57,9 +56,9 @@ namespace LudoVault.Repositories
             return publishers;
         }
 
-        public async Task<bool> Excluir(int id)
+        public async Task<bool> ExcluirPublisherAsync(int id)
         {
-            var publisher = await BuscarPorId(id);
+            var publisher = await BuscarPublisherPorIdAsync(id);
             _dbContext.Publishers.Remove(publisher);
             await _dbContext.SaveChangesAsync();
             return true;

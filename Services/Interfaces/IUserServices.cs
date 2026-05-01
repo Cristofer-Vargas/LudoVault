@@ -6,11 +6,19 @@ namespace LudoVault.Services.Interfaces
 {
     public interface IUserServices
     {
-        public Task<UserResponse> BuscarUsuarioPorId(int id);
-        public Task<UserResponse> CriarUsuario(UserRequest user);
-        public Task<UserResponse> AtualizarUsuario(UserRequest user, int id);
-        public Task<bool> VerificarEmailEmUso(string email);
-        public Task<UserRatingListGamesResponse> BuscarUserRatings(int id);
-        public Task<UserListResponse> BuscarUserLists(int id);
+        public Task<UserResponse> CriarUsuarioAsync(UserRequest user);
+        public Task<UserResponse> AtualizarUsuarioAsync(UserRequest user, int id);
+        public Task<UserResponse> BuscarUsuarioPorIdAsync(int id);
+
+        public Task<UserListListsResponse> CriarUserListAsync(UserListRequest userList);
+        public Task<UserListListsResponse> AtualizarUserListAsync(UserListRequest userList, int listId);
+        public Task<UserListListsResponse> CriarGameInListAsync(UserListGameRequest userGameList, int userId);
+        public Task<UserListResponse> BuscarUserListsAsync(int id);
+        public Task<bool> DeletarUserListAsync(int userId, int listId);
+        public Task<bool> DeletarGameInUserListAsync(int userId, int listId, int gameId);
+
+        public Task<UserRatingListGamesResponse> BuscarUserRatingsAsync(int id);
+
+        public Task<bool> VerificarEmailEmUsoAsync(string email);
     }
 }

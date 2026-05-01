@@ -6,26 +6,137 @@ using LudoVault.Services.Responses;
 
 namespace LudoVault.Services
 {
-    public class UserServices : IUserServices
+    public class UserServices(IUserRepository userRepo, ISecurityService securityService) : IUserServices
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ISecurityService _securityService;
+        private readonly IUserRepository _userRepository = userRepo;
+        private readonly ISecurityService _securityService = securityService;
 
-        public UserServices(IUserRepository userRepo, ISecurityService securityService)
-        {
-            _userRepository = userRepo;
-            _securityService = securityService;
-        }
 
-        public async Task<UserResponse> BuscarUsuarioPorId(int id)
+        public async Task<UserResponse> CriarUsuarioAsync(UserRequest user)
         {
-            var userResponse = UserMapper.ToResponse(await _userRepository.BuscarUsuarioPorId(id));
+            user.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
+            var userModel = UserMapper.ToModel(user, user.PasswordHash);
+
+            UserResponse userResponse = UserMapper.ToResponse(await _userRepository.CriarUsuarioAsync(userModel));
             return userResponse;
         }
 
-        public async Task<UserRatingListGamesResponse> BuscarUserRatings(int id)
+        public async Task<UserResponse> AtualizarUsuarioAsync(UserRequest user, int id)
         {
-            var userRatings = await _userRepository.BuscarGamesComUserRatings(id);
+            var userExisted = await _userRepository.BuscarUsuarioPorIdAsync(id);
+
+            userExisted.Name = user.Name;
+            userExisted.Email = user.Email;
+            userExisted.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
+            userExisted.Bio = user.Bio;
+
+            UserResponse userRes =  UserMapper.ToResponse(await _userRepository.AtualizarUsuarioAsync(userExisted, id));
+            return userRes;
+        }
+
+        public async Task<UserListListsResponse> CriarUserListAsync(UserListRequest userList)
+        {
+            await _userRepository.BuscarUsuarioPorIdAsync(userList.UserId);
+            var userListModel = UserListMapper.ToUserListModel(userList, userList.UserId);
+
+            var existeListaComMesmoNome = await _userRepository.ExisteListaComMesmoNomeAsync(userListModel.Name ?? string.Empty, userList.UserId);
+            if (existeListaComMesmoNome)
+                throw new ArgumentException("Existe outra lista com esse nome!");
+
+            var userCreatedModel = await _userRepository.CriarUserListAsync(userListModel);
+
+            return UserListMapper.ToListGameResponse(userCreatedModel);
+        }
+
+        public async Task<UserListResponse> BuscarUserListsAsync(int id)
+        {
+            await _userRepository.BuscarUsuarioPorIdAsync(id);
+
+            var userLists = await _userRepository.BuscarUserListsPorUsuarioAsync(id);
+
+            var totalLists = userLists.Count;
+
+            var userListsResponse = new UserListResponse
+            {
+                Lists = userLists
+                    .Select(ul => UserListMapper.ToListGameResponse(ul)).ToList(),
+                TotalLists = totalLists
+            };
+
+            return userListsResponse;
+
+        }
+
+        public async Task<UserListListsResponse> AtualizarUserListAsync(UserListRequest userList, int listId)
+        {
+            await _userRepository.BuscarUsuarioPorIdAsync(userList.UserId);
+
+            var userListModel = UserListMapper.ToUserListModel(userList, userList.UserId);
+            var existeListaComMesmoNome = await _userRepository.ExisteListaComMesmoNomeAsync(userListModel.Name ?? string.Empty, userList.UserId);
+            if (existeListaComMesmoNome)
+                throw new ArgumentException("Existe outra lista com esse nome!");
+
+            var createdUserListModel = await _userRepository.AtualizarUserListAsync(userListModel, userList.UserId, listId);
+
+            return UserListMapper.ToListGameResponse(createdUserListModel);
+        }
+
+        public async Task<UserListListsResponse> CriarGameInListAsync(UserListGameRequest userGameList, int userId)
+        {
+            await _userRepository.BuscarUsuarioPorIdAsync(userId);
+            var userListGameModel = UserListMapper.ToUserListGameModel(userGameList, userGameList.ListId);
+
+            var gameExistInThisList = await _userRepository.JogoExisteNaListaAsync(userGameList.GameId, userGameList.ListId);
+            if (gameExistInThisList) 
+                throw new ArgumentException("Esse jogo ja foi adicionado!");
+
+            var userListGame = await _userRepository.AdicionarJogoAListaAsync(userListGameModel);
+
+            return UserListMapper.ToListGameResponse(userListGame);
+        }
+
+        public async Task<bool> DeletarUserListAsync(int userId, int listId)
+        {
+            await _userRepository.BuscarUsuarioPorIdAsync(userId);
+            var userListExist = await _userRepository.ExisteUserListAsync(listId, userId);
+            if (userListExist)
+            {
+                await _userRepository.DeletarUserListAsync(listId);
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> DeletarGameInUserListAsync(int userId, int listId, int gameId)
+        {
+            await _userRepository.BuscarUsuarioPorIdAsync(userId);
+            var gameExistInUserList = await _userRepository.JogoExisteNaListaAsync(gameId, listId);
+            if (gameExistInUserList)
+            {
+                await _userRepository.RemoverJogoDaListaAsync(listId, gameId);
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<UserResponse> BuscarUsuarioPorIdAsync(int id)
+        {
+            var userResponse = UserMapper.ToResponse(await _userRepository.BuscarUsuarioPorIdAsync(id));
+            return userResponse;
+        }
+        
+        public async Task<bool> VerificarEmailEmUsoAsync(string email)
+        {
+            bool emailJaExiste = await _userRepository.VerificarEmailExistenteAsync(email);
+            if (emailJaExiste) return true;
+            return false;
+        }
+
+        public async Task<UserRatingListGamesResponse> BuscarUserRatingsAsync(int id)
+        {
+            var userRatings = await _userRepository.BuscarAvaliacoesDoUsuarioAsync(id);
             if (userRatings.Count == 0) 
                 throw new ArgumentException("Nenhuma avaliação desse usuário!");
 
@@ -39,53 +150,6 @@ namespace LudoVault.Services
             };
 
             return userRatingsResponse;
-        }
-
-        public async Task<UserListResponse> BuscarUserLists(int id)
-        {
-            await _userRepository.BuscarUsuarioPorId(id);
-
-            var userLists = await _userRepository.BuscarUserLists(id);
-
-            var totalLists = userLists.Count;
-
-            var userListsResponse = new UserListResponse
-            {
-                Lists = userLists
-                    .Select(ul => UserListMapper.ToListResponse(ul)).ToList(),
-                TotalLists = totalLists
-            };
-
-            return userListsResponse;
-        }
-
-        public async Task<UserResponse> CriarUsuario(UserRequest user)
-        {
-            user.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
-            var userModel = UserMapper.ToModel(user, user.PasswordHash);
-
-            UserResponse userResponse = UserMapper.ToResponse(await _userRepository.CriarUsuario(userModel));
-            return userResponse;
-        }
-
-        public async Task<UserResponse> AtualizarUsuario(UserRequest user, int id)
-        {
-            var userExisted = await _userRepository.BuscarUsuarioPorId(id);
-
-            userExisted.Name = user.Name;
-            userExisted.Email = user.Email;
-            userExisted.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
-            userExisted.Bio = user.Bio;
-
-            UserResponse userRes =  UserMapper.ToResponse(await _userRepository.Atualizar(userExisted, id));
-            return userRes;
-        }
-
-        public async Task<bool> VerificarEmailEmUso(string email)
-        {
-            bool emailJaExiste = await _userRepository.VerificarEmailExistente(email);
-            if (emailJaExiste) return true;
-            return false;
         }
 
     }

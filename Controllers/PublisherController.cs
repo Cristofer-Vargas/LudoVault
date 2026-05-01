@@ -21,7 +21,7 @@ namespace LudoVault.Controllers
         {
             try 
             {
-                var publisherList = await _publisherServices.BuscarPublishers();
+                var publisherList = await _publisherServices.BuscarTodasPublishersAsync();
                 return Ok(publisherList);
 
             } catch (Exception e)
@@ -35,7 +35,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                var publisher = await _publisherServices.BuscarPublisherPorId(id);
+                var publisher = await _publisherServices.BuscarPublisherPorIdAsync(id);
                 return Ok(publisher);
 
             }
@@ -54,7 +54,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                var p = await _publisherServices.CriarPublisher(publisher);
+                var p = await _publisherServices.CriarPublisherAsync(publisher);
                 return Ok(p);
 
             } catch(Exception e)
@@ -68,7 +68,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                var updatedPublisher = await _publisherServices.AtualizarPublisher(publisher, id);
+                var updatedPublisher = await _publisherServices.AtualizarPublisherAsync(publisher, id);
                 return Ok(updatedPublisher);
             }
             catch (KeyNotFoundException e)
@@ -86,7 +86,7 @@ namespace LudoVault.Controllers
         {
             try
             {
-                bool excluded = await _publisherServices.ExcluirPublisher(id);
+                bool excluded = await _publisherServices.ExcluirPublisherAsync(id);
                 return Ok("Publisher Excluido com sucesso");
 
             }

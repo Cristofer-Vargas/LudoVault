@@ -135,7 +135,7 @@ CREATE TABLE user_library_game (
 
 USE LudoVault;
 
-# ---
+# ==========================================================================================================================================
 
 SELECT * FROM game_rating;
 
@@ -176,25 +176,8 @@ INSERT INTO platform (name) VALUES ("Mobile");
 INSERT INTO platform (name) VALUES ("Nintendo switch");
 
 INSERT INTO platform (name) VALUES 
-('PlayStation 5'),
-('PlayStation 4'),
-('PlayStation 3'),
-('Xbox Series X/S'),
-('Xbox One'),
-('Xbox 360'),
-('Nintendo Switch'),
-('Nintendo Wii U'),
-('Nintendo 3DS'),
-('Android'),
-('iOS'),
-('Linux'),
-('macOS'),
-('Web Browser'),
-('PlayStation Vita'),
-('Nintendo DS'),
-('PlayStation 2'),
-('GameCube'),
-('Dreamcast'),
+('PlayStation 5'),('PlayStation 4'),('PlayStation 3'),('Xbox Series X/S'),('Xbox One'),('Xbox 360'),('Nintendo Switch'),('Nintendo Wii U'),
+('Nintendo 3DS'),('Android'),('iOS'),('Linux'),('macOS'),('Web Browser'),('PlayStation Vita'),('Nintendo DS'),('PlayStation 2'),('GameCube'),('Dreamcast'),
 ('Xbox (Original)');
 
 # ---
@@ -238,7 +221,7 @@ INSERT INTO game (name, image_url, description, publisher_id)
 VALUES ("Minecraft", "wwwroot/uploads/games/caminhoimagem.jpg", "Jogo Quadrado", 7);
 
 #---
-SELECT * FROM user_list_items WHERE list_id = 1;
+SELECT * FROM user_list_items WHERE list_id = 18;
 
 INSERT INTO user_list (name, user_id) VALUES("Meus Favoritos", 18);
 INSERT INTO user_list (name, user_id) VALUES("Meus Favoritos", 1);

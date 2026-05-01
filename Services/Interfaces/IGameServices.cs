@@ -5,11 +5,11 @@ namespace LudoVault.Services.Interfaces
 {
     public interface IGameServices
     {
-        public Task<GameResponse> CriarGame(GameRequest game);
-        public Task<GameResponse> AtualizarGame(GameRequest game, int id);
-        public Task<List<GameResponse>> BuscarGames();
-        public Task<GameResponse> BuscarGamePorId(int id);
-        public Task<bool> RemoverGame(int id);
-        public Task<GameRatingListUsersResponse> BuscarRatingsPorIdGame(int id);
+        public Task<GameResponse> CriarGameAsync(GameRequest game);
+        public Task<GameResponse> AtualizarGameAsync(GameRequest game, int id);
+        public Task<List<GameResponse>> BuscarTodosGamesAsync();
+        public Task<GameResponse> BuscarGamePorIdAsync(int id);
+        public Task<bool> RemoverGameAsync(int id);
+        public Task<GameRatingListUsersResponse> BuscarAvaliacoesPorJogoAsync(int id);
     }
 }

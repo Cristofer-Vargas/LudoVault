@@ -24,6 +24,6 @@ namespace LudoVault.Model
 
         [Column("created_at", TypeName = "timestamp")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public List<UserListItemsModel> ListItems { get; set; } = [];
+        public List<UserListGameModel> ListItems { get; set; } = [];
     }
 }
