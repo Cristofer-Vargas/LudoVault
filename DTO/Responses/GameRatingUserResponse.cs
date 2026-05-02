@@ -1,4 +1,4 @@
-﻿﻿namespace LudoVault.Services.Responses
+﻿namespace LudoVault.DTO.Responses
 {
     public class GameRatingUserResponse
 	{

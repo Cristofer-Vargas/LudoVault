@@ -1,6 +1,6 @@
-﻿﻿using LudoVault.Model;
-using LudoVault.Services.Requests;
-using LudoVault.Services.Responses;
+﻿using LudoVault.DTO.Requests;
+using LudoVault.DTO.Responses;
+using LudoVault.Model;
 
 namespace LudoVault.Services.Mapper
 {

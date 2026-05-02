@@ -1,12 +1,15 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace LudoVault.Services.Requests
+namespace LudoVault.DTO.Requests
 {
     public class GameRequest
     {
-        public string Name { get; set; } = string.Empty;
+        [Required]
+        public string? Name { get; set; }
         public string ImageUrl { get; set; } = "/caminhoImagem.jpg";
         public string? Description { get; set; }
+        [Required]
         public int PublisherId { get; set; }
 
         [JsonPropertyName("platforms")]

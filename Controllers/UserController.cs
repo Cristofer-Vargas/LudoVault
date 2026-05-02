@@ -1,5 +1,5 @@
+using LudoVault.DTO.Requests;
 using LudoVault.Services.Interfaces;
-using LudoVault.Services.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LudoVault.Controllers

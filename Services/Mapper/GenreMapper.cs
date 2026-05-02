@@ -1,5 +1,5 @@
-﻿﻿using LudoVault.Model;
-using LudoVault.Services.Responses;
+﻿using LudoVault.DTO.Responses;
+using LudoVault.Model;
 
 namespace LudoVault.Services.Mapper
 {

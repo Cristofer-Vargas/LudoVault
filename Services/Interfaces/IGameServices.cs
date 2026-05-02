@@ -1,5 +1,5 @@
-﻿using LudoVault.Services.Requests;
-using LudoVault.Services.Responses;
+﻿using LudoVault.DTO.Requests;
+using LudoVault.DTO.Responses;
 
 namespace LudoVault.Services.Interfaces
 {
