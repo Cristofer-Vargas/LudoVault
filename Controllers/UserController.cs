@@ -10,7 +10,7 @@ namespace LudoVault.Controllers
     {
         private readonly IUserServices _userServices = userServices;
 
-
+        // Usuário
         [HttpPut("{id}")]
         public async Task<IActionResult> AtualizarUsuario([FromBody]UserRequest user, int id)
         {
@@ -39,6 +39,7 @@ namespace LudoVault.Controllers
             }
         }
 
+        // Avaliaçãoes de Usuário
         [HttpGet("{id}/ratings")]
         public async Task<IActionResult> BuscarUserRatings(int id)
         {
@@ -53,6 +54,7 @@ namespace LudoVault.Controllers
             }
         }
 
+        // Listas de Usuários
         [HttpGet("{id}/lists")]
         public async Task<IActionResult> BuscarUserLists(int id)
         {

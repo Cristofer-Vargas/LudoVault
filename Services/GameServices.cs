@@ -6,17 +6,12 @@ using LudoVault.Services.Responses;
 
 namespace LudoVault.Services
 {
-    public class GameServices : IGameServices
+    public class GameServices(IGameRepository gameRepo, IPublisherRepository publisherRepo) : IGameServices
     {
-        private readonly IGameRepository _gameRepository;
-        private readonly IPublisherRepository _publisherRepository;
+        private readonly IGameRepository _gameRepository = gameRepo;
+        private readonly IPublisherRepository _publisherRepository = publisherRepo;
 
-        public GameServices(IGameRepository gameRepo, IPublisherRepository publisherRepo)
-        {
-            _gameRepository = gameRepo;
-            _publisherRepository = publisherRepo;
-        }
-
+        // Jogo
         public async Task<List<GameResponse>> BuscarTodosGamesAsync()
         {
             var gamesModel = await _gameRepository.BuscarTodosGamesAsync();
@@ -27,7 +22,6 @@ namespace LudoVault.Services
                 .Select(game => GameMapper.ToResponse(game))
                 .ToList();
         }
-
         public async Task<GameResponse> BuscarGamePorIdAsync(int id)
         {
             var gameModel = await _gameRepository.BuscarGamePorIdAsync(id);
@@ -36,8 +30,6 @@ namespace LudoVault.Services
 
             return GameMapper.ToResponse(gameModel);
         }
-
-
         public async Task<GameResponse> CriarGameAsync(GameRequest request)
         {
             var publisherModel = await _publisherRepository.BuscarPublisherPorIdAsync(request.PublisherId);
@@ -52,7 +44,6 @@ namespace LudoVault.Services
 
             return GameMapper.ToResponse(gameModel);
         }
-
         public async Task<GameResponse> AtualizarGameAsync(GameRequest game, int id)
         {
             var publisher = await _publisherRepository.BuscarPublisherPorIdAsync(game.PublisherId);
@@ -67,13 +58,13 @@ namespace LudoVault.Services
             var newGame = await _gameRepository.AtualizarGameAsync(gameModel, id);
             return GameMapper.ToResponse(newGame);
         }
-
         public async Task<bool> RemoverGameAsync(int id)
         {
             await _gameRepository.DeletarGameAsync(id);
             return true;
         }
 
+        // Avaliações de Jogo
         public async Task<GameRatingListUsersResponse> BuscarAvaliacoesPorJogoAsync(int id)
         {
             var gameRatings = await _gameRepository.BuscarAvaliacoesDoJogoAsync(id);

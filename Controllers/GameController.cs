@@ -7,29 +7,11 @@ namespace LudoVault.Controllers
 {
     [ApiController]
     [Route("[Controller]")]
-    public class GameController : ControllerBase
+    public class GameController(IGameServices gameServices) : ControllerBase
     {
-        private readonly IGameServices _gameServices;
+        private readonly IGameServices _gameServices = gameServices;
 
-        public GameController(IGameServices gameServices)
-        {
-            _gameServices = gameServices;
-        }
-
-        [HttpGet("{id}/ratings")]
-        public async Task<IActionResult> BuscarRatingsDeGame(int id)
-        {
-             try
-             {
-                var gameRatings = await _gameServices.BuscarAvaliacoesPorJogoAsync(id);
-                return Ok(gameRatings);
-
-             } catch (Exception e)
-             {
-                return NotFound(e.Message);
-             }
-        }
-
+        // Jogo
         [HttpGet]
         public async Task<IActionResult> BuscarGames()
         {
@@ -98,6 +80,22 @@ namespace LudoVault.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        // Avaliações de Jogo
+        [HttpGet("{id}/ratings")]
+        public async Task<IActionResult> BuscarRatingsDeGame(int id)
+        {
+            try
+            {
+                var gameRatings = await _gameServices.BuscarAvaliacoesPorJogoAsync(id);
+                return Ok(gameRatings);
+
+            }
+            catch (Exception e)
+            {
+                return NotFound(e.Message);
             }
         }
     }

@@ -7,13 +7,23 @@ namespace LudoVault.Controllers
 {
     [ApiController]
     [Route("[Controller]")]
-    public class PublisherController : ControllerBase
+    public class PublisherController(IPublisherServices publisherServices) : ControllerBase
     {
-        private readonly IPublisherServices _publisherServices;
+        private readonly IPublisherServices _publisherServices = publisherServices;
 
-        public PublisherController(IPublisherServices publisherServices)
+        // Desenvolvedora
+        [HttpPost]
+        public async Task<IActionResult> CriarPublisher([FromBody] PublisherRequest publisher)
         {
-            _publisherServices = publisherServices;
+            try
+            {
+                var p = await _publisherServices.CriarPublisherAsync(publisher);
+                return Ok(p);
+
+            } catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet]
@@ -44,20 +54,6 @@ namespace LudoVault.Controllers
                 return NotFound(e.Message);
             }
             catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CriarPublisher([FromBody] PublisherRequest publisher)
-        {
-            try
-            {
-                var p = await _publisherServices.CriarPublisherAsync(publisher);
-                return Ok(p);
-
-            } catch(Exception e)
             {
                 return BadRequest(e.Message);
             }

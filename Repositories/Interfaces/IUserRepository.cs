@@ -5,11 +5,13 @@ namespace LudoVault.Repositories.Interfaces
 {
     public interface IUserRepository
     {
+        // Usuário
         public Task<UserModel> CriarUsuarioAsync(UserModel user);
         public Task<UserModel> AtualizarUsuarioAsync(UserModel user, int id);
         public Task<UserModel> BuscarUsuarioPorIdAsync(int id);
+        public Task<bool> VerificarEmailExistenteAsync(string email);
 
-        // UserList
+        // Listas de Usuário
         public Task<UserListModel> CriarUserListAsync(UserListModel userList);
         public Task<UserListModel> AtualizarUserListAsync(UserListModel userList, int userId, int listId);
         public Task<UserListModel> AdicionarJogoAListaAsync(UserListGameModel userGameList);
@@ -21,10 +23,7 @@ namespace LudoVault.Repositories.Interfaces
         public Task<bool> DeletarUserListAsync(int listId);
         public Task<bool> RemoverJogoDaListaAsync(int listId, int gameId);
 
-        // User Ratings
+        // Avalaiações de Usuário
         public Task<List<GameRatingModel>> BuscarAvaliacoesDoUsuarioAsync(int userId);
-
-        // Email Exist?
-        public Task<bool> VerificarEmailExistenteAsync(string email);
     }
 }

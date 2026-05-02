@@ -23,10 +23,12 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<ISecurityService, SecurityService>();
 
+// Serviços
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IGameServices, GameServices>();
 builder.Services.AddScoped<IPublisherServices, PublisherServices>();
 
+// Repositórios
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();

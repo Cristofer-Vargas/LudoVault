@@ -6,14 +6,9 @@ namespace LudoVault.Controllers
 {
     [ApiController]
     [Route("[Controller]")]
-    public class LoginController : ControllerBase
+    public class LoginController(IUserServices userServices) : ControllerBase
     {
-        private readonly IUserServices _userServices;
-
-        public LoginController(IUserServices userServices)
-        {
-            _userServices = userServices;
-        }
+        private readonly IUserServices _userServices = userServices;
 
         [HttpPost]
         public async Task<IActionResult> CreatUser([FromBody] UserRequest user)

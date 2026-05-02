@@ -5,21 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LudoVault.Repositories
 {
-    public class PublisherRepository : IPublisherRepository
+    public class PublisherRepository(MysqlContext dbContext) : IPublisherRepository
     {
-        private readonly MysqlContext _dbContext;
-        public PublisherRepository(MysqlContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
+        private readonly MysqlContext _dbContext = dbContext;
+        
+        // Desenvolvedora
         public async Task<PublisherModel> CriarPublisherAsync(PublisherModel publisher)
         {
             await _dbContext.Publishers.AddAsync(publisher);
             await _dbContext.SaveChangesAsync();
             return publisher;
         }
-
         public async Task<PublisherModel> AtualizarPublisherAsync(PublisherModel publisher)
         {
             var currentPublisher = await _dbContext.Publishers.FindAsync(publisher.Id);
@@ -32,7 +28,6 @@ namespace LudoVault.Repositories
             await _dbContext.SaveChangesAsync();
             return currentPublisher;
         }
-
         public async Task<PublisherModel> BuscarPublisherPorIdAsync(int id)
         {
             var publisher = await _dbContext.Publishers
@@ -44,7 +39,6 @@ namespace LudoVault.Repositories
 
             return publisher;
         }
-
         public async Task<List<PublisherModel>> BuscarTodasPublishersAsync()
         {
             List<PublisherModel> publishers = await _dbContext.Publishers
@@ -55,7 +49,6 @@ namespace LudoVault.Repositories
 
             return publishers;
         }
-
         public async Task<bool> ExcluirPublisherAsync(int id)
         {
             var publisher = await BuscarPublisherPorIdAsync(id);

@@ -4,6 +4,7 @@ namespace LudoVault.Repositories.Interfaces
 {
     public interface IPublisherRepository
     {
+        // Desenvolvedora
         public Task<PublisherModel> CriarPublisherAsync(PublisherModel publisher);
         public Task<PublisherModel> AtualizarPublisherAsync(PublisherModel publisher);
         public Task<List<PublisherModel>> BuscarTodasPublishersAsync();

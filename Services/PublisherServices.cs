@@ -7,15 +7,11 @@ using LudoVault.Services.Responses;
 
 namespace LudoVault.Services
 {
-    public class PublisherServices : IPublisherServices
+    public class PublisherServices(IPublisherRepository publisherReposiroty) : IPublisherServices
     {
-        private readonly IPublisherRepository _publisherRepository;
+        private readonly IPublisherRepository _publisherRepository = publisherReposiroty;
 
-        public PublisherServices(IPublisherRepository publisherReposiroty)
-        {
-            _publisherRepository = publisherReposiroty;
-        }
-
+        // Desenvolvedora
         public async Task<PublisherResponse> CriarPublisherAsync(PublisherRequest publisher)
         {
             var publisherModel = await _publisherRepository.CriarPublisherAsync(PublisherMapper.ToModel(publisher));
@@ -23,7 +19,6 @@ namespace LudoVault.Services
                 publisherModel, 
                 publisherModel.Games.Select(GameMapper.ToResponse).ToList());
         }
-
         public async Task<PublisherResponse> AtualizarPublisherAsync(PublisherRequest publisher, int id)
         {
             var publisherModel = PublisherMapper.ToModel(publisher);
@@ -34,7 +29,6 @@ namespace LudoVault.Services
                 updatedPublisher,
                 updatedPublisher.Games.Select(GameMapper.ToResponse).ToList());
         }
-
         public async Task<List<PublisherResponse>> BuscarTodasPublishersAsync()
         {
             List<PublisherModel> pubModelList = await _publisherRepository.BuscarTodasPublishersAsync();
@@ -44,7 +38,6 @@ namespace LudoVault.Services
                 publisher.Games.Select(GameMapper.ToResponse)
             .ToList())).ToList();
         }
-
         public async Task<PublisherResponse> BuscarPublisherPorIdAsync(int id)
         {
             var publisherModel = await _publisherRepository.BuscarPublisherPorIdAsync(id);
@@ -53,7 +46,6 @@ namespace LudoVault.Services
                 publisherModel.Games.Select(GameMapper.ToResponse).ToList()
                 );
         }
-
         public async Task<bool> ExcluirPublisherAsync(int id)
         {
             bool publisherExcluded = await _publisherRepository.ExcluirPublisherAsync(id);

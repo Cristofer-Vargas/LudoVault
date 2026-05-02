@@ -3,28 +3,40 @@
   "WorkspaceRootPath": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\publishercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\publishercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\data\\mysqlcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:data\\mysqlcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\mapper\\userlistmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\mapper\\userlistmapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\responses\\userlistresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\responses\\userlistresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\interfaces\\iuserservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\interfaces\\iuserservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\responses\\userlistresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\responses\\userlistresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\requests\\userlistrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,36 +47,12 @@
       "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\requests\\userlistgamerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\model\\userlistmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:model\\userlistmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\model\\userlistgamemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:model\\userlistgamemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\publishercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\publishercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\responses\\userlistgameresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\responses\\userlistgameresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\responses\\userlistlistsresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\responses\\userlistlistsresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\data\\mysqlcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:data\\mysqlcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 336,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -90,71 +78,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 0,
               "Title": "PublisherController.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\PublisherController.cs",
               "RelativeDocumentMoniker": "Controllers\\PublisherController.cs",
               "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\PublisherController.cs",
               "RelativeToolTip": "Controllers\\PublisherController.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAYwGcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-01T19:31:56.69Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 1,
               "Title": "GameController.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\GameController.cs",
               "RelativeDocumentMoniker": "Controllers\\GameController.cs",
               "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\GameController.cs",
               "RelativeToolTip": "Controllers\\GameController.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAgwFwAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAiwFQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-01T19:30:55.465Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 2,
               "Title": "MysqlContext.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Data\\MysqlContext.cs",
               "RelativeDocumentMoniker": "Data\\MysqlContext.cs",
               "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Data\\MysqlContext.cs",
               "RelativeToolTip": "Data\\MysqlContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T23:24:04.894Z"
+              "WhenOpened": "2026-04-28T23:24:04.894Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Repositories\\Interfaces\\IUserRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\Interfaces\\IUserRepository.cs",
               "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Repositories\\Interfaces\\IUserRepository.cs",
               "RelativeToolTip": "Repositories\\Interfaces\\IUserRepository.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAxwBMAAABJAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-28T23:08:13.845Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\UserRepository.cs",
               "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Repositories\\UserRepository.cs",
               "RelativeToolTip": "Repositories\\UserRepository.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAkwIwAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA2wH8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-28T23:08:14.837Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "IUserServices.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Interfaces\\IUserServices.cs",
               "RelativeDocumentMoniker": "Services\\Interfaces\\IUserServices.cs",
@@ -167,26 +156,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "UserServices.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\UserServices.cs",
               "RelativeDocumentMoniker": "Services\\UserServices.cs",
               "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\UserServices.cs",
               "RelativeToolTip": "Services\\UserServices.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAqwDgAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAcwHQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-28T23:08:20.045Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
               "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UserController.cs",
               "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAuwI4AAABLAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAIoAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-28T20:32:34.893Z",
               "EditorCaption": ""
@@ -199,7 +188,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "UserListGameRequest.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Requests\\UserListGameRequest.cs",
               "RelativeDocumentMoniker": "Services\\Requests\\UserListGameRequest.cs",
@@ -207,12 +196,11 @@
               "RelativeToolTip": "Services\\Requests\\UserListGameRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-29T18:06:07.557Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-29T18:06:07.557Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "UserListRequest.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Requests\\UserListRequest.cs",
               "RelativeDocumentMoniker": "Services\\Requests\\UserListRequest.cs",
@@ -220,12 +208,11 @@
               "RelativeToolTip": "Services\\Requests\\UserListRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-29T18:05:42.438Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-29T18:05:42.438Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "UserListResponse.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Responses\\UserListResponse.cs",
               "RelativeDocumentMoniker": "Services\\Responses\\UserListResponse.cs",
@@ -238,7 +225,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 12,
               "Title": "UserListListsResponse.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Responses\\UserListListsResponse.cs",
               "RelativeDocumentMoniker": "Services\\Responses\\UserListListsResponse.cs",
@@ -250,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 11,
               "Title": "UserListGameResponse.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Responses\\UserListGameResponse.cs",
               "RelativeDocumentMoniker": "Services\\Responses\\UserListGameResponse.cs",
@@ -258,74 +245,7 @@
               "RelativeToolTip": "Services\\Responses\\UserListGameResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-28T22:43:26.673Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "3aaa6441-a783-41cf-a7a0-9016edb0ff81",
-        "Display": 1,
-        "X": 571,
-        "Y": 110,
-        "Width": 529,
-        "Height": 771,
-        "WindowState": 2
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 158,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "UserListModel.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Model\\UserListModel.cs",
-              "RelativeDocumentMoniker": "Model\\UserListModel.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Model\\UserListModel.cs",
-              "RelativeToolTip": "Model\\UserListModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-01T19:37:19.208Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "UserListGameModel.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Model\\UserListGameModel.cs",
-              "RelativeDocumentMoniker": "Model\\UserListGameModel.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Model\\UserListGameModel.cs",
-              "RelativeToolTip": "Model\\UserListGameModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-01T18:35:00.597Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 242,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserListMapper.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Mapper\\UserListMapper.cs",
-              "RelativeDocumentMoniker": "Services\\Mapper\\UserListMapper.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Mapper\\UserListMapper.cs",
-              "RelativeToolTip": "Services\\Mapper\\UserListMapper.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACYAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-01T18:35:13.851Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-28T22:43:26.673Z"
             }
           ]
         }

@@ -11,7 +11,7 @@ namespace LudoVault.Services
         private readonly IUserRepository _userRepository = userRepo;
         private readonly ISecurityService _securityService = securityService;
 
-
+        // Usuário
         public async Task<UserResponse> CriarUsuarioAsync(UserRequest user)
         {
             user.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
@@ -20,7 +20,6 @@ namespace LudoVault.Services
             UserResponse userResponse = UserMapper.ToResponse(await _userRepository.CriarUsuarioAsync(userModel));
             return userResponse;
         }
-
         public async Task<UserResponse> AtualizarUsuarioAsync(UserRequest user, int id)
         {
             var userExisted = await _userRepository.BuscarUsuarioPorIdAsync(id);
@@ -33,7 +32,20 @@ namespace LudoVault.Services
             UserResponse userRes =  UserMapper.ToResponse(await _userRepository.AtualizarUsuarioAsync(userExisted, id));
             return userRes;
         }
+        public async Task<UserResponse> BuscarUsuarioPorIdAsync(int id)
+        {
+            var userResponse = UserMapper.ToResponse(await _userRepository.BuscarUsuarioPorIdAsync(id));
+            return userResponse;
+        }
+        public async Task<bool> VerificarEmailEmUsoAsync(string email)
+        {
+            bool emailJaExiste = await _userRepository.VerificarEmailExistenteAsync(email);
+            if (emailJaExiste) return true;
+            return false;
+        }
 
+
+        // Listas de Usuário
         public async Task<UserListListsResponse> CriarUserListAsync(UserListRequest userList)
         {
             await _userRepository.BuscarUsuarioPorIdAsync(userList.UserId);
@@ -47,7 +59,6 @@ namespace LudoVault.Services
 
             return UserListMapper.ToListGameResponse(userCreatedModel);
         }
-
         public async Task<UserListResponse> BuscarUserListsAsync(int id)
         {
             await _userRepository.BuscarUsuarioPorIdAsync(id);
@@ -66,7 +77,6 @@ namespace LudoVault.Services
             return userListsResponse;
 
         }
-
         public async Task<UserListListsResponse> AtualizarUserListAsync(UserListRequest userList, int listId)
         {
             await _userRepository.BuscarUsuarioPorIdAsync(userList.UserId);
@@ -80,7 +90,6 @@ namespace LudoVault.Services
 
             return UserListMapper.ToListGameResponse(createdUserListModel);
         }
-
         public async Task<UserListListsResponse> CriarGameInListAsync(UserListGameRequest userGameList, int userId)
         {
             await _userRepository.BuscarUsuarioPorIdAsync(userId);
@@ -94,7 +103,6 @@ namespace LudoVault.Services
 
             return UserListMapper.ToListGameResponse(userListGame);
         }
-
         public async Task<bool> DeletarUserListAsync(int userId, int listId)
         {
             await _userRepository.BuscarUsuarioPorIdAsync(userId);
@@ -107,7 +115,6 @@ namespace LudoVault.Services
 
             return false;
         }
-
         public async Task<bool> DeletarGameInUserListAsync(int userId, int listId, int gameId)
         {
             await _userRepository.BuscarUsuarioPorIdAsync(userId);
@@ -121,19 +128,7 @@ namespace LudoVault.Services
             return false;
         }
 
-        public async Task<UserResponse> BuscarUsuarioPorIdAsync(int id)
-        {
-            var userResponse = UserMapper.ToResponse(await _userRepository.BuscarUsuarioPorIdAsync(id));
-            return userResponse;
-        }
-        
-        public async Task<bool> VerificarEmailEmUsoAsync(string email)
-        {
-            bool emailJaExiste = await _userRepository.VerificarEmailExistenteAsync(email);
-            if (emailJaExiste) return true;
-            return false;
-        }
-
+        // Avaliações de Usuário
         public async Task<UserRatingListGamesResponse> BuscarUserRatingsAsync(int id)
         {
             var userRatings = await _userRepository.BuscarAvaliacoesDoUsuarioAsync(id);
@@ -151,6 +146,5 @@ namespace LudoVault.Services
 
             return userRatingsResponse;
         }
-
     }
 }

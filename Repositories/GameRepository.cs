@@ -5,15 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LudoVault.Repositories
 {
-    public class GameRepository : IGameRepository
+    public class GameRepository(MysqlContext dbContext) : IGameRepository
     {
-        public readonly MysqlContext _dbContext;
-        public GameRepository(MysqlContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
-       public async Task<GameModel> CriarGameAsync(GameModel game)
+        public readonly MysqlContext _dbContext = dbContext;
+        
+        // Jogo
+        public async Task<GameModel> CriarGameAsync(GameModel game)
         {
             // Salva o Game para gerar o ID
             await _dbContext.AddAsync(game);
@@ -30,7 +27,6 @@ namespace LudoVault.Repositories
 
             return await BuscarGamePorIdAsync(game.Id) ?? throw new Exception("Erro ao recuperar o Jogo recém criado!");
         }
-
         public async Task<GameModel> AtualizarGameAsync(GameModel game, int id)
         {
             var currentGame = await BuscarGamePorIdAsync(id);
@@ -54,7 +50,6 @@ namespace LudoVault.Repositories
 
             return currentGame;
         }
-
         public async Task<GameModel> BuscarGamePorIdAsync(int id)
         {
             var game = await _dbContext.Games
@@ -72,7 +67,6 @@ namespace LudoVault.Repositories
 
             return game;
         }
-
         public async Task<List<GameModel>> BuscarTodosGamesAsync()
         {
             List<GameModel> games = await _dbContext.Games
@@ -84,7 +78,6 @@ namespace LudoVault.Repositories
             .ToListAsync();
             return games;
         }
-
         public async Task<bool> DeletarGameAsync(int id)
         {
             var currentGame = await BuscarGamePorIdAsync(id);
@@ -95,6 +88,7 @@ namespace LudoVault.Repositories
             return true;
         }
 
+        // Avaliações de Jogo
         public async Task<List<GameRatingModel>> BuscarAvaliacoesDoJogoAsync(int id)
         {
             List<GameRatingModel> gameRatings = await _dbContext.GameRatings
