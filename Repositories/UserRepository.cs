@@ -1,8 +1,6 @@
-﻿using BCrypt.Net;
-using LudoVault.Data;
+﻿using LudoVault.Data;
 using LudoVault.Model;
 using LudoVault.Repositories.Interfaces;
-using LudoVault.Services.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace LudoVault.Repositories
@@ -125,6 +123,49 @@ namespace LudoVault.Repositories
 
             _dbContext.UserListsItems.Remove(gameToDelete);
             await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        //Biblioteca de Usuário
+        public async Task<bool> AdicionarJogoABibliotecaAsync(UserLibraryModel userLibraryGame)
+        {
+            await _dbContext.UserLibrary
+                .AddAsync(userLibraryGame);
+
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+            
+        }
+        public async Task<List<UserLibraryModel>> BuscarJogosDaBiblioteca(int id)
+        {
+            var jogosLibrary = await _dbContext.UserLibrary
+                .Include(ul => ul.Game)
+                    .ThenInclude(g => g.Publisher)
+                .Include(ul => ul.User)
+                .Where(ul => ul.UserId == id)
+                .ToListAsync();
+
+            return jogosLibrary;
+        }
+        public async Task<bool> RemoverJogoDaBiblioteca(int libraryId)
+        {
+            var userLibrary = await _dbContext.UserLibrary.FindAsync(libraryId);
+            if (userLibrary == null)
+                throw new ArgumentException("Error ao encontrar na biblioteca");
+
+            _dbContext.UserLibrary.Remove(userLibrary);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+        public async Task<bool> ExisteJogoNaBiblioteca(int userId, int gameId)
+        {
+            var exist = await _dbContext.UserLibrary
+                .FirstOrDefaultAsync(ul => ul.UserId == userId && ul.GameId == gameId);
+
+            if (exist == null) return false;
 
             return true;
         }

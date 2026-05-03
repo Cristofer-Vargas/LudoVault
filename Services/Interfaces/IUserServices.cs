@@ -1,6 +1,6 @@
 ﻿using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
-using LudoVault.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LudoVault.Services.Interfaces
 {
@@ -19,6 +19,11 @@ namespace LudoVault.Services.Interfaces
         public Task<UserListResponse> BuscarUserListsAsync(int id);
         public Task<bool> DeletarUserListAsync(int userId, int listId);
         public Task<bool> DeletarGameInUserListAsync(int userId, int listId, int gameId);
+
+        // Biblioteca de Usuário
+        public Task<bool> AdicionarJogoABibliotecaAsync(UserLibraryRequest userLibrary);
+        public Task<List<UserLibraryGameResponse>> BuscarJogosDaBiblioteca(int id);
+        public Task<bool> RemoverJogoDaBiblioteca(int libraryId);
 
         // Avaliações de Usuários
         public Task<UserRatingListGamesResponse> BuscarUserRatingsAsync(int id);

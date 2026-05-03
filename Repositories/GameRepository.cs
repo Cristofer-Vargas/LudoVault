@@ -87,6 +87,14 @@ namespace LudoVault.Repositories
 
             return true;
         }
+        public async Task<bool> GameExisteAsync(int gameId)
+        {
+            var gameExist = await _dbContext.Games
+                .FirstOrDefaultAsync(g => g.Id == gameId);
+
+            if (gameExist == null) return false;
+            return true;
+        }
 
         // Avaliações de Jogo
         public async Task<List<GameRatingModel>> BuscarAvaliacoesDoJogoAsync(int id)

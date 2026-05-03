@@ -155,5 +155,54 @@ namespace LudoVault.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        // Biblioteca de Usuário
+        [HttpGet("{userId}/library")]
+        public async Task<IActionResult> BuscarBibliotecadeUser(int userId)
+        {
+            try
+            {
+                var userLibrary = await _userServices.BuscarJogosDaBiblioteca(userId);
+                return Ok(userLibrary);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("library")]
+        public async Task<IActionResult> AdicionarJogoABiblioteca([FromBody]UserLibraryRequest userLibrary)
+        {
+            try
+            {
+                await _userServices.AdicionarJogoABibliotecaAsync(userLibrary);
+                return Ok("Adicionado com Sucesso!");
+                                
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{userId}/library/{libraryId}")]
+        public async Task<IActionResult> RemoverJogoDaBiblioteca(int userId, int libraryId)
+        {
+            try
+            {
+                await _userServices.BuscarUsuarioPorIdAsync(userId);
+                await _userServices.RemoverJogoDaBiblioteca(libraryId);
+
+                return Ok("Removido com sucesso!");
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿﻿using LudoVault.Model;
-using LudoVault.Services.Requests;
 
 namespace LudoVault.Repositories.Interfaces
 {
@@ -22,6 +21,12 @@ namespace LudoVault.Repositories.Interfaces
         public Task<bool> JogoExisteNaListaAsync(int gameId, int listId);
         public Task<bool> DeletarUserListAsync(int listId);
         public Task<bool> RemoverJogoDaListaAsync(int listId, int gameId);
+
+        // Biblioteca de Usuário
+        public Task<bool> AdicionarJogoABibliotecaAsync(UserLibraryModel userListGame);
+        public Task<List<UserLibraryModel>> BuscarJogosDaBiblioteca(int id);
+        public Task<bool> RemoverJogoDaBiblioteca(int libraryId);
+        public Task<bool> ExisteJogoNaBiblioteca(int userId, int gameId);
 
         // Avalaiações de Usuário
         public Task<List<GameRatingModel>> BuscarAvaliacoesDoUsuarioAsync(int userId);

@@ -1,14 +1,16 @@
 ﻿using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
+using LudoVault.Model;
 using LudoVault.Repositories.Interfaces;
 using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
 
 namespace LudoVault.Services
 {
-    public class UserServices(IUserRepository userRepo, ISecurityService securityService) : IUserServices
+    public class UserServices(IUserRepository userRepo, ISecurityService securityService, IGameRepository gameRepo) : IUserServices
     {
         private readonly IUserRepository _userRepository = userRepo;
+        private readonly IGameRepository _gameRepository = gameRepo;
         private readonly ISecurityService _securityService = securityService;
 
         // Usuário
@@ -24,8 +26,8 @@ namespace LudoVault.Services
         {
             var userExisted = await _userRepository.BuscarUsuarioPorIdAsync(id);
 
-            userExisted.Name = user.Name;
-            userExisted.Email = user.Email;
+            userExisted.Name = user.Name ?? "";
+            userExisted.Email = user.Email ?? "";
             userExisted.PasswordHash = await _securityService.EncryptPassword(user.PasswordHash);
             userExisted.Bio = user.Bio;
 
@@ -95,6 +97,9 @@ namespace LudoVault.Services
             await _userRepository.BuscarUsuarioPorIdAsync(userId);
             var userListGameModel = UserListMapper.ToUserListGameModel(userGameList, userGameList.ListId);
 
+            if (!await _gameRepository.GameExisteAsync(userGameList.GameId))
+                throw new ArgumentException("Não foi possivel encontrar esse jogo.");
+
             var gameExistInThisList = await _userRepository.JogoExisteNaListaAsync(userGameList.GameId, userGameList.ListId);
             if (gameExistInThisList) 
                 throw new ArgumentException("Esse jogo ja foi adicionado!");
@@ -126,6 +131,42 @@ namespace LudoVault.Services
             }
 
             return false;
+        }
+
+        // Biblioteca de Usuário
+        public async Task<bool> AdicionarJogoABibliotecaAsync(UserLibraryRequest userLibrary)
+        {
+            var userLibraryModel = UserLibraryMapper.ToModel(userLibrary);
+
+            if (!await _gameRepository.GameExisteAsync(userLibrary.GameId))
+                throw new ArgumentException("Não foi possivel encontrar esse jogo.");
+
+            var gameExist = await _userRepository.ExisteJogoNaBiblioteca(userLibrary.UserId, userLibrary.GameId);
+            if (!gameExist)
+            {
+                var IsAdded = await _userRepository.AdicionarJogoABibliotecaAsync(userLibraryModel);
+                if (IsAdded)
+                    return true;
+
+                throw new ArgumentException("Não foi possivel adicionar a biblioteca.");
+            } else
+            {
+                throw new ArgumentException("Esse jogo ja foi adicionado a biblioteca.");
+            }
+        }
+        public async Task<List<UserLibraryGameResponse>> BuscarJogosDaBiblioteca(int id)
+        {
+            var libraryGames = await _userRepository.BuscarJogosDaBiblioteca(id);
+
+            var libraryGamesResponse = libraryGames
+                .Select(lg => UserLibraryMapper.ToGameResponse(lg))
+                .ToList();
+
+            return libraryGamesResponse;
+        }
+        public async Task<bool> RemoverJogoDaBiblioteca(int libraryId)
+        {
+            return await _userRepository.RemoverJogoDaBiblioteca(libraryId);
         }
 
         // Avaliações de Usuário

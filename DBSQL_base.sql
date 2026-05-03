@@ -108,35 +108,36 @@ CREATE TABLE user_list_items (
     REFERENCES game(id)
 );
 
+
 CREATE TABLE user_library (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(60) NOT NULL,
     user_id INT NOT NULL,
-    
-    CONSTRAINT fk_user_library_user
-    FOREIGN KEY(user_id)
-    REFERENCES user(id)
-);
-
-CREATE TABLE user_library_game (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    list_id INT NOT NULL,
     game_id INT NOT NULL,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
 	CONSTRAINT fk_user_library_library
-    FOREIGN KEY(list_id)
-    REFERENCES user_library(id),
+    FOREIGN KEY(user_id)
+    REFERENCES user(id),
     CONSTRAINT fk_user_library_game
     FOREIGN KEY(game_id)
     REFERENCES game(id)
 );
 
-
 USE LudoVault;
 
 # ==========================================================================================================================================
 
+# --- Total de Jogos por usuário
+SELECT 
+    u.id, 
+    u.name, 
+    COUNT(uli.game_id) AS total_jogos
+FROM user u
+LEFT JOIN user_list ul ON u.id = ul.user_id
+LEFT JOIN user_list_items uli ON ul.id = uli.list_id
+GROUP BY u.id, u.name;
+
+# ---
 SELECT * FROM game_rating;
 
 INSERT INTO game_rating (rating, game_id, user_id, comment) VALUES 
@@ -220,8 +221,8 @@ VALUES ("Genshin Impact", "wwwroot/uploads/games/caminhoimagem.jpg", "Joguinho G
 INSERT INTO game (name, image_url, description, publisher_id) 
 VALUES ("Minecraft", "wwwroot/uploads/games/caminhoimagem.jpg", "Jogo Quadrado", 7);
 
-#---
-SELECT * FROM user_list_items WHERE list_id = 18;
+# ---
+SELECT * FROM user_list WHERE user_id = 18;
 
 INSERT INTO user_list (name, user_id) VALUES("Meus Favoritos", 18);
 INSERT INTO user_list (name, user_id) VALUES("Meus Favoritos", 1);
@@ -229,3 +230,9 @@ INSERT INTO user_list_items (list_id, game_id) VALUES(1, 4);
 INSERT INTO user_list_items (list_id, game_id) VALUES(1, 7),(1, 3),(1, 6);
 INSERT INTO user_list (name, user_id) VALUES("Zerados", 1);
 INSERT INTO user_list_items (list_id, game_id) VALUES(2, 3), (2, 4), (2, 6);
+
+# ---
+SELECT * FROM user_library WHERE user_id = 1;
+
+INSERT INTO user_library(user_id, game_id) 
+VALUES(1, 3),(1, 4),(1, 5), (1, 6),(1, 7);
