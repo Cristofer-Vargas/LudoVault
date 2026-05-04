@@ -11,6 +11,8 @@ namespace LudoVault.Services.Interfaces
     public Task<List<GameResponse>> BuscarTodosGamesAsync();
     public Task<GameResponse> BuscarGamePorIdAsync(int id);
     public Task<bool> RemoverGameAsync(int id);
+    public Task<string> AdicionarImagemDeCapaAsync(IFormFile image, int gameId);
+    public Task<bool> RemoverImagemDeCapaAsync(int gameId);
 
     // Avaliações de Jogo
     public Task<GameRatingListUsersResponse> BuscarAvaliacoesPorJogoAsync(int id);

@@ -95,6 +95,15 @@ namespace LudoVault.Repositories
       if (gameExist == null) return false;
       return true;
     }
+    public async Task<bool> AtualizarCaminhoDeImagemEmGame(GameModel game)
+    {
+      _dbContext.Games
+        .Update(game);
+
+      await _dbContext.SaveChangesAsync();
+
+      return true;
+    }
 
     // Avaliações de Jogo
     public async Task<List<GameRatingModel>> BuscarAvaliacoesDoJogoAsync(int id)

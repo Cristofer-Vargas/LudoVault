@@ -6,10 +6,12 @@ using LudoVault.Services.Mapper;
 
 namespace LudoVault.Services
 {
-  public class GameServices(IGameRepository gameRepo, IPublisherRepository publisherRepo) : IGameServices
+  public class GameServices(IGameRepository gameRepo, IPublisherRepository publisherRepo, IImageServices imageServices, ISystemServices sistema) : IGameServices
   {
     private readonly IGameRepository _gameRepository = gameRepo;
     private readonly IPublisherRepository _publisherRepository = publisherRepo;
+    private readonly IImageServices _imageServices = imageServices;
+    private readonly ISystemServices _sistema = sistema;
 
     // Jogo
     public async Task<List<GameResponse>> BuscarTodosGamesAsync()
@@ -61,6 +63,25 @@ namespace LudoVault.Services
     public async Task<bool> RemoverGameAsync(int id)
     {
       await _gameRepository.DeletarGameAsync(id);
+      return true;
+    }
+    public async Task<string> AdicionarImagemDeCapaAsync(IFormFile image, int gameId)
+    {
+      var game = await _gameRepository.BuscarGamePorIdAsync(gameId);
+
+      var caminhoImg = await _imageServices.ConverteParaWebpESalvaImagem(image);
+      game.ImageUrl = caminhoImg;
+      await _gameRepository.AtualizarCaminhoDeImagemEmGame(game);
+
+      return caminhoImg;
+    }
+    public async Task<bool> RemoverImagemDeCapaAsync(int gameId)
+    {
+      var game = await _gameRepository.BuscarGamePorIdAsync(gameId);
+
+      game.ImageUrl = Path.Combine(_sistema.CaminhoAssetsRoot(), "uploads", "games", "default-image.webp");
+      await _gameRepository.AtualizarCaminhoDeImagemEmGame(game);
+
       return true;
     }
 

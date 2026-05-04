@@ -3,6 +3,7 @@ using LudoVault.Repositories;
 using LudoVault.Repositories.Interfaces;
 using LudoVault.Services;
 using LudoVault.Services.Interfaces;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,8 @@ builder.Services.AddScoped<ISecurityService, SecurityService>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<IGameServices, GameServices>();
 builder.Services.AddScoped<IPublisherServices, PublisherServices>();
+builder.Services.AddScoped<IImageServices, ImageServices>();
+builder.Services.AddScoped<ISystemServices, SystemServices>();
 
 // Repositórios
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -39,7 +42,7 @@ app.UseCors("AllowReactApp");
 
 // Configure the HTTP request pipeline.
 
-
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

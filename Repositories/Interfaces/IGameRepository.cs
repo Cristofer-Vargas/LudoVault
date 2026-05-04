@@ -11,6 +11,7 @@ namespace LudoVault.Repositories.Interfaces
     public Task<GameModel> AtualizarGameAsync(GameModel game, int id);
     public Task<bool> DeletarGameAsync(int id);
     public Task<bool> GameExisteAsync(int gameId);
+    public Task<bool> AtualizarCaminhoDeImagemEmGame(GameModel game);
 
     // Avaliações de Jogo
     public Task<List<GameRatingModel>> BuscarAvaliacoesDoJogoAsync(int id);

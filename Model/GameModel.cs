@@ -19,7 +19,7 @@ namespace LudoVault.Model
     [Required]
     [Column("image_url", TypeName = "varchar(255)")]
     [MaxLength(255)]
-    public string ImageUrl { get; set; } = "/caminhoImagem.jpg";
+    public string ImageUrl { get; set; } = "default-image.webp";
 
     [Column("description", TypeName = "text")]
     public string? Description { get; set; }

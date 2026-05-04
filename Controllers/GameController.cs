@@ -86,6 +86,21 @@ namespace LudoVault.Controllers
       }
     }
 
+    [HttpDelete("{gameId}/remove/profile/image")]
+    public async Task<IActionResult> RemoverImagemDeCapa(int gameId)
+    {
+      try
+      {
+        await _gameServices.RemoverImagemDeCapaAsync(gameId);
+        return Ok("Removido com sucesso!");
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(e.Message);
+      }
+    }
+
     // Avaliações de Jogo
     [HttpGet("{id}/ratings")]
     public async Task<IActionResult> BuscarRatingsDeGame(int id)
