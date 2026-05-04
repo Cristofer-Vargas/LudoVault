@@ -3,15 +3,15 @@ using LudoVault.Model;
 
 namespace LudoVault.Services.Mapper
 {
-    public static class PlatformMapper
+  public static class PlatformMapper
+  {
+    public static PlatformResponse ToResponse(PlatformModel platform)
     {
-        public static PlatformResponse ToResponse(PlatformModel platform)
-        {
-            return new PlatformResponse()
-            {
-                Id = platform.Id,
-                Name = platform.Name
-            };
-        }
+      return new PlatformResponse()
+      {
+        Id = platform.Id,
+        Name = platform.Name
+      };
     }
+  }
 }

@@ -8,13 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp",
-        policy =>
-        {
+  options.AddPolicy("AllowReactApp",
+          policy =>
+          {
             policy.WithOrigins("http://localhost:5173") // URL do seu React
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+          });
 });
 
 // Add services to the container.

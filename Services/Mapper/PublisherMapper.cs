@@ -4,24 +4,24 @@ using LudoVault.Model;
 
 namespace LudoVault.Services.Mapper
 {
-    public static class PublisherMapper
+  public static class PublisherMapper
+  {
+    public static PublisherModel ToModel(PublisherRequest publisherRequest)
     {
-        public static PublisherModel ToModel(PublisherRequest publisherRequest)
-        {
-            return new PublisherModel()
-            {
-                Name = publisherRequest.Name
-            };
-        }
-
-        public static PublisherResponse ToResponse(PublisherModel publisherModel, List<GameResponse> games)
-        {
-            return new PublisherResponse()
-            {
-                Id = publisherModel.Id,
-                Name = publisherModel.Name,
-                Games = games
-            };
-        }
+      return new PublisherModel()
+      {
+        Name = publisherRequest.Name
+      };
     }
+
+    public static PublisherResponse ToResponse(PublisherModel publisherModel, List<GameResponse> games)
+    {
+      return new PublisherResponse()
+      {
+        Id = publisherModel.Id,
+        Name = publisherModel.Name,
+        Games = games
+      };
+    }
+  }
 }

@@ -1,4 +1,11 @@
-﻿[*.cs]
+﻿[**]
+indent_style = space
+indent_size = 2
+
+[*.cs]
 
 # CS8602: Desreferência de uma referência possivelmente nula.
 dotnet_diagnostic.CS8602.severity = suggestion
+
+# CS8601: Possível atribuição de referência nula.
+dotnet_diagnostic.CS8601.severity = suggestion
