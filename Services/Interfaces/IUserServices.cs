@@ -10,6 +10,8 @@ namespace LudoVault.Services.Interfaces
     public Task<UserResponse> AtualizarUsuarioAsync(UserRequest user, int id);
     public Task<UserResponse> BuscarUsuarioPorIdAsync(int id);
     public Task<bool> VerificarEmailEmUsoAsync(string email);
+    public Task<string> AdicionarImagemDePerfilAsync(IFormFile image, int userId);
+    public Task<string> RemoverImagemDePerfilAsync(int userId);
 
     // Listas de Usuário
     public Task<UserListListsResponse> CriarUserListAsync(UserListRequest userList);

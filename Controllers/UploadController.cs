@@ -28,10 +28,21 @@ namespace LudoVault.Controllers
       return BadRequest("Não é possível salvar arquivo diferente de imagem!");
     }
 
-    [HttpPost("user/profile/image")]
-    public async Task<IActionResult> AdicionarImagemDePerfilUsuario([FromForm] ICollection<IFormFile> file)
+    [HttpPost("user/{userId}/profile/image")]
+    public async Task<IActionResult> AdicionarImagemDePerfilUsuario([FromForm] List<IFormFile> image, [FromRoute] int userId)
     {
-      throw new NotImplementedException();
+      if (image == null) return BadRequest("Nenhum arquivo enviado!");
+      if (image.Count > 1) return BadRequest("É aceito apenas um arquivo!");
+
+      var file = image.FirstOrDefault();
+      var type = file.ContentType.Split("/").FirstOrDefault();
+
+      if (type == "image")
+      {
+        return Ok(await _userServices.AdicionarImagemDePerfilAsync(file, userId));
+      }
+
+      return BadRequest("Não é possível salvar arquivo diferente de imagem!");
     }
   }
 }

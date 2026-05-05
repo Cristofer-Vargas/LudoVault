@@ -9,6 +9,7 @@ namespace LudoVault.Repositories.Interfaces
     public Task<UserModel> AtualizarUsuarioAsync(UserModel user, int id);
     public Task<UserModel> BuscarUsuarioPorIdAsync(int id);
     public Task<bool> VerificarEmailExistenteAsync(string email);
+    public Task<bool> AtualizarImagemDePerfilAsync(UserModel user);
 
     // Listas de Usuário
     public Task<UserListModel> CriarUserListAsync(UserListModel userList);

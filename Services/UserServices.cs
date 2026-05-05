@@ -6,11 +6,14 @@ using LudoVault.Services.Mapper;
 
 namespace LudoVault.Services
 {
-  public class UserServices(IUserRepository userRepo, ISecurityService securityService, IGameRepository gameRepo) : IUserServices
+  public class UserServices(IUserRepository userRepo, ISecurityService securityService, 
+    IGameRepository gameRepo, IImageServices imageServices, ISystemServices sistema) : IUserServices
   {
     private readonly IUserRepository _userRepository = userRepo;
     private readonly IGameRepository _gameRepository = gameRepo;
     private readonly ISecurityService _securityService = securityService;
+    private readonly IImageServices _imageServices = imageServices;
+    private readonly ISystemServices _sistema = sistema;
 
     // Usuário
     public async Task<UserResponse> CriarUsuarioAsync(UserRequest user)
@@ -43,6 +46,26 @@ namespace LudoVault.Services
       bool emailJaExiste = await _userRepository.VerificarEmailExistenteAsync(email);
       if (emailJaExiste) return true;
       return false;
+    }
+    public async Task<string> AdicionarImagemDePerfilAsync(IFormFile image, int userId)
+    {
+      var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
+
+      var caminho = await _imageServices.ConverteParaWebpESalvaImagem(image, "users");
+      user.AvatarUrl = caminho;
+      await _userRepository.AtualizarImagemDePerfilAsync(user);
+      return caminho;
+    }
+    public async Task<string> RemoverImagemDePerfilAsync(int userId)
+    {
+      var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
+
+      if ( ! _imageServices.ExcluirImagemAsset(user.AvatarUrl ?? "")) 
+        throw new ArgumentException("Não foi possivel excluir essa imagem!");
+
+      user.AvatarUrl = Path.Combine(_sistema.CaminhoAssetsRoot(), "uploads", "users", "default-image.webp");
+      await _userRepository.AtualizarImagemDePerfilAsync(user);
+      return user.AvatarUrl;
     }
 
 

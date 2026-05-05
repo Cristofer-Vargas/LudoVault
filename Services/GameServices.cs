@@ -69,7 +69,7 @@ namespace LudoVault.Services
     {
       var game = await _gameRepository.BuscarGamePorIdAsync(gameId);
 
-      var caminhoImg = await _imageServices.ConverteParaWebpESalvaImagem(image);
+      var caminhoImg = await _imageServices.ConverteParaWebpESalvaImagem(image, "games");
       game.ImageUrl = caminhoImg;
       await _gameRepository.AtualizarCaminhoDeImagemEmGame(game);
 
@@ -78,6 +78,9 @@ namespace LudoVault.Services
     public async Task<bool> RemoverImagemDeCapaAsync(int gameId)
     {
       var game = await _gameRepository.BuscarGamePorIdAsync(gameId);
+
+      if (!_imageServices.ExcluirImagemAsset(game.ImageUrl ?? ""))
+        throw new ArgumentException("Não foi possivel excluir essa imagem!");
 
       game.ImageUrl = Path.Combine(_sistema.CaminhoAssetsRoot(), "uploads", "games", "default-image.webp");
       await _gameRepository.AtualizarCaminhoDeImagemEmGame(game);

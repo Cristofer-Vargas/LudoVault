@@ -1,5 +1,6 @@
 using LudoVault.DTO.Requests;
 using LudoVault.Services.Interfaces;
+using LudoVault.Services.Validations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LudoVault.Controllers
@@ -38,6 +39,21 @@ namespace LudoVault.Controllers
       catch (Exception e)
       {
         return BadRequest($"Erro: {e.Message}");
+      }
+    }
+
+    [HttpDelete("{userId}/remove/profile/image")]
+    public async Task<IActionResult> RemoverImagemDePerfil(int userId)
+    {
+      try
+      {
+        await _userServices.RemoverImagemDePerfilAsync(userId);
+        return Ok("Removido com sucesso!");
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(e.Message);
       }
     }
 

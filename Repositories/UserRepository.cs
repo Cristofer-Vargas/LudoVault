@@ -34,6 +34,13 @@ namespace LudoVault.Repositories
     {
       return await _dbContext.Users.AnyAsync(u => u.Email == email);
     }
+    public async Task<bool> AtualizarImagemDePerfilAsync(UserModel user)
+    {
+      _dbContext.Users
+        .Update(user);
+      await _dbContext.SaveChangesAsync();
+      return true;
+    }
 
     // Listas de Usuário
     public async Task<UserListModel> CriarUserListAsync(UserListModel userList)

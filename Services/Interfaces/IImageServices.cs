@@ -2,6 +2,7 @@
 {
   public interface IImageServices
   {
-    public Task<string> ConverteParaWebpESalvaImagem(IFormFile imagem);
+    public Task<string> ConverteParaWebpESalvaImagem(IFormFile imagem, string finalPath);
+    public bool ExcluirImagemAsset(string filePath);
   }
 }
