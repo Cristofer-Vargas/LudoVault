@@ -2,7 +2,7 @@
 {
   public class UserRatingListGamesResponse
   {
-    public List<UserRatingGameResponse> GamesRatings { get; set; } = [];
-    public int? TotalRatings { get; set; }
+    public List<UserRatingGameResponse> Ratings { get; set; } = [];
+    public int TotalRatings { get; set; }
   }
 }

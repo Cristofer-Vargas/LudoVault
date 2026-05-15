@@ -10,47 +10,51 @@ namespace LudoVault.Repositories
     public readonly MysqlContext _dbContext = dbContext;
 
     // Jogo
-    public async Task<GameModel> CriarGameAsync(GameModel game)
+    public async Task<GameModel>? CriarGameAsync(GameModel game)
     {
-      // Salva o Game para gerar o ID
       await _dbContext.AddAsync(game);
       await _dbContext.SaveChangesAsync();
 
       foreach (var platform in game.GamePlatforms) { platform.GameId = game.Id; } // Para cada plataforma, e genero
       foreach (var genre in game.GameGenres) { genre.GameId = game.Id; }          // adiciona o ID do game para preencher no banco
 
-      // Adiciona explicitamente ao contexto
       if (game.GamePlatforms.Count > 0) { _dbContext.GamePlatforms.UpdateRange(game.GamePlatforms); }
       if (game.GameGenres.Count > 0) { _dbContext.GameGenres.UpdateRange(game.GameGenres); }
 
       await _dbContext.SaveChangesAsync();
 
-      return await BuscarGamePorIdAsync(game.Id) ?? throw new Exception("Erro ao recuperar o Jogo recém criado!");
+      return await BuscarGamePorIdAsync(game.Id);
     }
-    public async Task<GameModel> AtualizarGameAsync(GameModel game, int id)
+    public async Task<GameModel>? AtualizarGameAsync(GameModel game)
     {
-      var currentGame = await BuscarGamePorIdAsync(id);
+      // Deleta os GamePlatforms e GameGenres ANTIGOS pelo GameId
+      var oldPlatforms = await _dbContext.GamePlatforms
+          .Where(gp => gp.GameId == game.Id)
+          .ToListAsync();
+      _dbContext.GamePlatforms.RemoveRange(oldPlatforms);
 
-      currentGame.Name = game.Name;
-      currentGame.Description = game.Description;
-      currentGame.ImageUrl = game.ImageUrl;
-      currentGame.PublisherId = game.PublisherId;
-      currentGame.Publisher = game.Publisher;
+      var oldGenres = await _dbContext.GameGenres
+          .Where(gg => gg.GameId == game.Id)
+          .ToListAsync();
+      _dbContext.GameGenres.RemoveRange(oldGenres);
 
-      // Remove Relações para limpar tabela intermediaria
-      _dbContext.GamePlatforms.RemoveRange(currentGame.GamePlatforms);
-      _dbContext.GameGenres.RemoveRange(currentGame.GameGenres);
+      // Preenche os IDs das NOVAS relações
+      foreach (var platform in game.GamePlatforms)
+        platform.GameId = game.Id;
+      foreach (var genre in game.GameGenres)
+        genre.GameId = game.Id;
 
-      // Adiciona relações
-      currentGame.GamePlatforms = game.GamePlatforms;
-      currentGame.GameGenres = game.GameGenres;
+      // Atualiza o Game e adiciona as novas relações
+      _dbContext.Games.Update(game);
+      if (game.GamePlatforms.Count > 0)
+        _dbContext.GamePlatforms.AddRange(game.GamePlatforms);
+      if (game.GameGenres.Count > 0)
+        _dbContext.GameGenres.AddRange(game.GameGenres);
 
-      _dbContext.Games.Update(currentGame);
       await _dbContext.SaveChangesAsync();
-
-      return currentGame;
+      return await BuscarGamePorIdAsync(game.Id);
     }
-    public async Task<GameModel> BuscarGamePorIdAsync(int id)
+    public async Task<GameModel>? BuscarGamePorIdAsync(int id)
     {
       var game = await _dbContext.Games
       .Where(g => g.Id == id)
@@ -61,9 +65,6 @@ namespace LudoVault.Repositories
               .ThenInclude(gg => gg.Genre)
       .AsSplitQuery()
       .FirstOrDefaultAsync(g => g.Id == id);
-
-      if (game == null)
-        throw new ArgumentException("Nenhum Jogo encontrado!");
 
       return game;
     }
@@ -106,9 +107,9 @@ namespace LudoVault.Repositories
     }
 
     // Avaliações de Jogo
-    public async Task<List<GameRatingModel>> BuscarAvaliacoesDoJogoAsync(int id)
+    public async Task<List<RatingModel>> BuscarAvaliacoesDoJogoAsync(int id)
     {
-      List<GameRatingModel> gameRatings = await _dbContext.GameRatings
+      List<RatingModel> gameRatings = await _dbContext.Ratings
               .Include(gr => gr.Game)
               .Where(gr => gr.GameId == id)
               .Include(gr => gr.User)

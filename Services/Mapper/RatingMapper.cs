@@ -1,13 +1,27 @@
-﻿using LudoVault.DTO.Responses;
+﻿using LudoVault.DTO.Requests;
+using LudoVault.DTO.Responses;
 using LudoVault.Model;
 
 namespace LudoVault.Services.Mapper
 {
-  public static class GameRatingMapper
+  public static class RatingMapper
   {
-    public static GameRatingUserResponse ToGameUserResponse(GameRatingModel userRating)
+    public static RatingModel ToRatingModel(UserRatingRequest userRating, UserModel user, GameModel game)
     {
-      return new GameRatingUserResponse()
+      return new RatingModel
+      {
+        Rating = Math.Round(userRating.Rating, 1),
+        User = user,
+        UserId = user.Id,
+        Game = game,
+        GameId = game.Id,
+        Comment = userRating.Comment
+      };
+    }
+
+    public static RatingUserResponse ToGameUserResponse(RatingModel userRating)
+    {
+      return new RatingUserResponse()
       {
         Id = userRating.Id,
         Name = userRating.User.Name,
@@ -19,7 +33,7 @@ namespace LudoVault.Services.Mapper
       };
     }
 
-    public static UserRatingGameResponse ToUserGameResponse(GameRatingModel userRating)
+    public static UserRatingGameResponse ToUserGameResponse(RatingModel userRating)
     {
       return new UserRatingGameResponse
       {

@@ -13,18 +13,7 @@ namespace LudoVault.Controllers
     [HttpPost]
     public async Task<IActionResult> CreatUser([FromBody] UserRequest user)
     {
-      try
-      {
-        bool emailEmUso = await _userServices.VerificarEmailEmUsoAsync(user.Email);
-        if (emailEmUso) return BadRequest("Esse email ja esta cadastrado em nosso sistema!");
-
-        return Ok(await _userServices.CriarUsuarioAsync(user));
-
-      }
-      catch (Exception e)
-      {
-        return BadRequest($"Erro: {e.Message}");
-      }
+      return Ok(await _userServices.CriarUsuarioAsync(user));
     }
   }
 }

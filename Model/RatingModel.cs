@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LudoVault.Model
 {
-  [Table("game_rating")]
-  public class GameRatingModel
+  [Table("rating")]
+  public class RatingModel
   {
     [Key]
     [Column("id")]

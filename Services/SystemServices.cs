@@ -10,5 +10,15 @@ namespace LudoVault.Services
     {
       return _sistema.WebRootPath;
     }
+
+    public string CaminhoGameDefaultImage()
+    {
+      return Path.Combine(_sistema.WebRootPath, "uploads", "games", "default-image.webp");
+    }
+
+    public string CaminhoUserDefaultImage()
+    {
+      return Path.Combine(_sistema.WebRootPath, "uploads", "users", "default-image.webp");
+    }
   }
 }

@@ -10,13 +10,13 @@ namespace LudoVault.Repositories
     private readonly MysqlContext _dbContext = dbContext;
 
     // Desenvolvedora
-    public async Task<PublisherModel> CriarPublisherAsync(PublisherModel publisher)
+    public async Task<PublisherModel>? CriarPublisherAsync(PublisherModel publisher)
     {
       await _dbContext.Publishers.AddAsync(publisher);
       await _dbContext.SaveChangesAsync();
       return publisher;
     }
-    public async Task<PublisherModel> AtualizarPublisherAsync(PublisherModel publisher)
+    public async Task<PublisherModel>? AtualizarPublisherAsync(PublisherModel publisher)
     {
       var currentPublisher = await _dbContext.Publishers.FindAsync(publisher.Id);
       if (currentPublisher == null)
@@ -28,15 +28,11 @@ namespace LudoVault.Repositories
       await _dbContext.SaveChangesAsync();
       return currentPublisher;
     }
-    public async Task<PublisherModel> BuscarPublisherPorIdAsync(int id)
+    public async Task<PublisherModel>? BuscarPublisherPorIdAsync(int id)
     {
       var publisher = await _dbContext.Publishers
               .Include(p => p.Games)
               .FirstOrDefaultAsync(p => p.Id == id);
-
-      if (publisher == null)
-        throw new KeyNotFoundException($"Não foi encontrado a publisher especíofica!");
-
       return publisher;
     }
     public async Task<List<PublisherModel>> BuscarTodasPublishersAsync()

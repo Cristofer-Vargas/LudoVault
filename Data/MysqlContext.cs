@@ -14,7 +14,9 @@ namespace LudoVault.Data
     public DbSet<PlatformModel> Platforms { get; set; }
     public DbSet<GameGenreModel> GameGenres { get; set; }
     public DbSet<GenreModel> Genres { get; set; }
-    public DbSet<GameRatingModel> GameRatings { get; set; }
+
+    // Avaliações
+    public DbSet<RatingModel> Ratings { get; set; }
 
     // Usuário, Biblioteca e Listas <- Entidade e Associados
     public DbSet<UserModel> Users { get; set; }

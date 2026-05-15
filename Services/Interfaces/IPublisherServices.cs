@@ -1,15 +1,16 @@
 ﻿using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
+using LudoVault.Services.Validations.Base;
 
 namespace LudoVault.Services.Interfaces
 {
   public interface IPublisherServices
   {
     // Desenvolvedora
-    public Task<PublisherResponse> CriarPublisherAsync(PublisherRequest publisher);
-    public Task<PublisherResponse> AtualizarPublisherAsync(PublisherRequest publisher, int id);
-    public Task<List<PublisherResponse>> BuscarTodasPublishersAsync();
-    public Task<PublisherResponse> BuscarPublisherPorIdAsync(int id);
-    public Task<bool> ExcluirPublisherAsync(int id);
+    public Task<Response<PublisherResponse>> CriarPublisherAsync(PublisherRequest publisher);
+    public Task<Response<PublisherResponse>> AtualizarPublisherAsync(PublisherRequest publisher, int id);
+    public Task<Response<List<PublisherResponse>>> BuscarTodasPublishersAsync();
+    public Task<Response<PublisherResponse>> BuscarPublisherPorIdAsync(int id);
+    public Task<Response<string>> ExcluirPublisherAsync(int id);
   }
 }

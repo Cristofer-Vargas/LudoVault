@@ -15,213 +15,106 @@ namespace LudoVault.Controllers
     [HttpPut("{id}")]
     public async Task<IActionResult> AtualizarUsuario([FromBody] UserRequest user, int id)
     {
-      try
-      {
-        var u = await _userServices.AtualizarUsuarioAsync(user, id);
-        return Ok(u);
-
-      }
-      catch (Exception e)
-      {
-        return BadRequest($"Erro: {e.Message}");
-      }
+      return Ok(await _userServices.AtualizarUsuarioAsync(user, id));
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> BurcarUsuarioPorId(int id)
     {
-      try
-      {
-        var user = await _userServices.BuscarUsuarioPorIdAsync(id);
-        return Ok(user);
-
-      }
-      catch (Exception e)
-      {
-        return BadRequest($"Erro: {e.Message}");
-      }
+      return Ok(await _userServices.BuscarUsuarioPorIdAsync(id));
     }
 
     [HttpDelete("{userId}/remove/profile/image")]
     public async Task<IActionResult> RemoverImagemDePerfil(int userId)
     {
-      try
-      {
-        await _userServices.RemoverImagemDePerfilAsync(userId);
-        return Ok("Removido com sucesso!");
-      }
-      catch (Exception e)
-      {
+      return Ok(await _userServices.RemoverImagemDePerfilAsync(userId));
+    }
 
-        return BadRequest(e.Message);
-      }
+    [HttpDelete("{userId}/delete")]
+    public async Task<IActionResult> DeletarUsuario(int userId)
+    {
+      return Ok(await _userServices.DeletarUsuarioAsync(userId));
     }
 
     // Avaliaçãoes de Usuário
     [HttpGet("{id}/ratings")]
     public async Task<IActionResult> BuscarUserRatings(int id)
     {
-      try
-      {
-        var userRatings = await _userServices.BuscarUserRatingsAsync(id);
-        return Ok(userRatings);
+      return Ok(await _userServices.BuscarUserRatingsAsync(id));
+    }
 
-      }
-      catch (Exception e)
-      {
-        return BadRequest($"Erro: {e.Message}");
-      }
+    [HttpPost("{userId}/rating/game/{gameId}")]
+    public async Task<IActionResult> AdicionarUserRating([FromBody] UserRatingRequest userRatingRequest, [FromRoute] int userId, [FromRoute] int gameId)
+    {
+      return Ok(await _userServices.AdicionarUserRatingAsync(userRatingRequest, userId, gameId));
+    }
+
+    [HttpDelete("{userId}/rating/{ratingId}")]
+    public async Task<IActionResult> RemoverUserRating(int userId, int ratingId)
+    {
+      return Ok(await _userServices.RemoverRatingAsync(userId, ratingId));
+    }
+
+    [HttpPut("{userId}/rating/{ratingId}")]
+    public async Task<IActionResult> AtualizarUserRating([FromBody] UserRatingRequest userRatingRequest, [FromRoute] int userId, [FromRoute] int ratingId)
+    {
+      return Ok(await _userServices.AtualizarRatingAsync(userRatingRequest, userId, ratingId));
     }
 
     // Listas de Usuários
     [HttpGet("{id}/lists")]
     public async Task<IActionResult> BuscarUserLists(int id)
     {
-      try
-      {
-        var userLists = await _userServices.BuscarUserListsAsync(id);
-        return Ok(userLists);
-
-      }
-      catch (Exception e)
-      {
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.BuscarUserListsAsync(id));
     }
 
     [HttpPost("create/list")]
     public async Task<IActionResult> CreateUserList([FromBody] UserListRequest userList)
     {
-      try
-      {
-        var userLists = await _userServices.CriarUserListAsync(userList);
-        return Ok(userLists);
-
-      }
-      catch (Exception e)
-      {
-
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.CriarUserListAsync(userList));
     }
 
     [HttpPost("{userId}/list/game")]
     public async Task<IActionResult> AddGameInUserList([FromBody] UserListGameRequest game, int userId)
     {
-      try
-      {
-        var atualListWithGame = await _userServices.CriarGameInListAsync(game, userId);
-        return Ok(atualListWithGame);
-
-      }
-      catch (Exception e)
-      {
-
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.CriarGameInListAsync(game, userId));
     }
 
     [HttpPut("update/list/{listId}")]
     public async Task<IActionResult> AtualizarUserList([FromBody] UserListRequest userList, int listId)
     {
-      try
-      {
-        var userListUp = await _userServices.AtualizarUserListAsync(userList, listId);
-        return Ok(userListUp);
-
-      }
-      catch (Exception e)
-      {
-
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.AtualizarUserListAsync(userList, listId));
     }
 
     [HttpDelete("{userId}/list/{listId}/game/{gameId}")]
     public async Task<IActionResult> DeletarGameDeUserList(int userId, int listId, int gameId)
     {
-      try
-      {
-        if (await _userServices.DeletarGameInUserListAsync(userId, listId, gameId))
-        {
-          return Ok("Deletado com sucesso!");
-        }
-
-        throw new Exception("Não foi possivel deletar esse game!");
-      }
-      catch (Exception e)
-      {
-
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.DeletarGameInUserListAsync(userId, listId, gameId));
     }
 
     [HttpDelete("{userId}/list/{listId}")]
     public async Task<IActionResult> DeletarUserList(int userId, int listId)
     {
-      try
-      {
-        if (await _userServices.DeletarUserListAsync(userId, listId))
-        {
-          return Ok("Deletado com sucesso!");
-        }
-
-        throw new Exception("Não foi possivel deletar esse game!");
-      }
-      catch (Exception e)
-      {
-
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.DeletarUserListAsync(userId, listId));
     }
 
     // Biblioteca de Usuário
     [HttpGet("{userId}/library")]
     public async Task<IActionResult> BuscarBibliotecadeUser(int userId)
     {
-      try
-      {
-        var userLibrary = await _userServices.BuscarJogosDaBiblioteca(userId);
-        return Ok(userLibrary);
-      }
-      catch (Exception e)
-      {
-
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.BuscarJogosDaBibliotecaAsync(userId));
     }
 
     [HttpPost("library")]
     public async Task<IActionResult> AdicionarJogoABiblioteca([FromBody] UserLibraryRequest userLibrary)
     {
-      try
-      {
-        await _userServices.AdicionarJogoABibliotecaAsync(userLibrary);
-        return Ok("Adicionado com Sucesso!");
-
-      }
-      catch (Exception e)
-      {
-
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.AdicionarJogoABibliotecaAsync(userLibrary));
     }
 
     [HttpDelete("{userId}/library/{libraryId}")]
     public async Task<IActionResult> RemoverJogoDaBiblioteca(int userId, int libraryId)
     {
-      try
-      {
-        await _userServices.BuscarUsuarioPorIdAsync(userId);
-        await _userServices.RemoverJogoDaBiblioteca(libraryId);
-
-        return Ok("Removido com sucesso!");
-      }
-      catch (Exception e)
-      {
-
-        return BadRequest(e.Message);
-      }
+      return Ok(await _userServices.RemoverJogoDaBibliotecaAsync(userId, libraryId));
     }
   }
 }

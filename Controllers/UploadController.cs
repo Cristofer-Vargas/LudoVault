@@ -14,7 +14,7 @@ namespace LudoVault.Controllers
     [HttpPost("game/{gameId}/profile/image")]
     public async Task<IActionResult> AdicionarImagemAoGame([FromForm] List<IFormFile> image, [FromRoute] int gameId)
     {
-      if (image == null) return BadRequest("Nenhum arquivo enviado!");
+      if (image == null || image.Count == 0) return BadRequest("Nenhum arquivo enviado!");
       if (image.Count > 1) return BadRequest("É aceito apenas um arquivo!");
       
       var file = image.FirstOrDefault();
@@ -31,7 +31,7 @@ namespace LudoVault.Controllers
     [HttpPost("user/{userId}/profile/image")]
     public async Task<IActionResult> AdicionarImagemDePerfilUsuario([FromForm] List<IFormFile> image, [FromRoute] int userId)
     {
-      if (image == null) return BadRequest("Nenhum arquivo enviado!");
+      if (image == null || image.Count == 0) return BadRequest("Nenhum arquivo enviado!");
       if (image.Count > 1) return BadRequest("É aceito apenas um arquivo!");
 
       var file = image.FirstOrDefault();

@@ -24,7 +24,7 @@ namespace LudoVault.Model
 
     [Required]
     [Column("avatar_url", TypeName = "varchar(255")]
-    public string? AvatarUrl { get; set; }
+    public string AvatarUrl { get; set; } = "";
 
     [Column("bio", TypeName = "text")]
     public string? Bio { get; set; }
@@ -37,6 +37,6 @@ namespace LudoVault.Model
     [Column("created_at", TypeName = "timestamp")]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public List<GameRatingModel> GamesRating { get; set; } = [];
+    public List<RatingModel> GamesRating { get; set; } = [];
   }
 }

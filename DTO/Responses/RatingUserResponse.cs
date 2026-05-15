@@ -1,6 +1,6 @@
 ﻿namespace LudoVault.DTO.Responses
 {
-  public class GameRatingUserResponse
+  public class RatingUserResponse
   {
     public int Id { get; set; }
     public string? Name { get; set; }

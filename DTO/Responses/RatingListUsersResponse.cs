@@ -1,8 +1,8 @@
 ﻿namespace LudoVault.DTO.Responses
 {
-  public class GameRatingListUsersResponse
+  public class RatingListUsersResponse
   {
-    public List<GameRatingUserResponse> UsersRatings { get; set; } = [];
+    public List<RatingUserResponse> UsersRatings { get; set; } = [];
     public double? AvgRatings { get; set; }
     public int? TotalRatings { get; set; }
   }
