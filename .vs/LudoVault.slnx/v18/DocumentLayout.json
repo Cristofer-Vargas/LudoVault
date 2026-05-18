@@ -3,18 +3,6 @@
   "WorkspaceRootPath": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\uploadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\uploadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\publishercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\publishercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -43,51 +31,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UploadController.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UploadController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UploadController.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UploadController.cs",
-              "RelativeToolTip": "Controllers\\UploadController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T01:23:44.254Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PublisherController.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\PublisherController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PublisherController.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\PublisherController.cs",
-              "RelativeToolTip": "Controllers\\PublisherController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T01:23:39.437Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GameController.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\GameController.cs",
-              "RelativeDocumentMoniker": "Controllers\\GameController.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\GameController.cs",
-              "RelativeToolTip": "Controllers\\GameController.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAA9wCcAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-15T01:18:58.716Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
               "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UserController.cs",
               "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAAwAUAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAcwFcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-09T18:22:32.617Z",
               "EditorCaption": ""

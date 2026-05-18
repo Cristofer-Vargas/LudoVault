@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\uploadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\uploadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\services\\interfaces\\iuserservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:services\\interfaces\\iuserservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\publishercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\publishercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|c:\\cristofer\\programa\u00E7\u00E3o\\.net\\ludovault\\model\\ratingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{21FC9177-FFDB-76FE-1DC6-D76F10E25711}|LudoVault.csproj|solutionrelative:model\\ratingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 545,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,101 +42,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RatingModel.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Model\\RatingModel.cs",
-              "RelativeDocumentMoniker": "Model\\RatingModel.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Model\\RatingModel.cs",
-              "RelativeToolTip": "Model\\RatingModel.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-13T17:19:49.239Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Repositories\\UserRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\UserRepository.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Repositories\\UserRepository.cs",
-              "RelativeToolTip": "Repositories\\UserRepository.cs",
-              "ViewState": "AgIAANwAAAAAAAAAAAAwwOMAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-13T19:04:53.153Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UserServices.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\UserServices.cs",
-              "RelativeDocumentMoniker": "Services\\UserServices.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\UserServices.cs",
-              "RelativeToolTip": "Services\\UserServices.cs",
-              "ViewState": "AgIAADsCAAAAAAAAAAAkwE4CAABKAAAAAAAAAA==",
+              "Title": "UploadController.cs",
+              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UploadController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UploadController.cs",
+              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UploadController.cs",
+              "RelativeToolTip": "Controllers\\UploadController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T18:22:21.168Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UserController.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UserController.cs",
-              "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAwwDUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T18:22:32.617Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "c22a6ca3-2294-4464-af6b-ddb24d3fae3b",
-        "Display": 1,
-        "X": 291,
-        "Y": 523,
-        "Width": 958,
-        "Height": 797,
-        "WindowState": 0
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 1,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Repositories\\Interfaces\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Interfaces\\IUserRepository.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Repositories\\Interfaces\\IUserRepository.cs",
-              "RelativeToolTip": "Repositories\\Interfaces\\IUserRepository.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAYwCUAAABZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T18:22:26.537Z",
+              "WhenOpened": "2026-05-15T01:23:44.254Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "IUserServices.cs",
-              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Interfaces\\IUserServices.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\IUserServices.cs",
-              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Services\\Interfaces\\IUserServices.cs",
-              "RelativeToolTip": "Services\\Interfaces\\IUserServices.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAwwCIAAABPAAAAAAAAAA==",
+              "Title": "PublisherController.cs",
+              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\PublisherController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PublisherController.cs",
+              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\PublisherController.cs",
+              "RelativeToolTip": "Controllers\\PublisherController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-09T18:22:24.129Z",
+              "WhenOpened": "2026-05-15T01:23:39.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GameController.cs",
+              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\GameController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GameController.cs",
+              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\GameController.cs",
+              "RelativeToolTip": "Controllers\\GameController.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAA9wCcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-15T01:18:58.716Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserController.cs",
+              "ToolTip": "C:\\Cristofer\\Programa\u00E7\u00E3o\\.NET\\LudoVault\\Controllers\\UserController.cs",
+              "RelativeToolTip": "Controllers\\UserController.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAwAUAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T18:22:32.617Z",
               "EditorCaption": ""
             }
           ]
