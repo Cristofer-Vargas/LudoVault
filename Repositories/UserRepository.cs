@@ -44,7 +44,7 @@ namespace LudoVault.Repositories
       await _dbContext.SaveChangesAsync();
       return true;
     }
-    public async Task<bool> DeletarUsuarioAsync(UserModel user)
+    public async Task<bool> ExcluirUsuarioAsync(UserModel user)
     {
       await _dbContext.Users
         .Where(u => u.Id == user.Id)
@@ -54,7 +54,7 @@ namespace LudoVault.Repositories
     }
 
     // Listas de Usuário
-    public async Task<UserListModel>? CriarUserListAsync(UserListModel userList)
+    public async Task<UserListModel>? CriarListaAsync(UserListModel userList)
     {
       await _dbContext.UserLists.AddAsync(userList);
       await _dbContext.SaveChangesAsync();
@@ -63,7 +63,7 @@ namespace LudoVault.Repositories
               .AsNoTracking()
               .FirstOrDefaultAsync(ul => ul.Id == userList.Id);
     }
-    public async Task<UserListModel>? AtualizarUserListAsync(UserListModel userList, int userId, int listId)
+    public async Task<UserListModel>? AtualizarListaAsync(UserListModel userList, int userId, int listId)
     {
       var currentUserList = await _dbContext.UserLists.FindAsync(listId);
       if (currentUserList == null) return currentUserList;
@@ -98,11 +98,11 @@ namespace LudoVault.Repositories
     {
       return await _dbContext.UserLists.FindAsync(userListId);
     }
-    public async Task<UserListGameModel>? BuscarItemDaListaAsync(int userListGameId)
+    public async Task<UserListGameModel>? BuscarJogoDaListaAsync(int userListGameId)
     {
       return await _dbContext.UserListsItems.FindAsync(userListGameId);
     }
-    public async Task<List<UserListModel>> BuscarUserListsPorUsuarioAsync(int userId)
+    public async Task<List<UserListModel>> BuscarListasDeUsuarioAsync(int userId)
     {
       return await _dbContext.UserLists
               .AsNoTracking()
@@ -117,15 +117,15 @@ namespace LudoVault.Repositories
     {
       return await _dbContext.UserLists.AnyAsync(ul => ul.Name == name && ul.UserId == userId);
     }
-    public async Task<bool> ExisteUserListAsync(int listId, int userId)
+    public async Task<bool> ExisteListaAsync(int listId, int userId)
     {
       return await _dbContext.UserLists.AnyAsync(ul => ul.Id == listId && ul.UserId == userId);
     }
-    public async Task<bool> JogoExisteNaListaAsync(int gameId, int listId)
+    public async Task<bool> ExisteJogoNaListaAsync(int gameId, int listId)
     {
       return await _dbContext.UserListsItems.AnyAsync(uli => uli.GameId == gameId && uli.ListId == listId);
     }
-    public async Task<bool> DeletarUserListAsync(int listId)
+    public async Task<bool> ExcluirListaAsync(int listId)
     {
       var userListToDelete = await _dbContext.UserLists.FindAsync(listId);
       if (userListToDelete == null) return false;
@@ -148,7 +148,7 @@ namespace LudoVault.Repositories
     }
 
     //Biblioteca de Usuário
-    public async Task<bool> AdicionarJogoABibliotecaAsync(UserLibraryModel userLibraryGame)
+    public async Task<bool> AdicionarJogoNaBibliotecaAsync(UserLibraryModel userLibraryGame)
     {
       await _dbContext.UserLibrary
               .AddAsync(userLibraryGame);
@@ -200,7 +200,7 @@ namespace LudoVault.Repositories
               .AsSplitQuery()
               .ToListAsync();
     }
-    public async Task<List<RatingModel>> AdicionarUserRatingAsync(RatingModel rating)
+    public async Task<List<RatingModel>> AdicionarAvaliacaoAsync(RatingModel rating)
     {
       await _dbContext.Ratings.AddAsync(rating);
       await _dbContext.SaveChangesAsync();
@@ -212,7 +212,7 @@ namespace LudoVault.Repositories
         .AsSplitQuery()
         .ToListAsync();
     }
-    public async Task<RatingModel>? BuscarRatingPorUserEGameAsync(int userId, int gameId)
+    public async Task<RatingModel>? BuscarAvaliacaoPorUserEGameAsync(int userId, int gameId)
     {
       var rating = await _dbContext.Ratings
         .Where(r => r.UserId == userId && r.GameId == gameId)
@@ -220,7 +220,7 @@ namespace LudoVault.Repositories
 
       return rating;
     }
-    public async Task<RatingModel>? BuscarRatingPorIdAsync(int ratingId)
+    public async Task<RatingModel>? BuscarAvaliacaoPorIdAsync(int ratingId)
         {
           return await _dbContext.Ratings
             .Include(r => r.Game)
@@ -229,7 +229,7 @@ namespace LudoVault.Repositories
             .AsSplitQuery()
             .FirstOrDefaultAsync();
         }
-    public async Task<RatingModel> AtualizarRatingPorIdAsync(RatingModel rating, int ratingId)
+    public async Task<RatingModel> AtualizarAvaliacaoPorIdAsync(RatingModel rating, int ratingId)
         {
           var currentRating = await _dbContext.Ratings.FindAsync(ratingId);
           currentRating.Rating = rating.Rating;
@@ -245,7 +245,7 @@ namespace LudoVault.Repositories
             .AsSplitQuery()
             .FirstOrDefaultAsync();
         }
-    public async Task<bool> RemoverRatingAsync(RatingModel rating)
+    public async Task<bool> ExcluirAvaliacaoAsync(RatingModel rating)
     {
       _dbContext.Ratings.Remove(rating);
       await _dbContext.SaveChangesAsync();

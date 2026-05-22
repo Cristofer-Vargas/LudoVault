@@ -183,7 +183,7 @@ namespace LudoVault.Services
       return response;
     }
 
-    public async Task<Response<string>> DeletarUsuarioAsync(int userId)
+    public async Task<Response<string>> ExcluirUsuarioAsync(int userId)
     {
       var response = new Response<string>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
@@ -204,7 +204,7 @@ namespace LudoVault.Services
       }
       user.AvatarUrl = _sistema.CaminhoUserDefaultImage();
 
-      if (!await _userRepository.DeletarUsuarioAsync(user))
+      if (!await _userRepository.ExcluirUsuarioAsync(user))
       {
         _logger.LogError("Erro ao excluir usuario {UNAME} com ID {UID}", user.Name, user.Id);
         response.Report.Add(Report.Create("Erro ao excluir usuário."));
@@ -218,7 +218,7 @@ namespace LudoVault.Services
 
 
     // Listas de Usuário
-    public async Task<Response<UserListListsResponse>> CriarUserListAsync(UserListRequest userList)
+    public async Task<Response<UserListListsResponse>> CriarListaAsync(UserListRequest userList)
     {
       var response = new Response<UserListListsResponse>();
 
@@ -239,7 +239,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var userCreatedModel = await _userRepository.CriarUserListAsync(userListModel);
+      var userCreatedModel = await _userRepository.CriarListaAsync(userListModel);
       if (userCreatedModel == null)
       {
         response.Report.Add(Report.Create("Erro ao retornar lista recem criada!"));
@@ -250,7 +250,7 @@ namespace LudoVault.Services
       _logger.LogInformation("Lista {LNAME} criada por {UNAME} de ID {UID}.", userCreatedModel.Name, user.Name, user.Id);
       return Response.Ok(userRes);
     }
-    public async Task<Response<UserListResponse>> BuscarUserListsAsync(int id)
+    public async Task<Response<UserListResponse>> BuscarListasDeUsuarioAsync(int id)
     {
       var response = new Response<UserListResponse>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(id);
@@ -261,7 +261,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var userLists = await _userRepository.BuscarUserListsPorUsuarioAsync(id);
+      var userLists = await _userRepository.BuscarListasDeUsuarioAsync(id);
 
       var totalLists = userLists.Count;
 
@@ -275,7 +275,7 @@ namespace LudoVault.Services
       return Response.Ok(userListsResponse);
 
     }
-    public async Task<Response<UserListListsResponse>> AtualizarUserListAsync(UserListRequest userList, int listId)
+    public async Task<Response<UserListListsResponse>> AtualizarListaAsync(UserListRequest userList, int listId)
     {
       var response = new Response<UserListListsResponse>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userList.UserId);
@@ -301,13 +301,13 @@ namespace LudoVault.Services
         return response;
       }
 
-      var createdUserListModel = await _userRepository.AtualizarUserListAsync(userListModel, userList.UserId, listId);
+      var createdUserListModel = await _userRepository.AtualizarListaAsync(userListModel, userList.UserId, listId);
       var userListRes = UserListMapper.ToListGameResponse(createdUserListModel);
 
       _logger.LogInformation("Lista de {UID}:{UNAME} com list ID {LID} atualizada para {LNEWNAME}", user.Id, user.Name, list.Id, userList.Name); 
       return Response.Ok(userListRes);
     }
-    public async Task<Response<UserListListsResponse>> CriarGameInListAsync(UserListGameRequest userGameList, int userId)
+    public async Task<Response<UserListListsResponse>> AdicionarJogoAListaAsync(UserListGameRequest userGameList, int userId)
     {
       var response = new Response<UserListListsResponse>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
@@ -325,7 +325,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var gameExistInThisList = await _userRepository.JogoExisteNaListaAsync(userGameList.GameId, userGameList.ListId);
+      var gameExistInThisList = await _userRepository.ExisteJogoNaListaAsync(userGameList.GameId, userGameList.ListId);
       if (gameExistInThisList)
       {
         response.Report.Add(Report.Create("Esse jogo ja foi adicionado!"));
@@ -344,7 +344,7 @@ namespace LudoVault.Services
       _logger.LogInformation("Jogo {GID} adicionado em {LNAME} de {UNAME}.", userGameList.GameId, userListGame.Name, user.Name);
       return Response.Ok(userListRes);
     }
-    public async Task<Response<string>> DeletarUserListAsync(int userId, int listId)
+    public async Task<Response<string>> ExcluirListaAsync(int userId, int listId)
     {
       var response = new Response<string>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
@@ -354,19 +354,19 @@ namespace LudoVault.Services
         return response;
       }
 
-      var userListExist = await _userRepository.ExisteUserListAsync(listId, userId);
+      var userListExist = await _userRepository.ExisteListaAsync(listId, userId);
       if (!userListExist)
       {
         response.Data = "Erro ao excluir a lista.";
         return response;
       }
 
-      await _userRepository.DeletarUserListAsync(listId);
+      await _userRepository.ExcluirListaAsync(listId);
       response.Data = "Lista excluída com sucesso!";
       _logger.LogInformation("Lista {LID} excluida de {UNAME}.", listId, user.Name);
       return response;
     }
-    public async Task<Response<string>> DeletarGameInUserListAsync(int userId, int listId, int gameId)
+    public async Task<Response<string>> RemoverJogoDeListaAsync(int userId, int listId, int gameId)
     {
       var response = new Response<string>();
 
@@ -377,7 +377,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var gameExistInUserList = await _userRepository.JogoExisteNaListaAsync(gameId, listId);
+      var gameExistInUserList = await _userRepository.ExisteJogoNaListaAsync(gameId, listId);
       if (gameExistInUserList)
       {
         await _userRepository.RemoverJogoDaListaAsync(listId, gameId);
@@ -416,7 +416,7 @@ namespace LudoVault.Services
       }
 
       var userLibraryModel = UserLibraryMapper.ToModel(userLibrary);
-      var IsAdded = await _userRepository.AdicionarJogoABibliotecaAsync(userLibraryModel);
+      var IsAdded = await _userRepository.AdicionarJogoNaBibliotecaAsync(userLibraryModel);
       if (IsAdded)
       {
         _logger.LogInformation("Jogo {GID} adicionado a biblioteca de {UNAME}", userLibrary.GameId, user.Name);
@@ -468,7 +468,7 @@ namespace LudoVault.Services
     }
 
     // Avaliações de Usuário
-    public async Task<Response<UserRatingListGamesResponse>> BuscarUserRatingsAsync(int id)
+    public async Task<Response<UserRatingListGamesResponse>> BuscarAvaliacoesAsync(int id)
     {
       var response = new Response<UserRatingListGamesResponse>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(id);
@@ -492,7 +492,7 @@ namespace LudoVault.Services
       return Response.Ok(userRatingsResponse);
     }
 
-    public async Task<Response<UserRatingListGamesResponse>> AdicionarUserRatingAsync(UserRatingRequest userRating, int userId, int gameId)
+    public async Task<Response<UserRatingListGamesResponse>> AdicionarAvaliacaoAsync(UserRatingRequest userRating, int userId, int gameId)
     {
       var inputErrors = new List<Report>();
       var response = new Response<UserRatingListGamesResponse>(inputErrors);
@@ -520,14 +520,14 @@ namespace LudoVault.Services
         response.Report.Add(Report.Create("Usuário não encontrado!"));
         return response;
       }
-      if (await _userRepository.BuscarRatingPorUserEGameAsync(userId, gameId) != null)
+      if (await _userRepository.BuscarAvaliacaoPorUserEGameAsync(userId, gameId) != null)
       {
         response.Report.Add(Report.Create("Esse jogo ja foi avaliado!"));
         return response;
       }
 
       var userRatingModel = RatingMapper.ToRatingModel(userRating, user, game);
-      var userRatings = await _userRepository.AdicionarUserRatingAsync(userRatingModel);
+      var userRatings = await _userRepository.AdicionarAvaliacaoAsync(userRatingModel);
 
       var totalRatings = userRatings.Count;
 
@@ -542,11 +542,11 @@ namespace LudoVault.Services
       return Response.Ok(userRatingsResponse);
     }
 
-    public async Task<Response<UserRatingGameResponse>> BuscarRatingPorIdAsync(int ratingId)
+    public async Task<Response<UserRatingGameResponse>> BuscarAvaliacaoPorIdAsync(int ratingId)
     {
       var response = new Response<UserRatingGameResponse>();
 
-      var rating = await _userRepository.BuscarRatingPorIdAsync(ratingId);
+      var rating = await _userRepository.BuscarAvaliacaoPorIdAsync(ratingId);
       if (rating == null)
       {
         response.Report.Add(Report.Create("Erro ao encontrar avaliação.", 400));
@@ -556,7 +556,7 @@ namespace LudoVault.Services
       return response;
     }
 
-    public async Task<Response<UserRatingGameResponse>> AtualizarRatingAsync(UserRatingRequest userRating, int userId, int ratingId)
+    public async Task<Response<UserRatingGameResponse>> AtualizarAvaliacaoAsync(UserRatingRequest userRating, int userId, int ratingId)
     {
       var inputErrors = new List<Report>();
       var response = new Response<UserRatingGameResponse>(inputErrors);
@@ -578,7 +578,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var ratingExist = await _userRepository.BuscarRatingPorIdAsync(ratingId);
+      var ratingExist = await _userRepository.BuscarAvaliacaoPorIdAsync(ratingId);
       if (ratingExist == null)
       {
         response.Report.Add(Report.Create("Avaliação não encontrado."));
@@ -587,14 +587,14 @@ namespace LudoVault.Services
 
       var ratingModel = RatingMapper.ToRatingModel(userRating, user, ratingExist.Game);
 
-      var rating = await _userRepository.AtualizarRatingPorIdAsync(ratingModel, ratingId);
+      var rating = await _userRepository.AtualizarAvaliacaoPorIdAsync(ratingModel, ratingId);
 
       response.Data = RatingMapper.ToUserGameResponse(rating);
       _logger.LogInformation("Avaliação {RID} de jogo {GID} atualizada por {UNAME}", ratingId, ratingExist.GameId, user.Name);
       return response;
     }
 
-    public async Task<Response<string>> RemoverRatingAsync(int userId, int ratingId)
+    public async Task<Response<string>> ExcluirAvaliacaoAsync(int userId, int ratingId)
     {
       var response = new Response<string>();
 
@@ -605,14 +605,14 @@ namespace LudoVault.Services
         return response;
       }
 
-      var rating = await _userRepository.BuscarRatingPorIdAsync(ratingId);
+      var rating = await _userRepository.BuscarAvaliacaoPorIdAsync(ratingId);
       if (rating == null)
       {
         response.Report.Add(Report.Create("Avaliação não encontrada.", 400));
         return response;
       }
 
-      var removed = await _userRepository.RemoverRatingAsync(rating);
+      var removed = await _userRepository.ExcluirAvaliacaoAsync(rating);
       if (removed == false)
       {
         response.Report.Add(Report.Create("Erro ao excluir avaliação.", 500));

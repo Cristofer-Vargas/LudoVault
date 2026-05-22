@@ -32,69 +32,69 @@ namespace LudoVault.Controllers
     [HttpDelete("{userId}/delete")]
     public async Task<IActionResult> DeletarUsuario(int userId)
     {
-      return Ok(await _userServices.DeletarUsuarioAsync(userId));
+      return Ok(await _userServices.ExcluirUsuarioAsync(userId));
     }
 
     // Avaliaçãoes de Usuário
     [HttpGet("{id}/ratings")]
     public async Task<IActionResult> BuscarUserRatings(int id)
     {
-      return Ok(await _userServices.BuscarUserRatingsAsync(id));
+      return Ok(await _userServices.BuscarAvaliacoesAsync(id));
     }
 
     [HttpPost("{userId}/rating/game/{gameId}")]
     public async Task<IActionResult> AdicionarUserRating([FromBody] UserRatingRequest userRatingRequest, [FromRoute] int userId, [FromRoute] int gameId)
     {
-      return Ok(await _userServices.AdicionarUserRatingAsync(userRatingRequest, userId, gameId));
+      return Ok(await _userServices.AdicionarAvaliacaoAsync(userRatingRequest, userId, gameId));
     }
 
     [HttpDelete("{userId}/rating/{ratingId}")]
     public async Task<IActionResult> RemoverUserRating(int userId, int ratingId)
     {
-      return Ok(await _userServices.RemoverRatingAsync(userId, ratingId));
+      return Ok(await _userServices.ExcluirAvaliacaoAsync(userId, ratingId));
     }
 
     [HttpPut("{userId}/rating/{ratingId}")]
     public async Task<IActionResult> AtualizarUserRating([FromBody] UserRatingRequest userRatingRequest, [FromRoute] int userId, [FromRoute] int ratingId)
     {
-      return Ok(await _userServices.AtualizarRatingAsync(userRatingRequest, userId, ratingId));
+      return Ok(await _userServices.AtualizarAvaliacaoAsync(userRatingRequest, userId, ratingId));
     }
 
     // Listas de Usuários
     [HttpGet("{id}/lists")]
     public async Task<IActionResult> BuscarUserLists(int id)
     {
-      return Ok(await _userServices.BuscarUserListsAsync(id));
+      return Ok(await _userServices.BuscarListasDeUsuarioAsync(id));
     }
 
     [HttpPost("create/list")]
     public async Task<IActionResult> CreateUserList([FromBody] UserListRequest userList)
     {
-      return Ok(await _userServices.CriarUserListAsync(userList));
+      return Ok(await _userServices.CriarListaAsync(userList));
     }
 
     [HttpPost("{userId}/list/game")]
     public async Task<IActionResult> AddGameInUserList([FromBody] UserListGameRequest game, int userId)
     {
-      return Ok(await _userServices.CriarGameInListAsync(game, userId));
+      return Ok(await _userServices.AdicionarJogoAListaAsync(game, userId));
     }
 
     [HttpPut("update/list/{listId}")]
     public async Task<IActionResult> AtualizarUserList([FromBody] UserListRequest userList, int listId)
     {
-      return Ok(await _userServices.AtualizarUserListAsync(userList, listId));
+      return Ok(await _userServices.AtualizarListaAsync(userList, listId));
     }
 
     [HttpDelete("{userId}/list/{listId}/game/{gameId}")]
     public async Task<IActionResult> DeletarGameDeUserList(int userId, int listId, int gameId)
     {
-      return Ok(await _userServices.DeletarGameInUserListAsync(userId, listId, gameId));
+      return Ok(await _userServices.RemoverJogoDeListaAsync(userId, listId, gameId));
     }
 
     [HttpDelete("{userId}/list/{listId}")]
     public async Task<IActionResult> DeletarUserList(int userId, int listId)
     {
-      return Ok(await _userServices.DeletarUserListAsync(userId, listId));
+      return Ok(await _userServices.ExcluirListaAsync(userId, listId));
     }
 
     // Biblioteca de Usuário
