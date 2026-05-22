@@ -7,10 +7,10 @@ namespace LudoVault.Configurations
   {
     public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-      var connectionString = configuration["SQLConnection:MySqlConnection"];
+      var connectionString = configuration["MySqlConnection"];
       if (string.IsNullOrWhiteSpace(connectionString))
       {
-        throw new ArgumentException("String de conexão 'SQLConnection:MySqlConnection' não encontrada.");
+        throw new ArgumentException("String de conexão 'MySqlConnection' não encontrada.");
       }
 
       services.AddDbContext<MysqlContext>
