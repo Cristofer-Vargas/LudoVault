@@ -1,6 +1,5 @@
 ﻿using LudoVault.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Mime;
 
 namespace LudoVault.Controllers
 {
@@ -16,7 +15,7 @@ namespace LudoVault.Controllers
     {
       if (image == null || image.Count == 0) return BadRequest("Nenhum arquivo enviado!");
       if (image.Count > 1) return BadRequest("É aceito apenas um arquivo!");
-      
+
       var file = image.FirstOrDefault();
       var type = file.ContentType.Split("/").FirstOrDefault();
 

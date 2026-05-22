@@ -143,6 +143,7 @@ CREATE TABLE user_library (
 
 SELECT * FROM user;
 SELECT * FROM game;
+SELECT * FROM publisher;
 SELECT * FROM rating;
 SELECT * FROM user_library;
 SELECT * FROM user_list;

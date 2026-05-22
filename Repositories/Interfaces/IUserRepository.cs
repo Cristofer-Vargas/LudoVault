@@ -1,6 +1,4 @@
-﻿using LudoVault.DTO.Responses;
-using LudoVault.Model;
-using LudoVault.Services.Validations.Base;
+﻿using LudoVault.Model;
 
 namespace LudoVault.Repositories.Interfaces
 {
@@ -19,6 +17,7 @@ namespace LudoVault.Repositories.Interfaces
     public Task<UserListModel>? AtualizarUserListAsync(UserListModel userList, int userId, int listId);
     public Task<UserListModel>? AdicionarJogoAListaAsync(UserListGameModel userGameList);
     public Task<List<UserListModel>> BuscarUserListsPorUsuarioAsync(int userId);
+    public Task<UserListModel>? BuscarListaAsync(int userListId);
     public Task<UserListGameModel>? BuscarItemDaListaAsync(int userListGameId);
     public Task<bool> ExisteListaComMesmoNomeAsync(string name, int userId);
     public Task<bool> ExisteUserListAsync(int listId, int userId);

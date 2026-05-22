@@ -5,24 +5,24 @@ using SixLabors.ImageSharp.Processing;
 
 namespace LudoVault.Services
 {
-  public class ImageServices(ISystemServices sistema) : IImageServices
+  public class ImageServices(ISystemServices sistema, ILogger<ImageServices> logger) : IImageServices
   {
     private readonly ISystemServices _sistema = sistema;
+    private readonly ILogger<ImageServices> _logger = logger;
 
-    /// <summary>
-    /// Converte em Webp e salva arquivo de imagem em caminho root do sistemas com destino para games ou user informado pro usuário
-    /// </summary>
-    /// <returns>Retorna string do caminho com nome da imagem salva</returns>
     public async Task<string> ConverteParaWebpESalvaImagem(IFormFile imagem, string finalPath)
     {
       string caminhoGamePasta = Path.Combine(_sistema.CaminhoAssetsRoot(), "uploads", $"{finalPath}\\");
-      string caminhoCompleto = caminhoGamePasta + Guid.NewGuid().ToString() + ".webp";
+      string nomeArquivo = Guid.NewGuid().ToString() + ".webp";
+      string caminhoCompleto = caminhoGamePasta + nomeArquivo;
 
       if (imagem == null || imagem.Length == 0)
+      {
         return caminhoGamePasta + "default-image.webp";
+      }
 
       if (!Directory.Exists(caminhoGamePasta)) Directory.CreateDirectory(caminhoGamePasta);
-      
+
       using (var stream = imagem.OpenReadStream())
       {
         var img = await Image.LoadAsync(stream);
@@ -35,15 +35,20 @@ namespace LudoVault.Services
 
       }   // Carrega os Bytes de "imagem" da memória para "stream"
 
+      _logger.LogInformation("Imagem [{ImgName}] salva em: {ImgPath}", nomeArquivo, caminhoGamePasta);
       return caminhoCompleto;
-
     }
 
     public bool ExcluirImagemAsset(string filePath)
     {
-      if (!File.Exists(filePath) || filePath == null) return false;
+      if (!File.Exists(filePath) || filePath == null)
+      {
+        _logger.LogError("Erro ao excluir imagem no caminho: [{ImgPath}] -> Arquivo não existe ou caminho incorreto!", filePath);
+        return false;
+      }
 
       File.Delete(filePath);
+      _logger.LogInformation("Imagem excluída de: {ImgPath}", filePath);
       return true;
     }
   }

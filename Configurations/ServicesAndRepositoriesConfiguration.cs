@@ -10,7 +10,7 @@ namespace LudoVault.Configurations
     public static IServiceCollection AddServicesAndRepositories(this IServiceCollection services)
     {
       // Serviços
-      services.AddScoped<ISecurityService, SecurityService>();
+      services.AddScoped<ISecurityServices, SecurityServices>();
       services.AddScoped<IGameServices, GameServices>();
       services.AddScoped<IUserServices, UserServices>();
       services.AddScoped<IPublisherServices, PublisherServices>();

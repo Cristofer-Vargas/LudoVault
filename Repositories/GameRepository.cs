@@ -76,14 +76,13 @@ namespace LudoVault.Repositories
               .ThenInclude(gp => gp.Platform)
       .Include(g => g.GameGenres)
               .ThenInclude(gg => gg.Genre)
+      .AsSplitQuery()
       .ToListAsync();
       return games;
     }
-    public async Task<bool> DeletarGameAsync(int id)
+    public async Task<bool> DeletarGameAsync(GameModel game)
     {
-      var currentGame = await BuscarGamePorIdAsync(id);
-      if (currentGame == null) throw new ArgumentException("Nenhum Jogo encontrado!");
-      _dbContext.Games.Remove(currentGame);
+      _dbContext.Games.Remove(game);
       await _dbContext.SaveChangesAsync();
 
       return true;
@@ -113,6 +112,7 @@ namespace LudoVault.Repositories
               .Include(gr => gr.Game)
               .Where(gr => gr.GameId == id)
               .Include(gr => gr.User)
+              .AsSplitQuery()
               .ToListAsync();
 
       return gameRatings;

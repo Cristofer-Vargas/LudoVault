@@ -2,7 +2,7 @@
 
 namespace LudoVault.Services.Interfaces
 {
-  public interface ISecurityService
+  public interface ISecurityServices
   {
     // Comparar, Criar e verificar criptografia por BCrypt
     public Task<bool> ComparePassword(string pass, string confirmPass);

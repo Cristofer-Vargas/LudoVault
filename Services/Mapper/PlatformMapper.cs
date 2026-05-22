@@ -12,7 +12,7 @@ namespace LudoVault.Services.Mapper
         PlatformId = id
       };
     }
-    
+
     public static PlatformResponse ToResponse(PlatformModel platform)
     {
       return new PlatformResponse()

@@ -16,7 +16,7 @@ namespace LudoVault.Services.Interfaces
 
     // Listas de Usuário
     public Task<Response<UserListListsResponse>> CriarUserListAsync(UserListRequest userList);
-    public Task<Response<UserListListsResponse>> AtualizarUserListAsync(UserListRequest userList, int listId);
+    public Task<Response<UserListListsResponse>> AtualizarUserListAsync(UserListRequest listRequest, int listId);
     public Task<Response<UserListListsResponse>> CriarGameInListAsync(UserListGameRequest userGameList, int userId);
     public Task<Response<UserListResponse>> BuscarUserListsAsync(int id);
     public Task<Response<string>> DeletarUserListAsync(int userId, int listId);

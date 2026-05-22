@@ -3,17 +3,20 @@ using LudoVault.Services.Interfaces;
 
 namespace LudoVault.Services
 {
-  public class SecurityService : ISecurityService
+  public class SecurityServices(ILogger<SecurityServices> logger) : ISecurityServices
   {
+    private readonly ILogger<SecurityServices> _logger = logger;
+
     public async Task<bool> ComparePassword(string pass, string confirmPass)
     {
       var isEqual = pass.Trim().Equals(confirmPass.Trim());
-      return true;
+      return isEqual;
     }
 
     public async Task<string> EncryptPassword(string pass)
     {
-      var passHash = BCrypt.Net.BCrypt.HashPassword(pass);
+      var passHash = BCrypt.Net.BCrypt.HashPassword(pass, 12);
+      _logger.LogInformation("Senha criptografada.");
       return passHash;
     }
 

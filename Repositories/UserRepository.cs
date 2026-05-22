@@ -70,7 +70,7 @@ namespace LudoVault.Repositories
 
       userList.Id = currentUserList.Id;
       userList.CreatedAt = currentUserList.CreatedAt;
-      userList.UserId = userId;
+      userList.UserId = currentUserList.UserId;
 
       _dbContext.UserLists.Entry(currentUserList).CurrentValues.SetValues(userList);
       await _dbContext.SaveChangesAsync();
@@ -79,6 +79,7 @@ namespace LudoVault.Repositories
               .Include(ul => ul.ListItems)
                       .ThenInclude(lg => lg.Game)
                               .ThenInclude(g => g.Publisher)
+                              .AsSplitQuery()
               .FirstOrDefaultAsync(ul => ul.Id == listId);
     }
     public async Task<UserListModel>? AdicionarJogoAListaAsync(UserListGameModel userGameList)
@@ -90,7 +91,12 @@ namespace LudoVault.Repositories
               .Include(ul => ul.ListItems)
                       .ThenInclude(lg => lg.Game)
                               .ThenInclude(g => g.Publisher)
+                              .AsSplitQuery()
               .FirstOrDefaultAsync(ul => ul.Id == userGameList.ListId);
+    }
+    public async Task<UserListModel>? BuscarListaAsync(int userListId)
+    {
+      return await _dbContext.UserLists.FindAsync(userListId);
     }
     public async Task<UserListGameModel>? BuscarItemDaListaAsync(int userListGameId)
     {
@@ -159,6 +165,7 @@ namespace LudoVault.Repositories
                       .ThenInclude(g => g.Publisher)
               .Include(ul => ul.User)
               .Where(ul => ul.UserId == id)
+              .AsSplitQuery()
               .ToListAsync();
 
       return jogosLibrary;
@@ -190,6 +197,7 @@ namespace LudoVault.Repositories
               .Include(gr => gr.Game)
               .Include(gr => gr.User)
               .Where(gr => gr.UserId == userId)
+              .AsSplitQuery()
               .ToListAsync();
     }
     public async Task<List<RatingModel>> AdicionarUserRatingAsync(RatingModel rating)
@@ -201,9 +209,9 @@ namespace LudoVault.Repositories
         .Include(r => r.Game)
         .Include(r => r.User)
         .Where(r => r.UserId == rating.UserId)
+        .AsSplitQuery()
         .ToListAsync();
     }
-
     public async Task<RatingModel>? BuscarRatingPorUserEGameAsync(int userId, int gameId)
     {
       var rating = await _dbContext.Ratings
@@ -212,32 +220,31 @@ namespace LudoVault.Repositories
 
       return rating;
     }
-
     public async Task<RatingModel>? BuscarRatingPorIdAsync(int ratingId)
-    {
-      return await _dbContext.Ratings
-        .Include(r => r.Game)
-        .Include(r => r.User)
-        .Where(r => r.Id == ratingId)
-        .FirstOrDefaultAsync();
-    }
-
+        {
+          return await _dbContext.Ratings
+            .Include(r => r.Game)
+            .Include(r => r.User)
+            .Where(r => r.Id == ratingId)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync();
+        }
     public async Task<RatingModel> AtualizarRatingPorIdAsync(RatingModel rating, int ratingId)
-    {
-      var currentRating = await _dbContext.Ratings.FindAsync(ratingId);
-      currentRating.Rating = rating.Rating;
-      currentRating.Comment = rating.Comment;
+        {
+          var currentRating = await _dbContext.Ratings.FindAsync(ratingId);
+          currentRating.Rating = rating.Rating;
+          currentRating.Comment = rating.Comment;
 
-      _dbContext.Ratings.Update(currentRating);
-      await _dbContext.SaveChangesAsync();
+          _dbContext.Ratings.Update(currentRating);
+          await _dbContext.SaveChangesAsync();
 
-      return await _dbContext.Ratings
-        .Include(r => r.Game)
-        .Include(r => r.User)
-        .Where(r => r.Id == currentRating.Id)
-        .FirstOrDefaultAsync();
-    }
-
+          return await _dbContext.Ratings
+            .Include(r => r.Game)
+            .Include(r => r.User)
+            .Where(r => r.Id == currentRating.Id)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync();
+        }
     public async Task<bool> RemoverRatingAsync(RatingModel rating)
     {
       _dbContext.Ratings.Remove(rating);

@@ -14,7 +14,7 @@
       Report = reports;
     }
 
-    public Response(Report report) : this(new List<Report>() { report }){ }
+    public Response(Report report) : this(new List<Report>() { report }) { }
 
     public static Response<T> Ok<T>(T data) => new Response<T>(data);
     public static Response Ok() => new Response();

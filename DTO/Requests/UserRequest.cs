@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace LudoVault.DTO.Requests
+﻿namespace LudoVault.DTO.Requests
 {
   public class UserRequest
   {
