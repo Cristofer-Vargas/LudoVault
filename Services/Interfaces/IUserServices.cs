@@ -29,9 +29,8 @@ namespace LudoVault.Services.Interfaces
 
     // Avaliações de Usuários
     public Task<Response<UserRatingListGamesResponse>> AdicionarAvaliacaoAsync(UserRatingRequest userRating, int userId, int gameId);
-    public Task<Response<UserRatingListGamesResponse>> BuscarAvaliacoesAsync(int id);
-    public Task<Response<UserRatingGameResponse>> BuscarAvaliacaoPorIdAsync(int ratingId);
     public Task<Response<UserRatingGameResponse>> AtualizarAvaliacaoAsync(UserRatingRequest userRating, int userId, int ratingId);
+    public Task<Response<UserRatingListGamesResponse>> BuscarAvaliacoesAsync(int id);
     public Task<Response<string>> ExcluirAvaliacaoAsync(int userId, int ratingId);
   }
 }

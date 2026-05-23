@@ -110,10 +110,10 @@ namespace LudoVault.Controllers
       return Ok(await _userServices.AdicionarJogoABibliotecaAsync(userLibrary));
     }
 
-    [HttpDelete("{userId}/library/{libraryId}")]
-    public async Task<IActionResult> RemoverJogoDaBiblioteca(int userId, int libraryId)
+    [HttpDelete("{userId}/library/game/{gameId}")]
+    public async Task<IActionResult> RemoverJogoDaBiblioteca(int userId, int gameId)
     {
-      return Ok(await _userServices.RemoverJogoDaBibliotecaAsync(userId, libraryId));
+      return Ok(await _userServices.RemoverJogoDaBibliotecaAsync(userId, gameId));
     }
   }
 }

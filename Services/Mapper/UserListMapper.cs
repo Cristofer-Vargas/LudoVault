@@ -15,7 +15,7 @@ namespace LudoVault.Services.Mapper
       };
     }
 
-    public static UserListGameModel ToUserListGameModel(UserListGameRequest game, int listId)
+    public static UserListGameModel ToUserListGameModel(UserListGameRequest game)
     {
       return new UserListGameModel
       {

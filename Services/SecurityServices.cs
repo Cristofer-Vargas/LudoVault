@@ -16,7 +16,6 @@ namespace LudoVault.Services
     public async Task<string> EncryptPassword(string pass)
     {
       var passHash = BCrypt.Net.BCrypt.HashPassword(pass, 12);
-      _logger.LogInformation("Senha criptografada.");
       return passHash;
     }
 

@@ -10,196 +10,225 @@ namespace LudoVault.Repositories
     public readonly MysqlContext _dbContext = dbContext;
 
     // Usuário
-    public async Task<UserModel>? AtualizarUsuarioAsync(UserModel userUpdate, int id)
-    {
-      var userExisted = await BuscarUsuarioPorIdAsync(id);
-      _dbContext.Users.Entry(userExisted).CurrentValues.SetValues(userUpdate);
-      await _dbContext.SaveChangesAsync();
-
-      return userExisted;
-    }
     public async Task<UserModel>? CriarUsuarioAsync(UserModel user)
     {
-      await _dbContext.Users.AddAsync(user);
-      await _dbContext.SaveChangesAsync();
-      return user;
+      try
+      {
+        await _dbContext.Users.AddAsync(user);
+        await _dbContext.SaveChangesAsync();
+        return user;
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+    }
+    public async Task<UserModel>? AtualizarUsuarioAsync(UserModel user)
+    {
+      try
+      {
+        _dbContext.Users.Update(user);
+        await _dbContext.SaveChangesAsync();
+        return user;
+      }
+      catch (Exception)
+      {
+        return null;
+      }
     }
     public async Task<UserModel>? BuscarUsuarioPorIdAsync(int id)
     {
-      return await _dbContext.Users.FindAsync(id);
+      try
+      {
+        return await _dbContext.Users.FindAsync(id);
+      }
+      catch (Exception)
+      {
+        return null;
+      }
     }
     public async Task<bool> VerificarEmailExistenteAsync(int? userId, string email)
     {
-      if (userId != null)
+      try
       {
-        return await _dbContext.Users.AnyAsync(u => u.Id != userId && u.Email == email);
-      }
+        if (userId != null)
+        {
+          return await _dbContext.Users.AnyAsync(u => u.Id != userId && u.Email == email);
+        }
 
-      return await _dbContext.Users.AnyAsync(u => u.Email == email);
+        return await _dbContext.Users.AnyAsync(u => u.Email == email);
+      }
+      catch (Exception)
+      {
+        return false;
+      }
     }
     public async Task<bool> AtualizarImagemDePerfilAsync(UserModel user)
     {
-      _dbContext.Users
-        .Update(user);
-      await _dbContext.SaveChangesAsync();
-      return true;
+      try
+      {
+        _dbContext.Users.Update(user);
+        await _dbContext.SaveChangesAsync();
+        return true;
+      }
+      catch (Exception)
+      {
+        return false;
+      }
     }
     public async Task<bool> ExcluirUsuarioAsync(UserModel user)
     {
-      await _dbContext.Users
+      try
+      {
+        await _dbContext.Users
         .Where(u => u.Id == user.Id)
         .ExecuteDeleteAsync();
-      return true;
-
+        return true;
+      }
+      catch (Exception)
+      {
+        return false;
+      }
     }
 
     // Listas de Usuário
     public async Task<UserListModel>? CriarListaAsync(UserListModel userList)
     {
-      await _dbContext.UserLists.AddAsync(userList);
-      await _dbContext.SaveChangesAsync();
-
-      return await _dbContext.UserLists
-              .AsNoTracking()
-              .FirstOrDefaultAsync(ul => ul.Id == userList.Id);
+      try
+      {
+        await _dbContext.UserLists.AddAsync(userList);
+        await _dbContext.SaveChangesAsync();
+        return userList;
+      }
+      catch (Exception)
+      {
+        return null;
+      }
     }
-    public async Task<UserListModel>? AtualizarListaAsync(UserListModel userList, int userId, int listId)
+    public async Task<UserListModel>? AtualizarListaAsync(UserListModel userList)
     {
-      var currentUserList = await _dbContext.UserLists.FindAsync(listId);
-      if (currentUserList == null) return currentUserList;
-
-      userList.Id = currentUserList.Id;
-      userList.CreatedAt = currentUserList.CreatedAt;
-      userList.UserId = currentUserList.UserId;
-
-      _dbContext.UserLists.Entry(currentUserList).CurrentValues.SetValues(userList);
-      await _dbContext.SaveChangesAsync();
-
-      return await _dbContext.UserLists
-              .Include(ul => ul.ListItems)
-                      .ThenInclude(lg => lg.Game)
-                              .ThenInclude(g => g.Publisher)
-                              .AsSplitQuery()
-              .FirstOrDefaultAsync(ul => ul.Id == listId);
+      try
+      {
+        _dbContext.UserLists.Update(userList);
+        await _dbContext.SaveChangesAsync();
+        return userList;
+      }
+      catch (Exception)
+      {
+        return null;
+      }
     }
     public async Task<UserListModel>? AdicionarJogoAListaAsync(UserListGameModel userGameList)
     {
-      await _dbContext.UserListsItems.AddAsync(userGameList);
-      await _dbContext.SaveChangesAsync();
+      try
+      {
+        await _dbContext.UserListsItems.AddAsync(userGameList);
+        await _dbContext.SaveChangesAsync();
 
-      return await _dbContext.UserLists
-              .Include(ul => ul.ListItems)
-                      .ThenInclude(lg => lg.Game)
-                              .ThenInclude(g => g.Publisher)
-                              .AsSplitQuery()
-              .FirstOrDefaultAsync(ul => ul.Id == userGameList.ListId);
+        return await BuscarListaAsync(userGameList.ListId);
+      }
+      catch (Exception)
+      {
+        return null;
+      }
     }
     public async Task<UserListModel>? BuscarListaAsync(int userListId)
     {
-      return await _dbContext.UserLists.FindAsync(userListId);
-    }
-    public async Task<UserListGameModel>? BuscarJogoDaListaAsync(int userListGameId)
-    {
-      return await _dbContext.UserListsItems.FindAsync(userListGameId);
+      try
+      {
+        return await _dbContext.UserLists.FindAsync(userListId);
+      }
+      catch (Exception)
+      {
+        return null;
+      }
     }
     public async Task<List<UserListModel>> BuscarListasDeUsuarioAsync(int userId)
     {
-      return await _dbContext.UserLists
-              .AsNoTracking()
-              .Include(ul => ul.ListItems)
-                      .ThenInclude(uli => uli.Game)
-                              .ThenInclude(g => g.Publisher)
-              .Where(ul => ul.UserId == userId)
-              .AsSplitQuery()
-              .ToListAsync();
+      try
+      {
+        return await _dbContext.UserLists
+        .AsNoTracking()
+        .Include(ul => ul.ListItems)
+                .ThenInclude(uli => uli.Game)
+                        .ThenInclude(g => g.Publisher)
+        .Where(ul => ul.UserId == userId)
+        .AsSplitQuery()
+        .ToListAsync();
+      }
+      catch (Exception)
+      {
+        return [];
+      }
+    }
+    public async Task<UserListGameModel>? BuscarJogoDaListaAsync(int gameId, int listId)
+    {
+      return await _dbContext.UserListsItems
+      .FirstOrDefaultAsync(uli => uli.GameId == gameId && uli.ListId == listId);
     }
     public async Task<bool> ExisteListaComMesmoNomeAsync(string name, int userId)
     {
       return await _dbContext.UserLists.AnyAsync(ul => ul.Name == name && ul.UserId == userId);
     }
-    public async Task<bool> ExisteListaAsync(int listId, int userId)
+    public async Task<bool> ExcluirListaAsync(UserListModel list)
     {
-      return await _dbContext.UserLists.AnyAsync(ul => ul.Id == listId && ul.UserId == userId);
-    }
-    public async Task<bool> ExisteJogoNaListaAsync(int gameId, int listId)
-    {
-      return await _dbContext.UserListsItems.AnyAsync(uli => uli.GameId == gameId && uli.ListId == listId);
-    }
-    public async Task<bool> ExcluirListaAsync(int listId)
-    {
-      var userListToDelete = await _dbContext.UserLists.FindAsync(listId);
-      if (userListToDelete == null) return false;
-
-      _dbContext.UserLists.Remove(userListToDelete);
+      _dbContext.UserLists.Remove(list);
       await _dbContext.SaveChangesAsync();
       return true;
     }
-    public async Task<bool> RemoverJogoDaListaAsync(int listId, int gameId)
+    public async Task<bool> RemoverJogoDaListaAsync(UserListGameModel gameList)
     {
-      var gameToDelete = await _dbContext.UserListsItems
-              .FirstOrDefaultAsync(uli => uli.ListId == listId && uli.GameId == gameId);
-
-      if (gameToDelete == null) return false;
-
-      _dbContext.UserListsItems.Remove(gameToDelete);
+      _dbContext.UserListsItems.Remove(gameList);
       await _dbContext.SaveChangesAsync();
-
       return true;
     }
 
     //Biblioteca de Usuário
     public async Task<bool> AdicionarJogoNaBibliotecaAsync(UserLibraryModel userLibraryGame)
     {
-      await _dbContext.UserLibrary
-              .AddAsync(userLibraryGame);
+      try
+      {
+        await _dbContext.UserLibrary
+        .AddAsync(userLibraryGame);
+        await _dbContext.SaveChangesAsync();
 
-      await _dbContext.SaveChangesAsync();
-
-      return true;
-
+        return true;
+      }
+      catch (Exception)
+      {
+        return false;
+      }
     }
     public async Task<List<UserLibraryModel>> BuscarJogosDaBibliotecaAsync(int id)
     {
-      var jogosLibrary = await _dbContext.UserLibrary
+      return await _dbContext.UserLibrary
               .Include(ul => ul.Game)
                       .ThenInclude(g => g.Publisher)
               .Include(ul => ul.User)
               .Where(ul => ul.UserId == id)
               .AsSplitQuery()
               .ToListAsync();
-
-      return jogosLibrary;
     }
-    public async Task<bool> RemoverJogoDaBibliotecaAsync(int libraryId)
+    public async Task<UserLibraryModel>? BuscarPorIdJogoDaBibliotecaAsync(int userId, int gameId)
     {
-      var userLibrary = await _dbContext.UserLibrary.FindAsync(libraryId);
-      if (userLibrary == null) return false;
-
-      _dbContext.UserLibrary.Remove(userLibrary);
+      try
+      {
+        return await _dbContext.UserLibrary
+        .FirstOrDefaultAsync(ul => ul.UserId == userId && ul.GameId == gameId);
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+    }
+    public async Task<bool> RemoverJogoDaBibliotecaAsync(UserLibraryModel library)
+    {
+      _dbContext.UserLibrary.Remove(library);
       await _dbContext.SaveChangesAsync();
-
-      return true;
-    }
-    public async Task<bool> ExisteJogoNaBibliotecaAsync(int userId, int gameId)
-    {
-      var exist = await _dbContext.UserLibrary
-              .FirstOrDefaultAsync(ul => ul.UserId == userId && ul.GameId == gameId);
-
-      if (exist == null) return false;
-
       return true;
     }
 
     // Avaliações de Usuário
-    public async Task<List<RatingModel>> BuscarAvaliacoesDoUsuarioAsync(int userId)
-    {
-      return await _dbContext.Ratings
-              .Include(gr => gr.Game)
-              .Include(gr => gr.User)
-              .Where(gr => gr.UserId == userId)
-              .AsSplitQuery()
-              .ToListAsync();
-    }
     public async Task<List<RatingModel>> AdicionarAvaliacaoAsync(RatingModel rating)
     {
       await _dbContext.Ratings.AddAsync(rating);
@@ -212,44 +241,47 @@ namespace LudoVault.Repositories
         .AsSplitQuery()
         .ToListAsync();
     }
-    public async Task<RatingModel>? BuscarAvaliacaoPorUserEGameAsync(int userId, int gameId)
+    public async Task<RatingModel> AtualizarAvaliacaoPorIdAsync(RatingModel rating)
     {
-      var rating = await _dbContext.Ratings
-        .Where(r => r.UserId == userId && r.GameId == gameId)
-        .FirstOrDefaultAsync();
-
+      _dbContext.Ratings.Update(rating);
+      await _dbContext.SaveChangesAsync();
       return rating;
     }
+    public async Task<List<RatingModel>> BuscarAvaliacoesDoUsuarioAsync(int userId)
+    {
+      return await _dbContext.Ratings
+              .Include(gr => gr.Game)
+              .Include(gr => gr.User)
+              .Where(gr => gr.UserId == userId)
+              .AsSplitQuery()
+              .ToListAsync();
+    }
+    public async Task<RatingModel>? BuscarAvaliacaoPorUserEGameAsync(int userId, int gameId)
+    {
+      try
+      {
+        return await _dbContext.Ratings
+        .Where(r => r.UserId == userId && r.GameId == gameId)
+        .FirstOrDefaultAsync();
+      }
+      catch (Exception)
+      {
+        return null;
+      }
+    }
     public async Task<RatingModel>? BuscarAvaliacaoPorIdAsync(int ratingId)
-        {
-          return await _dbContext.Ratings
-            .Include(r => r.Game)
-            .Include(r => r.User)
-            .Where(r => r.Id == ratingId)
-            .AsSplitQuery()
-            .FirstOrDefaultAsync();
-        }
-    public async Task<RatingModel> AtualizarAvaliacaoPorIdAsync(RatingModel rating, int ratingId)
-        {
-          var currentRating = await _dbContext.Ratings.FindAsync(ratingId);
-          currentRating.Rating = rating.Rating;
-          currentRating.Comment = rating.Comment;
-
-          _dbContext.Ratings.Update(currentRating);
-          await _dbContext.SaveChangesAsync();
-
-          return await _dbContext.Ratings
-            .Include(r => r.Game)
-            .Include(r => r.User)
-            .Where(r => r.Id == currentRating.Id)
-            .AsSplitQuery()
-            .FirstOrDefaultAsync();
-        }
+    {
+      return await _dbContext.Ratings
+        .Include(r => r.Game)
+        .Include(r => r.User)
+        .Where(r => r.Id == ratingId)
+        .AsSplitQuery()
+        .FirstOrDefaultAsync();
+    }
     public async Task<bool> ExcluirAvaliacaoAsync(RatingModel rating)
     {
       _dbContext.Ratings.Remove(rating);
       await _dbContext.SaveChangesAsync();
-
       return true;
     }
   }
