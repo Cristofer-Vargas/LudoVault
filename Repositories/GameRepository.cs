@@ -10,7 +10,7 @@ namespace LudoVault.Repositories
     public readonly MysqlContext _dbContext = dbContext;
 
     // Jogo
-    public async Task<GameModel>? CriarGameAsync(GameModel game)
+    public async Task<GameModel>? CriarAsync(GameModel game)
     {
       await _dbContext.AddAsync(game);
       await _dbContext.SaveChangesAsync();
@@ -23,9 +23,9 @@ namespace LudoVault.Repositories
 
       await _dbContext.SaveChangesAsync();
 
-      return await BuscarGamePorIdAsync(game.Id);
+      return await BuscarPorIdAsync(game.Id);
     }
-    public async Task<GameModel>? AtualizarGameAsync(GameModel game)
+    public async Task<GameModel>? AtualizarAsync(GameModel game)
     {
       // Deleta os GamePlatforms e GameGenres ANTIGOS pelo GameId
       var oldPlatforms = await _dbContext.GamePlatforms
@@ -52,9 +52,9 @@ namespace LudoVault.Repositories
         _dbContext.GameGenres.AddRange(game.GameGenres);
 
       await _dbContext.SaveChangesAsync();
-      return await BuscarGamePorIdAsync(game.Id);
+      return await BuscarPorIdAsync(game.Id);
     }
-    public async Task<GameModel>? BuscarGamePorIdAsync(int id)
+    public async Task<GameModel>? BuscarPorIdAsync(int id)
     {
       var game = await _dbContext.Games
       .Where(g => g.Id == id)
@@ -68,7 +68,7 @@ namespace LudoVault.Repositories
 
       return game;
     }
-    public async Task<List<GameModel>> BuscarTodosGamesAsync()
+    public async Task<List<GameModel>> BuscarTodosAsync()
     {
       List<GameModel> games = await _dbContext.Games
       .Include(g => g.Publisher)
@@ -80,22 +80,14 @@ namespace LudoVault.Repositories
       .ToListAsync();
       return games;
     }
-    public async Task<bool> DeletarGameAsync(GameModel game)
+    public async Task<bool> ExcluirAsync(GameModel game)
     {
       _dbContext.Games.Remove(game);
       await _dbContext.SaveChangesAsync();
 
       return true;
     }
-    public async Task<bool> GameExisteAsync(int gameId)
-    {
-      var gameExist = await _dbContext.Games
-              .FirstOrDefaultAsync(g => g.Id == gameId);
-
-      if (gameExist == null) return false;
-      return true;
-    }
-    public async Task<bool> AtualizarCaminhoDeImagemEmGame(GameModel game)
+    public async Task<bool> AtualizarCaminhoDeImagem(GameModel game)
     {
       _dbContext.Games
         .Update(game);
@@ -106,7 +98,7 @@ namespace LudoVault.Repositories
     }
 
     // Avaliações de Jogo
-    public async Task<List<RatingModel>> BuscarAvaliacoesDoJogoAsync(int id)
+    public async Task<List<RatingModel>> BuscarAvaliacoesAsync(int id)
     {
       List<RatingModel> gameRatings = await _dbContext.Ratings
               .Include(gr => gr.Game)

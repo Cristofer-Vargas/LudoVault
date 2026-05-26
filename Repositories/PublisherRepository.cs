@@ -10,13 +10,13 @@ namespace LudoVault.Repositories
     private readonly MysqlContext _dbContext = dbContext;
 
     // Desenvolvedora
-    public async Task<PublisherModel>? CriarPublisherAsync(PublisherModel publisher)
+    public async Task<PublisherModel>? CriarAsync(PublisherModel publisher)
     {
       await _dbContext.Publishers.AddAsync(publisher);
       await _dbContext.SaveChangesAsync();
       return publisher;
     }
-    public async Task<PublisherModel>? AtualizarPublisherAsync(PublisherModel publisher)
+    public async Task<PublisherModel>? AtualizarAsync(PublisherModel publisher)
     {
       var currentPublisher = await _dbContext.Publishers.FindAsync(publisher.Id);
       if (currentPublisher == null)
@@ -28,14 +28,14 @@ namespace LudoVault.Repositories
       await _dbContext.SaveChangesAsync();
       return currentPublisher;
     }
-    public async Task<PublisherModel>? BuscarPublisherPorIdAsync(int id)
+    public async Task<PublisherModel>? BuscarPorIdAsync(int id)
     {
       var publisher = await _dbContext.Publishers
               .Include(p => p.Games)
               .FirstOrDefaultAsync(p => p.Id == id);
       return publisher;
     }
-    public async Task<List<PublisherModel>> BuscarTodasPublishersAsync()
+    public async Task<List<PublisherModel>> BuscarTodosAsync()
     {
       List<PublisherModel> publishers = await _dbContext.Publishers
               .Include(p => p.Games)
@@ -45,9 +45,8 @@ namespace LudoVault.Repositories
 
       return publishers;
     }
-    public async Task<bool> ExcluirPublisherAsync(int id)
+    public async Task<bool> ExcluirAsync(PublisherModel publisher)
     {
-      var publisher = await BuscarPublisherPorIdAsync(id);
       _dbContext.Publishers.Remove(publisher);
       await _dbContext.SaveChangesAsync();
       return true;

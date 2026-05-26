@@ -242,9 +242,9 @@ namespace LudoVault.Services
         return response;
       }
 
-      var userRes = UserListMapper.ToListGameResponse(lista);
+      response.Data = UserListMapper.ToListGameResponse(lista);
       _logger.LogInformation("Lista {LNAME} criada por {UID}:{UNAME}.", lista.Name, user.Id, user.Name);
-      return Response.Ok(userRes);
+      return response;
     }
     public async Task<Response<UserListListsResponse>> AtualizarListaAsync(UserListRequest userList, int listId)
     {
@@ -298,7 +298,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var game = await _gameRepository.BuscarGamePorIdAsync(userGameList.GameId);
+      var game = await _gameRepository.BuscarPorIdAsync(userGameList.GameId);
       if (game == null)
       {
         response.Report.Add(Report.Create("Jogo não encontrado!"));
@@ -337,13 +337,13 @@ namespace LudoVault.Services
 
       var userLists = await _userRepository.BuscarListasDeUsuarioAsync(id);
       var totalLists = userLists.Count;
-      var userListsResponse = new UserListResponse
+      response.Data = new UserListResponse
       {
         Lists = userLists
                       .Select(ul => UserListMapper.ToListGameResponse(ul)).ToList(),
         TotalLists = totalLists
       };
-      return Response.Ok(userListsResponse);
+      return response;
     }
     public async Task<Response<string>> ExcluirListaAsync(int userId, int listId)
     {
@@ -385,7 +385,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var game = await _gameRepository.BuscarGamePorIdAsync(gameId);
+      var game = await _gameRepository.BuscarPorIdAsync(gameId);
       if (game == null)
       {
         response.Report.Add(Report.Create("Jogo não encontrado!"));
@@ -430,7 +430,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var game = await _gameRepository.BuscarGamePorIdAsync(userLibrary.GameId);
+      var game = await _gameRepository.BuscarPorIdAsync(userLibrary.GameId);
       if (game == null)
       {
         response.Report.Add(Report.Create("Jogo não encontrado!"));
@@ -484,7 +484,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var game = await _gameRepository.BuscarGamePorIdAsync(gameId);
+      var game = await _gameRepository.BuscarPorIdAsync(gameId);
       if (game == null)
       {
         response.Report.Add(Report.Create("Jogo não encontrado!"));
@@ -526,7 +526,7 @@ namespace LudoVault.Services
         return response;
 
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
-      var game = await _gameRepository.BuscarGamePorIdAsync(gameId);
+      var game = await _gameRepository.BuscarPorIdAsync(gameId);
 
       if (game == null)
       {
@@ -589,7 +589,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var game = await _gameRepository.BuscarGamePorIdAsync(rating.GameId);
+      var game = await _gameRepository.BuscarPorIdAsync(rating.GameId);
       if (game == null)
       {
         response.Report.Add(Report.Create("Jogo não encontrado!"));

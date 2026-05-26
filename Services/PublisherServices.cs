@@ -16,75 +16,105 @@ namespace LudoVault.Services
 
     public async Task<Response<PublisherResponse>> CriarPublisherAsync(PublisherRequest publisher)
     {
-      var publisherModel = await _publisherRepository.CriarPublisherAsync(PublisherMapper.ToModel(publisher));
-      var pubRes = PublisherMapper.ToResponse(
-              publisherModel,
-              publisherModel.Games.Select(GameMapper.ToResponse).ToList());
+      var inputErrors = new List<Report>();
+      var response = new Response<PublisherResponse>(inputErrors);
+      if (string.IsNullOrWhiteSpace(publisher.Name))
+        inputErrors.Add(Report.Create("Nome de publisher deve ser preenchido corretamente!", 400));
+      if (inputErrors.Count > 0)
+        return response;
 
-      _logger.LogInformation("Publisher {PNAME} criada com sucesso.", publisherModel.Name);
-      return Response.Ok(pubRes);
+      var publisherModel = PublisherMapper.ToModel(publisher);
+      var publisherCreated = await _publisherRepository.CriarAsync(publisherModel);
+      if (publisherCreated == null)
+      {
+        _logger.LogError("Erro interno ao criar publisher.");
+        response.Report.Add(Report.Create("Erro ao criar publisher.", 500));
+        return response;
+      }
+
+      response.Data = PublisherMapper.ToResponse(
+              publisherCreated,
+              publisherCreated.Games.Select(p => GameMapper.ToResponse(p)).ToList());
+
+      _logger.LogInformation("Publisher {PID}:{PNAME} criada com sucesso.", publisherCreated.Id, publisherCreated.Name);
+      return response;
     }
     public async Task<Response<PublisherResponse>> AtualizarPublisherAsync(PublisherRequest publisher, int id)
     {
       var response = new Response<PublisherResponse>();
-      var pub = await _publisherRepository.BuscarPublisherPorIdAsync(id);
+      var pub = await _publisherRepository.BuscarPorIdAsync(id);
       if (pub == null)
       {
-        response.Report.Add(Report.Create("Publisher não encontrada!", 400));
+        response.Report.Add(Report.Create("Publisher não encontrada!", 404));
         return response;
       }
 
       var publisherModel = PublisherMapper.ToModel(publisher);
-      publisherModel.Id = id;
-      var updatedPublisher = await _publisherRepository.AtualizarPublisherAsync(publisherModel);
+      publisherModel.Id = pub.Id;
+      var updatedPublisher = await _publisherRepository.AtualizarAsync(publisherModel);
+      if (updatedPublisher == null)
+      {
+        _logger.LogError("Erro interno ao atualizar publisher {PID}:{PNAME}.", publisherModel.Id, publisherModel.Name);
+        response.Report.Add(Report.Create("Erro ao atualizar publisher.", 500));
+        return response;
+      }
 
-      var pubRes = PublisherMapper.ToResponse(
+      response.Data = PublisherMapper.ToResponse(
               updatedPublisher,
               updatedPublisher.Games.Select(GameMapper.ToResponse).ToList());
 
-      _logger.LogInformation("Publisher atualizada de {POLDNAME} para {PNEWNAME}", pub.Name, updatedPublisher.Name);
-      return Response.Ok(pubRes);
+      _logger.LogInformation("Publisher {PID}:{POLDNAME} atualizada para {PNEWNAME}", updatedPublisher.Id, pub.Name, updatedPublisher.Name);
+      return response;
     }
     public async Task<Response<List<PublisherResponse>>> BuscarTodasPublishersAsync()
     {
-      List<PublisherModel> pubModelList = await _publisherRepository.BuscarTodasPublishersAsync();
+      var response = new Response<List<PublisherResponse>>();
+      List<PublisherModel> pubModelList = await _publisherRepository.BuscarTodosAsync();
 
-      var pubRes = pubModelList.Select(publisher => PublisherMapper.ToResponse(
+      response.Data = pubModelList.Select(publisher => PublisherMapper.ToResponse(
               publisher,
               publisher.Games.Select(GameMapper.ToResponse)
       .ToList())).ToList();
 
-      return Response.Ok(pubRes);
+      return response;
     }
     public async Task<Response<PublisherResponse>> BuscarPublisherPorIdAsync(int id)
     {
-      var publisherModel = await _publisherRepository.BuscarPublisherPorIdAsync(id);
-      var pubRes = PublisherMapper.ToResponse(
+      var response = new Response<PublisherResponse>();
+
+      var publisherModel = await _publisherRepository.BuscarPorIdAsync(id);
+      if (publisherModel == null)
+      {
+        response.Report.Add(Report.Create("Publisher não encontrada!", 404));
+        return response;
+      }
+
+      response.Data = PublisherMapper.ToResponse(
               publisherModel,
               publisherModel.Games.Select(GameMapper.ToResponse).ToList()
               );
 
-      return Response.Ok(pubRes);
+      return response;
     }
     public async Task<Response<string>> ExcluirPublisherAsync(int id)
     {
       var response = new Response<string>();
-      var pub = await _publisherRepository.BuscarPublisherPorIdAsync(id);
+      var pub = await _publisherRepository.BuscarPorIdAsync(id);
       if (pub == null)
       {
-        response.Report.Add(Report.Create("Publisher não encontrada!", 400));
+        response.Report.Add(Report.Create("Publisher não encontrada!", 404));
         return response;
       }
 
-      bool publisherExcluded = await _publisherRepository.ExcluirPublisherAsync(id);
-      if (publisherExcluded)
+      bool publisherExcluded = await _publisherRepository.ExcluirAsync(pub);
+      if (!publisherExcluded)
       {
-        response.Data = "Excluido com sucesso!";
-        return response;
+        _logger.LogError("Erro ao excluir publisher {PID}:{PNAME}.", pub.Id, pub.Name);
+        response.Data = "Erro ao excluir.";
       }
 
-      _logger.LogError("Erro ao excluir publisher {PID}:{PNAME}.", pub.Id, pub.Name);
-      response.Data = "Erro ao excluir.";
+      response.Data = "Excluido com sucesso!";
+      _logger.LogError("Publisher {PID}:{PNAME} excluida com sucesso.", pub.Id, pub.Name);
       return response;
     }
   }
