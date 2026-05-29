@@ -8,7 +8,7 @@ using LudoVault.Services.Validations.Base;
 namespace LudoVault.Services
 {
   public class GameServices(IGameRepository gameRepo, IPlatformRepository platformRepo, IGenreRepository genreRepo,
-    IPublisherRepository publisherRepo, IImageServices imageServices, ISystemServices sistema, 
+    IPublisherRepository publisherRepo, IImageServices imageServices, ISystemServices sistema,
     ILogger<GameServices> logger) : IGameServices
   {
     private readonly IGameRepository _gameRepository = gameRepo;

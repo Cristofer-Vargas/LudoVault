@@ -20,6 +20,8 @@ namespace LudoVault.Configurations
       // Repositórios
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<IGameRepository, GameRepository>();
+      services.AddScoped<IPlatformRepository, PlatformRepository>();
+      services.AddScoped<IGenreRepository, GenreRepository>();
       services.AddScoped<IPublisherRepository, PublisherRepository>();
 
       return services;

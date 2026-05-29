@@ -97,7 +97,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      _logger.LogInformation("Usuário {UNAME} com ID {UID} atualizado.", currentUser.Name, currentUser.Id);
+      _logger.LogInformation("Usuário {UID}:{UNAME} atualizado.", currentUser.Id, currentUser.Name);
       response.Data = UserMapper.ToResponse(currentUser);
       return response;
     }
@@ -271,14 +271,16 @@ namespace LudoVault.Services
         return response;
       }
 
-      var listModel = UserListMapper.ToUserListModel(userList, userList.UserId);
-      listModel.Id = list.Id;
-      listModel.UserId = user.Id;
-      listModel.CreatedAt = list.CreatedAt;
+      list.Name = userList.Name;
+      var createdListModel = await _userRepository.AtualizarListaAsync(list);
+      if (createdListModel == null)
+      {
+        response.Report.Add(Report.Create("Erro interno ao atualizar lista!", 500));
+        return response;
+      }
 
-      var createdListModel = await _userRepository.AtualizarListaAsync(listModel);
-      _logger.LogInformation("Lista {LID}:{OLDLNAME} de {UID}:{UNAME} atualizada para {LNEWNAME}.", list.Id, list.Name, user.Id, user.Name, createdListModel.Name);
       response.Data = UserListMapper.ToListGameResponse(createdListModel);
+      _logger.LogInformation("Lista {LID}:{LNAME} atualizada por {UID}:{UNAME} com sucesso.", createdListModel.Id, createdListModel.Name, user.Id, user.Name);
       return response;
     }
     public async Task<Response<UserListListsResponse>> AdicionarJogoAListaAsync(UserListGameRequest userGameList, int userId)
@@ -438,7 +440,7 @@ namespace LudoVault.Services
       }
 
       var libraryGame = await _userRepository.BuscarPorIdJogoDaBibliotecaAsync(userLibrary.UserId, userLibrary.GameId);
-      if (libraryGame == null)
+      if (libraryGame != null)
       {
         response.Report.Add(Report.Create("Esse jogo ja foi adicionado a biblioteca.", 400));
         return response;
@@ -539,7 +541,7 @@ namespace LudoVault.Services
         response.Report.Add(Report.Create("Usuário não encontrado!"));
         return response;
       }
-      
+
       var rating = await _userRepository.BuscarAvaliacaoPorUserEGameAsync(userId, gameId);
       if (rating != null)
       {
@@ -596,8 +598,9 @@ namespace LudoVault.Services
         return response;
       }
 
-      var ratingModel = RatingMapper.ToRatingModel(userRating, user, rating.Game);
-      var ratingUpdated = await _userRepository.AtualizarAvaliacaoPorIdAsync(ratingModel);
+      rating.Rating = userRating.Rating;
+      rating.Comment = userRating.Comment;
+      var ratingUpdated = await _userRepository.AtualizarAvaliacaoPorIdAsync(rating);
       if (ratingUpdated == null)
       {
         response.Report.Add(Report.Create("Erro ao retornar avaliação atualizada!", 500));

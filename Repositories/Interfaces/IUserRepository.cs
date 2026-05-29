@@ -31,7 +31,7 @@ namespace LudoVault.Repositories.Interfaces
 
     // Avalaiações de Usuário
     public Task<List<RatingModel>> AdicionarAvaliacaoAsync(RatingModel rating);
-    public Task<RatingModel> AtualizarAvaliacaoPorIdAsync(RatingModel rating);
+    public Task<RatingModel>? AtualizarAvaliacaoPorIdAsync(RatingModel rating);
     public Task<List<RatingModel>> BuscarAvaliacoesDoUsuarioAsync(int userId);
     public Task<RatingModel>? BuscarAvaliacaoPorIdAsync(int ratingId);
     public Task<RatingModel>? BuscarAvaliacaoPorUserEGameAsync(int userId, int gameId);
