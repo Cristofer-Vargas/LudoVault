@@ -40,7 +40,7 @@ namespace LudoVault.Services
         var platform = await _platformRepository.BuscarPorId(platformId);
         if (platform == null)
         {
-          inputErrors.Add(Report.Create($"Plataforma {platformId} não encontrada!", 404));
+          inputErrors.Add(Report.Create("Plataforma não encontrada!", 404));
         }
       }
       foreach (var genreId in gameRequest.GenreIds)
@@ -48,7 +48,7 @@ namespace LudoVault.Services
         var genre = await _genreRepository.BuscarPorId(genreId);
         if (genre == null)
         {
-          inputErrors.Add(Report.Create($"Gênero {genreId} não encontrada!", 404));
+          inputErrors.Add(Report.Create("Gênero não encontrado!", 404));
         }
       }
       if (inputErrors.Count > 0)
@@ -73,7 +73,7 @@ namespace LudoVault.Services
       if (game == null)
       {
         _logger.LogError("Erro interno ao criar jogo {GNAME}.", gameRequest.Name);
-        response.Report.Add(Report.Create("Erro ao criar jogo.", 500));
+        response.Report.Add(Report.Create($"Erro interno ao criar jogo {gameRequest.Name}.", 500));
         return response;
       }
 
@@ -89,14 +89,14 @@ namespace LudoVault.Services
       var game = await _gameRepository.BuscarPorIdAsync(id);
       if (game == null)
       {
-        response.Report.Add(Report.Create("Jogo não encontrado!"));
+        response.Report.Add(Report.Create("Jogo não encontrado!", 404));
         return response;
       }
 
       var publisher = await _publisherRepository.BuscarPorIdAsync(gameRequest.PublisherId);
       if (publisher == null)
       {
-        response.Report.Add(Report.Create("Não foi possivel encontrar a Publisher informada."));
+        response.Report.Add(Report.Create("Não foi possivel encontrar a Publisher informada.", 404));
         return response;
       }
 
@@ -110,7 +110,7 @@ namespace LudoVault.Services
         var platform = await _platformRepository.BuscarPorId(platformId);
         if (platform == null)
         {
-          inputErrors.Add(Report.Create($"Plataforma {platformId} não encontrada!", 404));
+          inputErrors.Add(Report.Create("Plataforma não encontrada!", 404));
         }
       }
       foreach (var genreId in gameRequest.GenreIds)
@@ -118,7 +118,7 @@ namespace LudoVault.Services
         var genre = await _genreRepository.BuscarPorId(genreId);
         if (genre == null)
         {
-          inputErrors.Add(Report.Create($"Gênero {genreId} não encontrada!", 404));
+          inputErrors.Add(Report.Create("Gênero não encontrado!", 404));
         }
       }
       if (inputErrors.Count > 0)
@@ -142,7 +142,7 @@ namespace LudoVault.Services
       if (newGame == null)
       {
         _logger.LogWarning("Erro ao atualizar jogo {GID}:{GNAME}!", game.Id, game.Name);
-        response.Report.Add(Report.Create("Erro interno ao atualizar jogo!", 500));
+        response.Report.Add(Report.Create($"Erro interno ao atualizar jogo {game.Name}!", 500));
         return response;
       }
 
@@ -155,10 +155,10 @@ namespace LudoVault.Services
       var response = new Response<List<GameResponse>>();
 
       var gamesModel = await _gameRepository.BuscarTodosAsync();
-      if (gamesModel == null)
+      if (gamesModel == null || gamesModel.Count == 0)
       {
-        _logger.LogWarning("Nenhum Jogo Encontrado!");
-        response.Report.Add(Report.Create("Nenhum Jogo Encontrado!", 404));
+        _logger.LogWarning("Erro interno ou nenhum jogo cadastrado!");
+        response.Report.Add(Report.Create("Erro interno ou nenhum jogo cadastrado!", 404));
         return response;
       }
 
@@ -172,7 +172,7 @@ namespace LudoVault.Services
       var gameModel = await _gameRepository.BuscarPorIdAsync(id);
       if (gameModel == null)
       {
-        response.Report.Add(Report.Create("Jogo não encontrado!"));
+        response.Report.Add(Report.Create("Jogo não encontrado!", 404));
         return response;
 
       }
@@ -187,17 +187,17 @@ namespace LudoVault.Services
       if (game == null)
       {
         _logger.LogWarning("Jogo com ID {GID} não encontrado para adicionar imagem.", gameId);
-        response.Report.Add(Report.Create("Jogo não encontrado!"));
+        response.Report.Add(Report.Create("Jogo não encontrado!", 404));
         return response;
       }
 
       _logger.LogInformation("Adicionando Imagem para jogo {GID}:{GNAME}.", game.Id, game.Name);
       if (game.ImageUrl != _sistema.CaminhoGameDefaultImage())
       {
-        _logger.LogInformation("Substituindo Imagem existente.");
+        _logger.LogInformation("Substituindo Imagem existente...");
         if (!_imageServices.ExcluirImagemAsset(game.ImageUrl))
         {
-          response.Report.Add(Report.Create("Erro ao excluir imagem do servidor!"));
+          response.Report.Add(Report.Create("Erro ao excluir imagem do servidor!", 500));
           return response;
         }
       }
@@ -207,6 +207,7 @@ namespace LudoVault.Services
       var imageUpdated = await _gameRepository.AtualizarCaminhoDeImagem(game);
       if (!imageUpdated)
       {
+        _logger.LogError("Erro interno ao atualizar imagem de {GID}:{GNAME}.", game.Id, game.Name);
         response.Report.Add(Report.Create("Erro interno ao atualizar imagem!", 500));
         return response;
       }
@@ -222,7 +223,7 @@ namespace LudoVault.Services
       if (game == null)
       {
         _logger.LogWarning("Tentativa de exclusão de jogo inexistente. ID: {GID}", gameId);
-        response.Report.Add(Report.Create("Jogo não encontrado!"));
+        response.Report.Add(Report.Create("Jogo não encontrado!", 404));
         return response;
       }
 
@@ -230,7 +231,7 @@ namespace LudoVault.Services
       {
         if (!_imageServices.ExcluirImagemAsset(game.ImageUrl))
         {
-          response.Report.Add(Report.Create("Erro ao excluir imagem do servidor!"));
+          response.Report.Add(Report.Create("Erro ao excluir imagem do servidor!", 500));
           return response;
         }
       }
@@ -238,12 +239,12 @@ namespace LudoVault.Services
       var deletado = await _gameRepository.ExcluirAsync(game);
       if (!deletado)
       {
-        _logger.LogError("Erro ao excluir jogo com ID {GID}.", game.Id);
-        response.Report.Add(Report.Create("Erro ao excluir jogo do banco de dados."));
+        _logger.LogError("Erro ao excluir jogo {GID}:{GNAME}.", game.Id, game.Name);
+        response.Report.Add(Report.Create("Erro interno ao excluir jogo.", 500));
         return response;
       }
       _logger.LogInformation("Jogo {GID}:{GNAME} excluído com sucesso.", game.Id, game.Name);
-      response.Data = "Jogo excluído com sucesso!";
+      response.Data = $"Jogo {game.Name} excluído com sucesso!";
       return response;
     }
     public async Task<Response<string>> RemoverImagemDeCapaAsync(int gameId)
@@ -254,7 +255,7 @@ namespace LudoVault.Services
       if (game == null)
       {
         _logger.LogWarning("Jogo com ID {GID} não encontrado para remover imagem.", gameId);
-        response.Report.Add(Report.Create("Jogo não encontrado!"));
+        response.Report.Add(Report.Create("Jogo não encontrado!", 404));
         return response;
       }
       _logger.LogInformation("Removendo Imagem de {GID}:{GNAME}.", game.Id, game.Name);
@@ -264,7 +265,7 @@ namespace LudoVault.Services
       {
         if (!_imageServices.ExcluirImagemAsset(game.ImageUrl ?? ""))
         {
-          response.Report.Add(Report.Create("Não foi possivel excluir essa imagem!"));
+          response.Report.Add(Report.Create("Não foi possivel excluir essa imagem!", 500));
           return response;
         }
 
@@ -272,7 +273,7 @@ namespace LudoVault.Services
       if (game.ImageUrl == pathGameDefaultImage)
       {
         _logger.LogInformation("Jogo {GID}:{GNAME} não possui imagem cadastrada.", game.Id, game.Name);
-        response.Data = "Esse jogo não possui uma imagem.";
+        response.Report.Add(Report.Create($"Jogo {game.Name} não possui uma imagem.", 400));
         return response;
       }
 
@@ -280,12 +281,12 @@ namespace LudoVault.Services
       var imagemUpdated = await _gameRepository.AtualizarCaminhoDeImagem(game);
       if (!imagemUpdated)
       {
-        _logger.LogError("Erro interno ao excluir imagem {PATH}", game.ImageUrl);
+        _logger.LogError("Erro interno ao remover imagem de {GID}:{GNAME}", game.Id, game.Name);
         response.Report.Add(Report.Create("Erro interno ao remover imagem!", 500));
         return response;
       }
 
-      response.Data = "Imagem removida com sucesso!";
+      response.Data = $"Imagem de {game.Name} removida com sucesso!";
       return response;
     }
 
@@ -297,14 +298,14 @@ namespace LudoVault.Services
       if (game == null)
       {
         _logger.LogWarning("Jogo com ID {GID} não encontrado para busca de avaliações.", id);
-        response.Report.Add(Report.Create("Jogo não encontrado!"));
+        response.Report.Add(Report.Create("Jogo não encontrado!", 404));
         return response;
       }
 
       var gameRatings = await _gameRepository.BuscarAvaliacoesAsync(id);
       if (gameRatings.Count == 0)
       {
-        response.Report.Add(Report.Create("Nenhuma avaliação encontrada!", 404));
+        response.Report.Add(Report.Create($"Nenhuma avaliação de {game.Name} encontrada!", 404));
         return response;
       }
 

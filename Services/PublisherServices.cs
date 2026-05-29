@@ -27,8 +27,8 @@ namespace LudoVault.Services
       var publisherCreated = await _publisherRepository.CriarAsync(publisherModel);
       if (publisherCreated == null)
       {
-        _logger.LogError("Erro interno ao criar publisher.");
-        response.Report.Add(Report.Create("Erro ao criar publisher.", 500));
+        _logger.LogError("Erro interno ao criar publisher {PNAME}.", publisher.Name);
+        response.Report.Add(Report.Create($"Erro ao criar publisher {publisher.Name}.", 500));
         return response;
       }
 
@@ -55,7 +55,7 @@ namespace LudoVault.Services
       if (updatedPublisher == null)
       {
         _logger.LogError("Erro interno ao atualizar publisher {PID}:{PNAME}.", publisherModel.Id, publisherModel.Name);
-        response.Report.Add(Report.Create("Erro ao atualizar publisher.", 500));
+        response.Report.Add(Report.Create($"Erro ao atualizar publisher {publisher.Name}.", 500));
         return response;
       }
 
@@ -110,11 +110,12 @@ namespace LudoVault.Services
       if (!publisherExcluded)
       {
         _logger.LogError("Erro ao excluir publisher {PID}:{PNAME}.", pub.Id, pub.Name);
-        response.Data = "Erro ao excluir.";
+        response.Report.Add(Report.Create($"Erro interno ao excluir {pub.Name}.", 500));
+        return response;
       }
 
-      response.Data = "Excluido com sucesso!";
-      _logger.LogError("Publisher {PID}:{PNAME} excluida com sucesso.", pub.Id, pub.Name);
+      response.Data = $"Publisher {pub.Name} excluido com sucesso.";
+      _logger.LogInformation("Publisher {PID}:{PNAME} excluida com sucesso.", pub.Id, pub.Name);
       return response;
     }
   }
