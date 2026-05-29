@@ -179,9 +179,9 @@ namespace LudoVault.Services
       response.Data = GameMapper.ToResponse(gameModel);
       return response;
     }
-    public async Task<Response<string>> AdicionarImagemDeCapaAsync(IFormFile image, int gameId)
+    public async Task<Response<GameResponse>> AdicionarImagemDeCapaAsync(IFormFile image, int gameId)
     {
-      var response = new Response<string>();
+      var response = new Response<GameResponse>();
 
       var game = await _gameRepository.BuscarPorIdAsync(gameId);
       if (game == null)
@@ -212,7 +212,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = caminhoImg;
+      response.Data = GameMapper.ToResponse(game);
       return response;
     }
     public async Task<Response<string>> RemoverGameAsync(int gameId)
@@ -247,9 +247,9 @@ namespace LudoVault.Services
       response.Data = $"Jogo {game.Name} excluído com sucesso!";
       return response;
     }
-    public async Task<Response<string>> RemoverImagemDeCapaAsync(int gameId)
+    public async Task<Response<GameResponse>> RemoverImagemDeCapaAsync(int gameId)
     {
-      var response = new Response<string>();
+      var response = new Response<GameResponse>();
 
       var game = await _gameRepository.BuscarPorIdAsync(gameId);
       if (game == null)
@@ -286,7 +286,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = $"Imagem de {game.Name} removida com sucesso!";
+      response.Data = GameMapper.ToResponse(game);
       return response;
     }
 

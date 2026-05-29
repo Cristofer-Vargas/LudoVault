@@ -114,9 +114,9 @@ namespace LudoVault.Services
       response.Data = UserMapper.ToResponse(user);
       return response;
     }
-    public async Task<Response<string>> AdicionarImagemDePerfilAsync(IFormFile image, int userId)
+    public async Task<Response<UserResponse>> AdicionarImagemDePerfilAsync(IFormFile image, int userId)
     {
-      var response = new Response<string>();
+      var response = new Response<UserResponse>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
       if (user == null)
       {
@@ -145,13 +145,13 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = caminho;
+      response.Data = UserMapper.ToResponse(user);
       _logger.LogInformation("Imagem de {UID}:{UNAME} atualizada com sucesso.", user.Id, user.Name);
       return response;
     }
-    public async Task<Response<string>> RemoverImagemDePerfilAsync(int userId)
+    public async Task<Response<UserResponse>> RemoverImagemDePerfilAsync(int userId)
     {
-      var response = new Response<string>();
+      var response = new Response<UserResponse>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
       if (user == null)
       {
@@ -179,7 +179,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = user.AvatarUrl;
+      response.Data = UserMapper.ToResponse(user);
       return response;
     }
     public async Task<Response<string>> ExcluirUsuarioAsync(int userId)
@@ -377,9 +377,9 @@ namespace LudoVault.Services
       _logger.LogInformation("Lista {LID}:{LNAME} excluida por {UID}:{UNAME}.", list.Id, list.Name, user.Id, user.Name);
       return response;
     }
-    public async Task<Response<string>> RemoverJogoDeListaAsync(int userId, int listId, int gameId)
+    public async Task<Response<UserListListsResponse>> RemoverJogoDeListaAsync(int userId, int listId, int gameId)
     {
-      var response = new Response<string>();
+      var response = new Response<UserListListsResponse>();
 
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
       if (user == null)
@@ -417,15 +417,21 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = $"Jogo {game.Name} removido de {list.Name} com sucesso!";
+      var updatedList = await _userRepository.BuscarListaAsync(listId);
+      if (updatedList == null)
+      {
+        response.Report.Add(Report.Create("Erro ao recuperar lista atualizada.", 500));
+        return response;
+      }
+
+      response.Data = UserListMapper.ToListGameResponse(updatedList);
       _logger.LogInformation("Jogo {GID}:{GNAME} removido da lista {LID}:{LNAME} por {UID}:{UNAME}", game.Id, game.Name, list.Id, list.Name, user.Id, user.Name);
       return response;
     }
-
     // Biblioteca de Usuário
-    public async Task<Response<string>> AdicionarJogoABibliotecaAsync(UserLibraryRequest userLibrary)
+    public async Task<Response<List<UserLibraryGameResponse>>> AdicionarJogoABibliotecaAsync(UserLibraryRequest userLibrary)
     {
-      var response = new Response<string>();
+      var response = new Response<List<UserLibraryGameResponse>>();
 
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userLibrary.UserId);
       if (user == null)
@@ -458,7 +464,9 @@ namespace LudoVault.Services
       }
 
       _logger.LogInformation("Jogo {GID}:{GNAME} adicionado a biblioteca de {UID}:{UNAME}", game.Id, game.Name, user.Id, user.Name);
-      response.Data = $"Jogo {game.Name} adicionado a biblioteca com sucesso!";
+      
+      var updatedLibrary = await _userRepository.BuscarJogosDaBibliotecaAsync(userLibrary.UserId);
+      response.Data = updatedLibrary.Select(UserLibraryMapper.ToGameResponse).ToList();
       return response;
     }
     public async Task<Response<List<UserLibraryGameResponse>>> BuscarJogosDaBibliotecaAsync(int id)
@@ -479,9 +487,9 @@ namespace LudoVault.Services
 
       return response;
     }
-    public async Task<Response<string>> RemoverJogoDaBibliotecaAsync(int userId, int gameId)
+    public async Task<Response<List<UserLibraryGameResponse>>> RemoverJogoDaBibliotecaAsync(int userId, int gameId)
     {
-      var response = new Response<string>();
+      var response = new Response<List<UserLibraryGameResponse>>();
       var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
       if (user == null)
       {
@@ -511,8 +519,9 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = $"Jogo {game.Name} removido com sucesso!";
       _logger.LogInformation("Jogo {GID}:{GNAME} removido da biblioteca de {UID}:{UNAME}", game.Id, game.Name, user.Id, user.Name);
+      var updatedLibrary = await _userRepository.BuscarJogosDaBibliotecaAsync(userId);
+      response.Data = updatedLibrary.Select(UserLibraryMapper.ToGameResponse).ToList();
       return response;
     }
 
