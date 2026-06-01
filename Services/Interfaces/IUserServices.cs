@@ -9,6 +9,7 @@ namespace LudoVault.Services.Interfaces
     // Usuário
     public Task<Response<UserResponse>> CriarUsuarioAsync(UserRequest user);
     public Task<Response<UserResponse>> AtualizarUsuarioAsync(UserRequest user, int userId);
+    public Task<Response<UserResponse>> AtualizarSenhaUsuarioAsync(UserPasswordUpdateRequest request, int userId);
     public Task<Response<UserResponse>> BuscarUsuarioPorIdAsync(int id);
     public Task<Response<UserResponse>> AdicionarImagemDePerfilAsync(IFormFile image, int userId);
     public Task<Response<UserResponse>> RemoverImagemDePerfilAsync(int userId);

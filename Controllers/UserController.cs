@@ -17,6 +17,12 @@ namespace LudoVault.Controllers
       return Ok(await _userServices.AtualizarUsuarioAsync(user, id));
     }
 
+    [HttpPut("{id}/update-password")]
+    public async Task<IActionResult> AtualizarSenhaUsuario([FromBody] UserPasswordUpdateRequest request, int id)
+    {
+      return Ok(await _userServices.AtualizarSenhaUsuarioAsync(request, id));
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> BurcarUsuarioPorId(int id)
     {

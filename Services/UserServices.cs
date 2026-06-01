@@ -95,6 +95,44 @@ namespace LudoVault.Services
       response.Data = UserMapper.ToResponse(currentUser);
       return response;
     }
+    public async Task<Response<UserResponse>> AtualizarSenhaUsuarioAsync(UserPasswordUpdateRequest request, int userId)
+    {
+      var response = new Response<UserResponse>();
+
+      var validation = new UserPasswordUpdateValidation();
+      var errors = validation.Validate(request).GetErrors();
+
+      if (!errors.IsSuccessul)
+        return new Response<UserResponse>(errors.Report);
+
+      var user = await _userRepository.BuscarUsuarioPorIdAsync(userId);
+      if (user == null)
+      {
+        response.Report.Add(Report.Create("Usuário não encontrado!", 404));
+        return response;
+      }
+
+      var oldPasswordValid = await _securityService.VerifyPassword(request.OldPassword, user);
+      if (!oldPasswordValid)
+      {
+        response.Report.Add(Report.Create("A senha antiga inserida está incorreta.", 400));
+        return response;
+      }
+
+      user.PasswordHash = await _securityService.EncryptPassword(request.NewPassword);
+
+      var currentUser = await _userRepository.AtualizarUsuarioAsync(user);
+      if (currentUser == null)
+      {
+        _logger.LogError("Erro ao atualizar senha do usuário {UID}:{UNAME}.", user.Id, user.Name);
+        response.Report.Add(Report.Create($"Erro interno ao atualizar a senha do usuário {user.Name}.", 500));
+        return response;
+      }
+
+      _logger.LogInformation("Senha do usuário {UID}:{UNAME} atualizada com sucesso.", currentUser.Id, currentUser.Name);
+      response.Data = UserMapper.ToResponse(currentUser);
+      return response;
+    }
     public async Task<Response<UserResponse>> BuscarUsuarioPorIdAsync(int id)
     {
       var response = new Response<UserResponse>();
