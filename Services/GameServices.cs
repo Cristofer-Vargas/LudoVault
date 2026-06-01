@@ -22,8 +22,9 @@ namespace LudoVault.Services
 
     private readonly ILogger<GameServices> _logger = logger;
     
-    private async Task ValidarPlataformasEGenerosAsync(GameRequest gameRequest, Response<GameResponse> response)
+    private async Task<List<Report>> ValidarPlataformasEGenerosAsync(GameRequest gameRequest, Response<GameResponse> response)
     {
+      var reports = new List<Report>();
       foreach (var platformId in gameRequest.PlatformIds)
       {
         var platform = await _platformRepository.BuscarPorId(platformId);
@@ -40,6 +41,7 @@ namespace LudoVault.Services
           response.Report.Add(Report.Create($"Gênero com ID {genreId} não encontrado!", 404));
         }
       }
+      return reports;
     }
 
     // Jogo
@@ -55,8 +57,11 @@ namespace LudoVault.Services
 
       gameRequest.PlatformIds = gameRequest.PlatformIds.Distinct().ToList();
       gameRequest.GenreIds = gameRequest.GenreIds.Distinct().ToList();
-      await ValidarPlataformasEGenerosAsync(gameRequest, response);
-      
+
+      var platformAndGenreErrors = await ValidarPlataformasEGenerosAsync(gameRequest, response);
+      if (platformAndGenreErrors.Count > 0)
+        return new Response<GameResponse>(platformAndGenreErrors);
+
       var publisher = await _publisherRepository.BuscarPorIdAsync(gameRequest.PublisherId);
       if (publisher == null)
       {
@@ -98,7 +103,10 @@ namespace LudoVault.Services
 
       gameRequest.PlatformIds = gameRequest.PlatformIds.Distinct().ToList();
       gameRequest.GenreIds = gameRequest.GenreIds.Distinct().ToList();
-      await ValidarPlataformasEGenerosAsync(gameRequest, response);
+      
+      var platformAndGenreErrors = await ValidarPlataformasEGenerosAsync(gameRequest, response);
+      if (platformAndGenreErrors.Count > 0)
+        return new Response<GameResponse>(platformAndGenreErrors);
 
       var game = await _gameRepository.BuscarPorIdAsync(id);
       if (game == null)
