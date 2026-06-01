@@ -15,12 +15,12 @@ namespace LudoVault.Services.Mapper
       };
     }
 
-    public static UserListGameModel ToUserListGameModel(UserListGameRequest game)
+    public static UserListGameModel ToUserListGameModel(int listId, int gameId)
     {
       return new UserListGameModel
       {
-        ListId = game.ListId,
-        GameId = game.GameId
+        ListId = listId,
+        GameId = gameId
       };
     }
 

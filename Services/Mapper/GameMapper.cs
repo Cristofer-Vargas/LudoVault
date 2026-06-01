@@ -32,20 +32,20 @@ namespace LudoVault.Services.Mapper
         Name = game.Name,
         ImageUrl = game.ImageUrl,
         Description = game.Description ?? "",
-        PublisherName = game.Publisher.Name,
-        Platforms = game.GamePlatforms
+        PublisherName = game.Publisher?.Name ?? "N/A",
+        Platforms = game.GamePlatforms?
                       .Where(gp => gp.Platform != null)
                       .Select(gp => new PlatformResponse
                       {
-                        Id = gp.Platform.Id,
+                        Id = gp.Platform!.Id,
                         Name = gp.Platform.Name
                       })
                       .ToList() ?? [],
-        Genres = game.GameGenres
+        Genres = game.GameGenres?
                       .Where(gg => gg.Genre != null)
                       .Select(gg => new GenreResponse
                       {
-                        Id = gg.Genre.Id,
+                        Id = gg.Genre!.Id,
                         Name = gg.Genre.Name
                       })
                       .ToList() ?? []

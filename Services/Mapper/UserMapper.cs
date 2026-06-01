@@ -11,7 +11,7 @@ namespace LudoVault.Services.Mapper
       return new UserModel()
       {
         Name = userRequest.Name,
-        Email = userRequest.Email,
+        Email = userRequest.Email.ToLower().Trim(),
         Bio = userRequest.Bio,
         PasswordHash = passwordHash,
         AvatarUrl = userRequest.AvatarUrl ?? "/caminho_avatar_padrao.jpg"

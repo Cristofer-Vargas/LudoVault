@@ -6,12 +6,12 @@ namespace LudoVault.Services.Mapper
 {
   public static class UserLibraryMapper
   {
-    public static UserLibraryModel ToModel(UserLibraryRequest userLibrary)
+    public static UserLibraryModel ToModel(int userId, int gameId)
     {
       return new UserLibraryModel
       {
-        UserId = userLibrary.UserId,
-        GameId = userLibrary.GameId
+        UserId = userId,
+        GameId = gameId
       };
     }
 

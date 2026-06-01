@@ -28,7 +28,7 @@ namespace LudoVault.Model
     public required UserModel User { get; set; }
 
     [Column("comment", TypeName = "text")]
-    [MaxLength(255)]
+    [MaxLength(1200)]
     public string Comment { get; set; } = string.Empty;
 
     [Required]

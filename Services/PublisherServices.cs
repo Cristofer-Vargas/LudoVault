@@ -1,10 +1,11 @@
-﻿using LudoVault.DTO.Requests;
+using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
 using LudoVault.Model;
 using LudoVault.Repositories.Interfaces;
 using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
-using LudoVault.Services.Validations.Base;
+using LudoVault.Validations;
+using LudoVault.Validations.Base;
 
 namespace LudoVault.Services
 {
@@ -16,13 +17,13 @@ namespace LudoVault.Services
 
     public async Task<Response<PublisherResponse>> CriarPublisherAsync(PublisherRequest publisher)
     {
-      var inputErrors = new List<Report>();
-      var response = new Response<PublisherResponse>(inputErrors);
-      if (string.IsNullOrWhiteSpace(publisher.Name))
-        inputErrors.Add(Report.Create("Nome de publisher deve ser preenchido corretamente!", 400));
-      if (inputErrors.Count > 0)
-        return response;
+      var validation = new PublisherValidation();
+      var errors = validation.Validate(publisher).GetErrors();
 
+      if (!errors.IsSuccessul)
+        return new Response<PublisherResponse>(errors.Report);
+
+      var response = new Response<PublisherResponse>();
       var publisherModel = PublisherMapper.ToModel(publisher);
       var publisherCreated = await _publisherRepository.CriarAsync(publisherModel);
       if (publisherCreated == null)
@@ -41,6 +42,12 @@ namespace LudoVault.Services
     }
     public async Task<Response<PublisherResponse>> AtualizarPublisherAsync(PublisherRequest publisher, int id)
     {
+      var validation = new PublisherValidation();
+      var errors = validation.Validate(publisher).GetErrors();
+
+      if (!errors.IsSuccessul)
+        return new Response<PublisherResponse>(errors.Report);
+
       var response = new Response<PublisherResponse>();
       var pub = await _publisherRepository.BuscarPorIdAsync(id);
       if (pub == null)

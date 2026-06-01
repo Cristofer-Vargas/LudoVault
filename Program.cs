@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddCorsPolicy();
 builder.Services.AddServicesAndRepositories();
+builder.Services.AddValidations();
 
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
 

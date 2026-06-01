@@ -1,8 +1,9 @@
-﻿namespace LudoVault.Services.Validations.Base
+﻿namespace LudoVault.Validations.Base
 {
   public class Response
   {
     public List<Report> Report { get; }
+    public bool IsSuccessul => Report.Count == 0;
 
     public Response()
     {
@@ -11,10 +12,8 @@
 
     public Response(List<Report> reports)
     {
-      Report = reports;
+      Report = reports ?? new List<Report>();
     }
-
-    public Response(Report report) : this(new List<Report>() { report }) { }
 
     public static Response<T> Ok<T>(T data) => new Response<T>(data);
     public static Response Ok() => new Response();
@@ -24,6 +23,8 @@
     {
       return new Response<T>(reports);
     }
+
+    public Response(Report report) : this(new List<Report>() { report }) { }
   }
 
   public class Response<T> : Response

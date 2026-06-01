@@ -1,6 +1,6 @@
 ﻿using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
-using LudoVault.Services.Validations.Base;
+using LudoVault.Validations.Base;
 
 namespace LudoVault.Services.Interfaces
 {

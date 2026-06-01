@@ -67,22 +67,22 @@ namespace LudoVault.Controllers
       return Ok(await _userServices.BuscarListasDeUsuarioAsync(id));
     }
 
-    [HttpPost("create/list")]
-    public async Task<IActionResult> CreateUserList([FromBody] UserListRequest userList)
+    [HttpPost("{userId}/create/list")]
+    public async Task<IActionResult> CreateUserList([FromBody] UserListRequest userList, int userId)
     {
-      return Ok(await _userServices.CriarListaAsync(userList));
+      return Ok(await _userServices.CriarListaAsync(userList, userId));
     }
 
-    [HttpPost("{userId}/list/game")]
-    public async Task<IActionResult> AddGameInUserList([FromBody] UserListGameRequest game, int userId)
+    [HttpPost("{userId}/list/{listId}/game/{gameId}")]
+    public async Task<IActionResult> AddGameInUserList(int listId, int gameId, int userId)
     {
-      return Ok(await _userServices.AdicionarJogoAListaAsync(game, userId));
+      return Ok(await _userServices.AdicionarJogoAListaAsync(listId, gameId, userId));
     }
 
-    [HttpPut("update/list/{listId}")]
-    public async Task<IActionResult> AtualizarUserList([FromBody] UserListRequest userList, int listId)
+    [HttpPut("{userId}/update/list/{listId}")]
+    public async Task<IActionResult> AtualizarUserList([FromBody] UserListRequest userList, int userId, int listId)
     {
-      return Ok(await _userServices.AtualizarListaAsync(userList, listId));
+      return Ok(await _userServices.AtualizarListaAsync(userList, userId, listId));
     }
 
     [HttpDelete("{userId}/list/{listId}/game/{gameId}")]
@@ -104,10 +104,10 @@ namespace LudoVault.Controllers
       return Ok(await _userServices.BuscarJogosDaBibliotecaAsync(userId));
     }
 
-    [HttpPost("library")]
-    public async Task<IActionResult> AdicionarJogoABiblioteca([FromBody] UserLibraryRequest userLibrary)
+    [HttpPost("{userId}/library/game/{gameId}")]
+    public async Task<IActionResult> AdicionarJogoABiblioteca(int userId, int gameId)
     {
-      return Ok(await _userServices.AdicionarJogoABibliotecaAsync(userLibrary));
+      return Ok(await _userServices.AdicionarJogoABibliotecaAsync(userId, gameId));
     }
 
     [HttpDelete("{userId}/library/game/{gameId}")]

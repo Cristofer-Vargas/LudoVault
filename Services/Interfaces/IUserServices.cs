@@ -1,6 +1,6 @@
-﻿using LudoVault.DTO.Requests;
+using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
-using LudoVault.Services.Validations.Base;
+using LudoVault.Validations.Base;
 
 namespace LudoVault.Services.Interfaces
 {
@@ -15,15 +15,15 @@ namespace LudoVault.Services.Interfaces
     public Task<Response<string>> ExcluirUsuarioAsync(int userId);
 
     // Listas de Usuário
-    public Task<Response<UserListListsResponse>> CriarListaAsync(UserListRequest userList);
-    public Task<Response<UserListListsResponse>> AtualizarListaAsync(UserListRequest userList, int listId);
-    public Task<Response<UserListListsResponse>> AdicionarJogoAListaAsync(UserListGameRequest userGameList, int userId);
+    public Task<Response<UserListListsResponse>> CriarListaAsync(UserListRequest userList, int userId);
+    public Task<Response<UserListListsResponse>> AtualizarListaAsync(UserListRequest userList, int userId, int listId);
+    public Task<Response<UserListListsResponse>> AdicionarJogoAListaAsync(int listId, int gameId, int userId);
     public Task<Response<UserListResponse>> BuscarListasDeUsuarioAsync(int id);
     public Task<Response<string>> ExcluirListaAsync(int userId, int listId);
     public Task<Response<UserListListsResponse>> RemoverJogoDeListaAsync(int userId, int listId, int gameId);
 
     // Biblioteca de Usuário
-    public Task<Response<List<UserLibraryGameResponse>>> AdicionarJogoABibliotecaAsync(UserLibraryRequest userLibrary);
+    public Task<Response<List<UserLibraryGameResponse>>> AdicionarJogoABibliotecaAsync(int userId, int gameId);
     public Task<Response<List<UserLibraryGameResponse>>> BuscarJogosDaBibliotecaAsync(int id);
     public Task<Response<List<UserLibraryGameResponse>>> RemoverJogoDaBibliotecaAsync(int userId, int gameId);
 
