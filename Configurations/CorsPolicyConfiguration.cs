@@ -6,10 +6,10 @@
     {
       services.AddCors(options =>
       {
-        options.AddPolicy("AllowReactApp",
+        options.AddPolicy("AllowApp",
                 policy =>
                 {
-                  policy.WithOrigins("http://localhost:5173") // URL do seu React
+                  policy.WithOrigins("http://localhost:4200") // URL do seu APP
                                       .AllowAnyHeader()
                                       .AllowAnyMethod();
                 });

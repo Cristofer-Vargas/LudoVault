@@ -16,7 +16,7 @@ builder.AddLoggerSerilog();
 // Configure the HTTP request pipeline.
 var app = builder.Build();
 
-app.UseCors("AllowReactApp");
+app.UseCors("AllowApp");
 app.UseStaticFiles();
 app.UseHttpsRedirection();
 
