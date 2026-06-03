@@ -1,0 +1,15 @@
+services:
+  LudoVault:
+    container_name: LudoVault
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

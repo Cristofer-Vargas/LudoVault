@@ -5,9 +5,9 @@ namespace LudoVault.Configurations
 {
   public static class DatabaseConfigs
   {
-    public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services)
     {
-      var connectionString = configuration["MySqlConnection"];
+      var connectionString = System.Environment.GetEnvironmentVariable("MySqlConnection");
       if (string.IsNullOrWhiteSpace(connectionString))
       {
         throw new ArgumentException("String de conexão 'MySqlConnection' não encontrada.");
@@ -17,7 +17,7 @@ namespace LudoVault.Configurations
               (options => options.UseMySql
               (
                       connectionString,
-                      ServerVersion.AutoDetect(connectionString)
+                      Microsoft.EntityFrameworkCore.ServerVersion.AutoDetect(connectionString)
               )
               );
       return services;
