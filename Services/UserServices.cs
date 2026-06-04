@@ -5,18 +5,20 @@ using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
 using LudoVault.Validations;
 using LudoVault.Validations.Base;
+using Microsoft.Extensions.Options;
+using LudoVault.Configurations;
 
 namespace LudoVault.Services
 {
   public class UserServices(IUserRepository userRepo, ISecurityServices securityService,
-    IGameRepository gameRepo, IImageServices imageServices, ISystemServices sistema, ILogger<UserServices> logger) : IUserServices
+    IGameRepository gameRepo, IImageServices imageServices, ILogger<UserServices> logger, IOptions<DefaultImagesOptions> defaultImagesOptions) : IUserServices
   {
     private readonly IUserRepository _userRepository = userRepo;
     private readonly IGameRepository _gameRepository = gameRepo;
     private readonly ISecurityServices _securityService = securityService;
     private readonly IImageServices _imageServices = imageServices;
-    private readonly ISystemServices _sistema = sistema;
     private readonly ILogger<UserServices> _logger = logger;
+    private readonly DefaultImagesOptions _defaultImages = defaultImagesOptions.Value;
 
     // Usuário
     public async Task<Response<UserResponse>> CriarUsuarioAsync(UserRequest userRequest)
@@ -36,7 +38,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      userRequest.AvatarUrl = _sistema.CaminhoUserDefaultImage();
+      userRequest.AvatarUrl = _defaultImages.UserAvatar;
       userRequest.PasswordHash = await _securityService.EncryptPassword(userRequest.PasswordHash ?? "");
       var userModel = UserMapper.ToModel(userRequest, userRequest.PasswordHash);
 
@@ -156,7 +158,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      if (user.AvatarUrl != _sistema.CaminhoUserDefaultImage())
+      if (user.AvatarUrl != _defaultImages.UserAvatar)
       {
         var imageDeleted = _imageServices.ExcluirImagemAsset(user.AvatarUrl);
         if (!imageDeleted && !string.IsNullOrWhiteSpace(user.AvatarUrl))
@@ -164,7 +166,7 @@ namespace LudoVault.Services
           response.Report.Add(Report.Create("Erro interno ao substituir imagem.", 500));
           return response;
         }
-        user.AvatarUrl = _sistema.CaminhoUserDefaultImage();
+        user.AvatarUrl = _defaultImages.UserAvatar;
       }
 
       var caminho = await _imageServices.ConverteParaWebpESalvaImagem(image, "users");
@@ -192,7 +194,7 @@ namespace LudoVault.Services
       }
 
       _logger.LogInformation("Removendo imagem de {UID}:{UNAME}.", user.Id, user.Name);
-      var pathUserDefaultImage = _sistema.CaminhoUserDefaultImage();
+      var pathUserDefaultImage = _defaultImages.UserAvatar;
       if (user.AvatarUrl != pathUserDefaultImage)
       {
         var imageDeleted = _imageServices.ExcluirImagemAsset(user.AvatarUrl ?? "");
@@ -231,7 +233,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      if (user.AvatarUrl != _sistema.CaminhoUserDefaultImage() && !string.IsNullOrWhiteSpace(user.AvatarUrl))
+      if (user.AvatarUrl != _defaultImages.UserAvatar && !string.IsNullOrWhiteSpace(user.AvatarUrl))
       {
         var imageDeleted = _imageServices.ExcluirImagemAsset(user.AvatarUrl);
         if (!imageDeleted)
@@ -240,7 +242,7 @@ namespace LudoVault.Services
           return response;
         }
       }
-      user.AvatarUrl = _sistema.CaminhoUserDefaultImage();
+      user.AvatarUrl = _defaultImages.UserAvatar;
 
       var userExcluded = await _userRepository.ExcluirUsuarioAsync(user);
       if (!userExcluded)
@@ -473,7 +475,7 @@ namespace LudoVault.Services
       _logger.LogInformation("Jogo {GID}:{GNAME} removido da lista {LID}:{LNAME} por {UID}:{UNAME}", game.Id, game.Name, list.Id, list.Name, user.Id, user.Name);
       return response;
     }
-    
+
     // Biblioteca de Usuário
     public async Task<Response<List<UserLibraryGameResponse>>> AdicionarJogoABibliotecaAsync(int userId, int gameId)
     {
@@ -510,7 +512,7 @@ namespace LudoVault.Services
       }
 
       _logger.LogInformation("Jogo {GID}:{GNAME} adicionado a biblioteca de {UID}:{UNAME}", game.Id, game.Name, user.Id, user.Name);
-      
+
       var updatedLibrary = await _userRepository.BuscarJogosDaBibliotecaAsync(userId);
       response.Data = updatedLibrary.Select(UserLibraryMapper.ToGameResponse).ToList();
       return response;

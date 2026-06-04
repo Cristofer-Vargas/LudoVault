@@ -15,8 +15,7 @@ namespace LudoVault.Configurations
       services.AddScoped<IUserServices, UserServices>();
       services.AddScoped<IPublisherServices, PublisherServices>();
       services.AddScoped<IImageServices, ImageServices>();
-      services.AddScoped<ISystemServices, SystemServices>();
-      
+
       // Repositórios
       services.AddScoped<IUserRepository, UserRepository>();
       services.AddScoped<IGameRepository, GameRepository>();

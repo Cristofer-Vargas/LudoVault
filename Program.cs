@@ -8,6 +8,8 @@ builder.Services.AddCorsPolicy();
 builder.Services.AddServicesAndRepositories();
 builder.Services.AddValidations();
 
+builder.Services.Configure<DefaultImagesOptions>(builder.Configuration.GetSection("ImageProvider:DefaultImages"));
+
 builder.Services.AddDatabaseConfiguration();
 
 // Log System

@@ -5,20 +5,23 @@ using SixLabors.ImageSharp.Processing;
 
 namespace LudoVault.Services
 {
-  public class ImageServices(ISystemServices sistema, ILogger<ImageServices> logger) : IImageServices
+  public class ImageServices(ILogger<ImageServices> logger, IWebHostEnvironment webHost, IConfiguration config) : IImageServices
   {
-    private readonly ISystemServices _sistema = sistema;
     private readonly ILogger<ImageServices> _logger = logger;
+    private readonly IWebHostEnvironment _webHost = webHost;
+    private readonly IConfiguration _config = config;
 
     public async Task<string> ConverteParaWebpESalvaImagem(IFormFile imagem, string finalPath)
     {
-      string caminhoGamePasta = Path.Combine(_sistema.CaminhoAssetsRoot(), "uploads", $"{finalPath}\\");
+      // inves de colocar finalPath por string, definir dinamicamente? para entrar no caminho de user ou game
+      // ou espaço para adições de outros caminhos tambem, futuramente
+      string caminhoGamePasta = Path.Combine(_webHost.WebRootPath, "uploads", $"{finalPath}\\");
       string nomeArquivo = Guid.NewGuid().ToString() + ".webp";
       string caminhoCompleto = caminhoGamePasta + nomeArquivo;
 
       if (imagem == null || imagem.Length == 0)
       {
-        return caminhoGamePasta + "default-image.webp";
+        return _config["DefaultImages:GameImage"];
       }
 
       if (!Directory.Exists(caminhoGamePasta)) Directory.CreateDirectory(caminhoGamePasta);

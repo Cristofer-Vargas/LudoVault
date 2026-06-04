@@ -1,4 +1,3 @@
-﻿using FluentValidation;
 using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
 using LudoVault.Repositories.Interfaces;
@@ -6,11 +5,13 @@ using LudoVault.Services.Interfaces;
 using LudoVault.Services.Mapper;
 using LudoVault.Validations;
 using LudoVault.Validations.Base;
+using Microsoft.Extensions.Options;
+using LudoVault.Configurations;
 
 namespace LudoVault.Services
 {
   public class GameServices(IGameRepository gameRepo, IPlatformRepository platformRepo, IGenreRepository genreRepo,
-    IPublisherRepository publisherRepo, IImageServices imageServices, ISystemServices sistema,
+    IPublisherRepository publisherRepo, IImageServices imageServices, IOptions<DefaultImagesOptions> defaultImagesOptions,
     ILogger<GameServices> logger) : IGameServices
   {
     private readonly IGameRepository _gameRepository = gameRepo;
@@ -18,10 +19,10 @@ namespace LudoVault.Services
     private readonly IGenreRepository _genreRepository = genreRepo;
     private readonly IPublisherRepository _publisherRepository = publisherRepo;
     private readonly IImageServices _imageServices = imageServices;
-    private readonly ISystemServices _sistema = sistema;
+    private readonly DefaultImagesOptions _defaultImages = defaultImagesOptions.Value;
 
     private readonly ILogger<GameServices> _logger = logger;
-    
+
     private async Task<List<Report>> ValidarPlataformasEGenerosAsync(GameRequest gameRequest, Response<GameResponse> response)
     {
       var reports = new List<Report>();
@@ -71,7 +72,7 @@ namespace LudoVault.Services
       if (!response.IsSuccessul)
         return response;
 
-      gameRequest.ImageUrl = _sistema.CaminhoGameDefaultImage();
+      gameRequest.ImageUrl = _defaultImages.GameImage;
       var gameModel = GameMapper.ToModel(
           gameRequest,
           publisher!,
@@ -103,7 +104,7 @@ namespace LudoVault.Services
 
       gameRequest.PlatformIds = gameRequest.PlatformIds.Distinct().ToList();
       gameRequest.GenreIds = gameRequest.GenreIds.Distinct().ToList();
-      
+
       var platformAndGenreErrors = await ValidarPlataformasEGenerosAsync(gameRequest, response);
       if (platformAndGenreErrors.Count > 0)
         return new Response<GameResponse>(platformAndGenreErrors);
@@ -131,7 +132,7 @@ namespace LudoVault.Services
       game.Publisher = publisher!;
 
       game.GamePlatforms = gameRequest.PlatformIds
-        .Select(id => PlatformMapper.ToGamePlatformModel(id)) 
+        .Select(id => PlatformMapper.ToGamePlatformModel(id))
         .ToList();
       game.GameGenres = gameRequest.GenreIds
         .Select(id => GenreMapper.ToGameGenreModel(id))
@@ -191,12 +192,12 @@ namespace LudoVault.Services
       }
 
       var oldImageUrl = game.ImageUrl;
-      var defaultImageUrl = _sistema.CaminhoGameDefaultImage();
+      var defaultImageUrl = _defaultImages.GameImage;
 
       _logger.LogInformation("Adicionando Imagem para jogo {GID}:{GNAME}.", game.Id, game.Name);
-      
+
       var caminhoImg = await _imageServices.ConverteParaWebpESalvaImagem(image, "games");
-      
+
       if (caminhoImg == defaultImageUrl && (image == null || image.Length == 0))
       {
         response.Report.Add(Report.Create("Nenhuma imagem enviada!", 400));
@@ -205,13 +206,13 @@ namespace LudoVault.Services
 
       game.ImageUrl = caminhoImg;
       var imageUpdated = await _gameRepository.AtualizarCaminhoDeImagem(game);
-      
+
       if (!imageUpdated)
       {
         _logger.LogError("Erro interno ao atualizar imagem de {GID}:{GNAME}.", game.Id, game.Name);
         if (caminhoImg != defaultImageUrl)
         {
-          _imageServices.ExcluirImagemAsset(caminhoImg); 
+          _imageServices.ExcluirImagemAsset(caminhoImg);
         }
         response.Report.Add(Report.Create("Erro interno ao atualizar imagem!", 500));
         return response;
@@ -238,7 +239,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      if (game.ImageUrl != _sistema.CaminhoGameDefaultImage())    // Garantir que se for imagem dafult, não o exclua do servidor
+      if (game.ImageUrl != _defaultImages.GameImage)    // Garantir que se for imagem dafult, não o exclua do servidor
       {
         if (!_imageServices.ExcluirImagemAsset(game.ImageUrl))
         {
@@ -271,7 +272,7 @@ namespace LudoVault.Services
       }
       _logger.LogInformation("Removendo Imagem de {GID}:{GNAME}.", game.Id, game.Name);
 
-      var pathGameDefaultImage = _sistema.CaminhoGameDefaultImage();
+      var pathGameDefaultImage = _defaultImages.GameImage;
       if (game.ImageUrl != pathGameDefaultImage)
       {
         if (!_imageServices.ExcluirImagemAsset(game.ImageUrl ?? ""))
