@@ -1,4 +1,4 @@
-﻿using LudoVault.DTO.Requests;
+using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
 using LudoVault.Model;
 
@@ -15,9 +15,9 @@ namespace LudoVault.Services.Mapper
       };
     }
 
-    public static UserListGameModel ToUserListGameModel(int listId, int gameId)
+    public static UserListItemModel ToUserListItemModel(int listId, int gameId)
     {
-      return new UserListGameModel
+      return new UserListItemModel
       {
         ListId = listId,
         GameId = gameId
@@ -34,7 +34,7 @@ namespace LudoVault.Services.Mapper
         TotalGames = list.ListItems.Count
       };
     }
-    public static UserListGameResponse ToGameResponse(UserListGameModel listItem)
+    public static UserListGameResponse ToGameResponse(UserListItemModel listItem)
     {
       return new UserListGameResponse
       {
@@ -43,7 +43,7 @@ namespace LudoVault.Services.Mapper
         Name = listItem.Game.Name,
         ImageUrl = listItem.Game.ImageUrl,
         PublisherName = listItem.Game.Publisher.Name,
-        CreatedAt = listItem.CreatedAt.ToString()
+        CreatedAt = listItem.AddedAt.ToString()
       };
     }
   }

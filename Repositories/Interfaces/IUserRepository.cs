@@ -15,13 +15,13 @@ namespace LudoVault.Repositories.Interfaces
     // Listas de Usuário
     public Task<UserListModel>? CriarListaAsync(UserListModel userList);
     public Task<UserListModel>? AtualizarListaAsync(UserListModel userList);
-    public Task<UserListModel>? AdicionarJogoAListaAsync(UserListGameModel userGameList);
+    public Task<UserListModel>? AdicionarJogoAListaAsync(UserListItemModel userGameList);
     public Task<List<UserListModel>> BuscarListasDeUsuarioAsync(int userId);
     public Task<UserListModel>? BuscarListaAsync(int userListId);
-    public Task<UserListGameModel>? BuscarJogoDaListaAsync(int gameId, int listId);
+    public Task<UserListItemModel>? BuscarJogoDaListaAsync(int gameId, int listId);
     public Task<bool> ExisteListaComMesmoNomeAsync(string name, int userId);
     public Task<bool> ExcluirListaAsync(UserListModel list);
-    public Task<bool> RemoverJogoDaListaAsync(UserListGameModel game); // trocar por id do jogo dentro de list
+    public Task<bool> RemoverJogoDaListaAsync(UserListItemModel game); // trocar por id do jogo dentro de list
 
     // Biblioteca de Usuário
     public Task<bool> AdicionarJogoNaBibliotecaAsync(UserLibraryModel userListGame);

@@ -362,8 +362,8 @@ namespace LudoVault.Services
         return response;
       }
 
-      var userListGameModel = UserListMapper.ToUserListGameModel(listId, gameId);
-      var userListGame = await _userRepository.AdicionarJogoAListaAsync(userListGameModel);
+      var UserListItemModel = UserListMapper.ToUserListItemModel(listId, gameId);
+      var userListGame = await _userRepository.AdicionarJogoAListaAsync(UserListItemModel);
       if (userListGame == null)
       {
         _logger.LogError("Erro ao retornar lista {LID}:{LNAME} para o usuário {UID}:{UNAME} após adicionar jogo {GID}:{GNAME}.", list.Id, list.Name, user.Id, user.Name, game.Id, game.Name);

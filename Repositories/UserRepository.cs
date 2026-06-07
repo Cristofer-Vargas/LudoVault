@@ -152,7 +152,7 @@ namespace LudoVault.Repositories
         return null;
       }
     }
-    public async Task<UserListModel>? AdicionarJogoAListaAsync(UserListGameModel listGame)
+    public async Task<UserListModel>? AdicionarJogoAListaAsync(UserListItemModel listGame)
     {
       using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
@@ -203,7 +203,7 @@ namespace LudoVault.Repositories
         return [];
       }
     }
-    public async Task<UserListGameModel>? BuscarJogoDaListaAsync(int gameId, int listId)
+    public async Task<UserListItemModel>? BuscarJogoDaListaAsync(int gameId, int listId)
     {
       try
       {
@@ -245,7 +245,7 @@ namespace LudoVault.Repositories
         return false;
       }
     }
-    public async Task<bool> RemoverJogoDaListaAsync(UserListGameModel listGame)
+    public async Task<bool> RemoverJogoDaListaAsync(UserListItemModel listGame)
     {
       using var transaction = await _dbContext.Database.BeginTransactionAsync();
 

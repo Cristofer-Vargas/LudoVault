@@ -1,4 +1,4 @@
-﻿using LudoVault.DTO.Responses;
+using LudoVault.DTO.Responses;
 using LudoVault.Model;
 
 namespace LudoVault.Services.Mapper
@@ -22,7 +22,7 @@ namespace LudoVault.Services.Mapper
         GameId = userLibrary.GameId,
         Name = userLibrary.Game.Name,
         ImageUrl = userLibrary.Game.ImageUrl,
-        AddedAt = userLibrary.CreatedAt.ToString()
+        AddedAt = userLibrary.AddedAt.ToString()
       };
     }
   }
