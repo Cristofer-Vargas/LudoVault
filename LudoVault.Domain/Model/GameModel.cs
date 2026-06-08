@@ -1,13 +1,12 @@
 namespace LudoVault.Domain.Model
 {
-  public class GameModel
+  public class GameModel : EntityBaseModel
   {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string ImageUrl { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int PublisherId { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime LauchedAt { get; set; } = DateTime.UtcNow;
     public PublisherModel? Publisher { get; set; }
     public List<GamePlatformModel> GamePlatforms { get; set; } = [];
     public List<GameGenreModel> GameGenres { get; set; } = [];

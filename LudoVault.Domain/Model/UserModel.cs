@@ -1,8 +1,7 @@
 ﻿namespace LudoVault.Domain.Model
 {
-  public class UserModel
+  public class UserModel : EntityBaseModel
   {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string AvatarUrl { get; set; } = "";

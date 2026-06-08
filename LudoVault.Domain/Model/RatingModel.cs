@@ -1,8 +1,7 @@
 namespace LudoVault.Domain.Model
 {
-  public class RatingModel
+  public class RatingModel : EntityBaseModel
   {
-    public int Id { get; set; }
     public decimal Rating { get; set; }
     public string Comment { get; set; } = string.Empty;
     public int GameId { get; set; }

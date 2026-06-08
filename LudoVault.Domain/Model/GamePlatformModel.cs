@@ -1,8 +1,7 @@
 namespace LudoVault.Domain.Model
 {
-  public class GamePlatformModel
+  public class GamePlatformModel : EntityBaseModel
   {
-    public int Id { get; set; }
     public int GameId { get; set; }
     public int PlatformId { get; set; }
     public PlatformModel? Platform { get; set; }

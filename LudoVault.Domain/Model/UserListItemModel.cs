@@ -1,8 +1,7 @@
 namespace LudoVault.Domain.Model
 {
-  public class UserListItemModel
+  public class UserListItemModel : EntityBaseModel
   {
-    public int Id { get; set; }
     public int ListId { get; set; }
     public int GameId { get; set; }
     public DateTime AddedAt { get; set; } = DateTime.UtcNow;

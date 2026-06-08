@@ -1,8 +1,7 @@
 namespace LudoVault.Domain.Model
 {
-  public class UserLibraryModel
+  public class UserLibraryModel : EntityBaseModel
   {
-    public int Id { get; set; }
     public int UserId { get; set; }
     public UserModel? User { get; set; }
     public int GameId { get; set; }
