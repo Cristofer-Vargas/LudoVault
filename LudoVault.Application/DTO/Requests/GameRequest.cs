@@ -1,0 +1,18 @@
+using System.Text.Json.Serialization;
+
+namespace LudoVault.Application.DTO.Requests
+{
+  public class GameRequest
+  {
+    public string? Name { get; set; }
+    public string ImageUrl { get; set; } = "";
+    public string? Description { get; set; }
+    public int PublisherId { get; set; }
+
+    [JsonPropertyName("platforms")]
+    public List<int> PlatformIds { get; set; } = [];
+
+    [JsonPropertyName("genres")]
+    public List<int> GenreIds { get; set; } = [];
+  }
+}

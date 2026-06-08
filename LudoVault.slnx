@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="LudoVault.csproj" />
+  <Project Path="LudoVault.Api/LudoVault.Api.csproj" />
+  <Project Path="LudoVault.Application/LudoVault.Application.csproj" />
+  <Project Path="LudoVault.Domain/LudoVault.Domain.csproj" />
+  <Project Path="LudoVault.Infra/LudoVault.Infra.csproj" />
 </Solution>
