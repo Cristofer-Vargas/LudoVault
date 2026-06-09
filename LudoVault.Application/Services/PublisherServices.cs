@@ -38,6 +38,7 @@ namespace LudoVault.Application.Services
               publisherCreated.Games.Select(p => GameMapper.ToResponse(p)).ToList());
 
       _logger.LogInformation("Publisher {PID}:{PNAME} criada com sucesso.", publisherCreated.Id, publisherCreated.Name);
+      response.Status = 201;
       return response;
     }
     public async Task<Response<PublisherResponse>> AtualizarPublisherAsync(PublisherRequest publisher, int id)
@@ -71,6 +72,7 @@ namespace LudoVault.Application.Services
               updatedPublisher.Games.Select(GameMapper.ToResponse).ToList());
 
       _logger.LogInformation("Publisher {PID}:{POLDNAME} atualizada para {PNEWNAME}", updatedPublisher.Id, pub.Name, updatedPublisher.Name);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<List<PublisherResponse>>> BuscarTodasPublishersAsync()
@@ -82,7 +84,7 @@ namespace LudoVault.Application.Services
               publisher,
               publisher.Games.Select(GameMapper.ToResponse)
       .ToList())).ToList();
-
+      response.Status = 200;
       return response;
     }
     public async Task<Response<PublisherResponse>> BuscarPublisherPorIdAsync(int id)
@@ -100,7 +102,7 @@ namespace LudoVault.Application.Services
               publisherModel,
               publisherModel.Games.Select(GameMapper.ToResponse).ToList()
               );
-
+      response.Status = 200;
       return response;
     }
     public async Task<Response<string>> ExcluirPublisherAsync(int id)
@@ -123,6 +125,7 @@ namespace LudoVault.Application.Services
 
       response.Data = $"Publisher {pub.Name} excluido com sucesso.";
       _logger.LogInformation("Publisher {PID}:{PNAME} excluida com sucesso.", pub.Id, pub.Name);
+      response.Status = 200;
       return response;
     }
   }

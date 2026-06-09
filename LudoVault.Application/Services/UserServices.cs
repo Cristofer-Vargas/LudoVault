@@ -52,6 +52,7 @@ namespace LudoVault.Application.Services
 
       _logger.LogInformation("Usuário {UID}:{UNAME} criado com sucesso.", currentUser.Id, currentUser.Name);
       response.Data = UserMapper.ToResponse(currentUser);
+      response.Status = 201;
       return response;
     }
     public async Task<Response<UserResponse>> AtualizarUsuarioAsync(UserRequest userRequest, int userID)
@@ -65,7 +66,6 @@ namespace LudoVault.Application.Services
         return response;
       }
 
-      // Futuramente terá uma rota que atualiza a senha se o usuário tiver a senha antiga (verifica se é igual e redefine pela nova)
       userRequest.PasswordHash = user.PasswordHash;
 
       var validation = new UserValidation();
@@ -95,6 +95,7 @@ namespace LudoVault.Application.Services
 
       _logger.LogInformation("Usuário {UID}:{UNAME} atualizado.", currentUser.Id, currentUser.Name);
       response.Data = UserMapper.ToResponse(currentUser);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<UserResponse>> AtualizarSenhaUsuarioAsync(UserPasswordUpdateRequest request, int userId)
@@ -133,6 +134,7 @@ namespace LudoVault.Application.Services
 
       _logger.LogInformation("Senha do usuário {UID}:{UNAME} atualizada com sucesso.", currentUser.Id, currentUser.Name);
       response.Data = UserMapper.ToResponse(currentUser);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<UserResponse>> BuscarUsuarioPorIdAsync(int id)
@@ -146,6 +148,7 @@ namespace LudoVault.Application.Services
       }
 
       response.Data = UserMapper.ToResponse(user);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<UserResponse>> AdicionarImagemDePerfilAsync(IFormFile image, int userId)
@@ -181,6 +184,7 @@ namespace LudoVault.Application.Services
 
       response.Data = UserMapper.ToResponse(user);
       _logger.LogInformation("Imagem de {UID}:{UNAME} atualizada com sucesso.", user.Id, user.Name);
+      response.Status = 201;
       return response;
     }
     public async Task<Response<UserResponse>> RemoverImagemDePerfilAsync(int userId)
@@ -221,6 +225,7 @@ namespace LudoVault.Application.Services
       }
 
       response.Data = UserMapper.ToResponse(user);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<string>> ExcluirUsuarioAsync(int userId)
@@ -254,6 +259,7 @@ namespace LudoVault.Application.Services
 
       response.Data = $"Usuário {user.Name} excluido com sucesso!";
       _logger.LogInformation("Usuario {UID}:{UNAME} excluido com sucesso!", user.Id, user.Name);
+      response.Status = 200;
       return response;
     }
 
@@ -292,6 +298,7 @@ namespace LudoVault.Application.Services
 
       response.Data = UserListMapper.ToListGameResponse(lista);
       _logger.LogInformation("Lista {LID}:{LNAME} criada por {UID}:{UNAME}.", lista.Id, lista.Name, user.Id, user.Name);
+      response.Status = 201;
       return response;
     }
     public async Task<Response<UserListListsResponse>> AtualizarListaAsync(UserListRequest userList, int userId, int listId)
@@ -329,6 +336,7 @@ namespace LudoVault.Application.Services
 
       response.Data = UserListMapper.ToListGameResponse(createdListModel);
       _logger.LogInformation("Lista {LID}:{LNAME} atualizada por {UID}:{UNAME} com sucesso.", createdListModel.Id, createdListModel.Name, user.Id, user.Name);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<UserListListsResponse>> AdicionarJogoAListaAsync(int listId, int gameId, int userId)
@@ -373,6 +381,7 @@ namespace LudoVault.Application.Services
 
       response.Data = UserListMapper.ToListGameResponse(userListGame);
       _logger.LogInformation("Jogo {GID}:{GNAME} adicionado em {LID}:{LNAME} de {UID}:{UNAME}.", game.Id, game.Name, list.Id, list.Name, user.Id, user.Name);
+      response.Status = 201;
       return response;
     }
     public async Task<Response<UserListResponse>> BuscarListasDeUsuarioAsync(int id)
@@ -393,6 +402,7 @@ namespace LudoVault.Application.Services
                       .Select(ul => UserListMapper.ToListGameResponse(ul)).ToList(),
         TotalLists = totalLists
       };
+      response.Status = 200;
       return response;
     }
     public async Task<Response<string>> ExcluirListaAsync(int userId, int listId)
@@ -422,6 +432,7 @@ namespace LudoVault.Application.Services
 
       response.Data = $"Lista {list.Name} excluída com sucesso!";
       _logger.LogInformation("Lista {LID}:{LNAME} excluida por {UID}:{UNAME}.", list.Id, list.Name, user.Id, user.Name);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<UserListListsResponse>> RemoverJogoDeListaAsync(int userId, int listId, int gameId)
@@ -473,6 +484,7 @@ namespace LudoVault.Application.Services
 
       response.Data = UserListMapper.ToListGameResponse(updatedList);
       _logger.LogInformation("Jogo {GID}:{GNAME} removido da lista {LID}:{LNAME} por {UID}:{UNAME}", game.Id, game.Name, list.Id, list.Name, user.Id, user.Name);
+      response.Status = 200;
       return response;
     }
 
@@ -515,6 +527,7 @@ namespace LudoVault.Application.Services
 
       var updatedLibrary = await _userRepository.BuscarJogosDaBibliotecaAsync(userId);
       response.Data = updatedLibrary.Select(UserLibraryMapper.ToGameResponse).ToList();
+      response.Status = 201;
       return response;
     }
     public async Task<Response<List<UserLibraryGameResponse>>> BuscarJogosDaBibliotecaAsync(int id)
@@ -532,7 +545,7 @@ namespace LudoVault.Application.Services
       response.Data = libraryGames
               .Select(lg => UserLibraryMapper.ToGameResponse(lg))
               .ToList();
-
+      response.Status = 200;
       return response;
     }
     public async Task<Response<List<UserLibraryGameResponse>>> RemoverJogoDaBibliotecaAsync(int userId, int gameId)
@@ -570,6 +583,7 @@ namespace LudoVault.Application.Services
       _logger.LogInformation("Jogo {GID}:{GNAME} removido da biblioteca de {UID}:{UNAME}", game.Id, game.Name, user.Id, user.Name);
       var updatedLibrary = await _userRepository.BuscarJogosDaBibliotecaAsync(userId);
       response.Data = updatedLibrary.Select(UserLibraryMapper.ToGameResponse).ToList();
+      response.Status = 200;
       return response;
     }
 
@@ -618,6 +632,7 @@ namespace LudoVault.Application.Services
       };
 
       _logger.LogInformation("Avaliação de {GID}:{GNAME} adicionada por {UID}:{UNAME}", game.Id, game.Name, user.Id, user.Name);
+      response.Status = 201;
       return response;
     }
     public async Task<Response<UserRatingGameResponse>> AtualizarAvaliacaoAsync(UserRatingRequest userRating, int userId, int ratingId)
@@ -662,6 +677,7 @@ namespace LudoVault.Application.Services
 
       response.Data = RatingMapper.ToUserGameResponse(ratingUpdated);
       _logger.LogInformation("Avaliação {RID} de jogo {GID}:{GNAME} atualizada por {UID}:{UNAME}", rating.Id, game.Id, game.Name, user.Id, user.Name);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<UserRatingListGamesResponse>> BuscarAvaliacoesAsync(int id)
@@ -683,7 +699,7 @@ namespace LudoVault.Application.Services
               .Select(ur => RatingMapper.ToUserGameResponse(ur)).ToList(),
         TotalRatings = totalRatings
       };
-
+      response.Status = 200;
       return response;
     }
     public async Task<Response<string>> ExcluirAvaliacaoAsync(int userId, int ratingId)
@@ -713,6 +729,7 @@ namespace LudoVault.Application.Services
 
       response.Data = "Avaliação excluida com sucesso!";
       _logger.LogInformation("Avaliação {RID} de {UID}:{UNAME} excluida.", rating.Id, user.Id, user.Name);
+      response.Status = 200;
       return response;
     }
   }

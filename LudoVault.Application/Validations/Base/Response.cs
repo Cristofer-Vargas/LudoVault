@@ -4,6 +4,7 @@ namespace LudoVault.Application.Validations.Base
   {
     public List<Report> Report { get; }
     public bool IsSuccessul => Report.Count == 0;
+    public int Status { get; set; }
 
     public Response()
     {

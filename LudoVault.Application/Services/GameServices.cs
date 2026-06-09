@@ -90,6 +90,7 @@ namespace LudoVault.Application.Services
 
       _logger.LogInformation("Jogo {GID}:{GNAME} criado com sucesso.", game.Id, game.Name);
       response.Data = GameMapper.ToResponse(game);
+      response.Status = 201;
       return response;
     }
     public async Task<Response<GameResponse>> AtualizarGameAsync(GameRequest gameRequest, int id)
@@ -148,6 +149,7 @@ namespace LudoVault.Application.Services
 
       _logger.LogInformation("Jogo {GID}:{GNAME} atualizado com sucesso.", newGame.Id, newGame.Name);
       response.Data = GameMapper.ToResponse(newGame);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<List<GameResponse>>> BuscarTodosGamesAsync()
@@ -163,6 +165,7 @@ namespace LudoVault.Application.Services
       }
 
       response.Data = gamesModel.Select(game => GameMapper.ToResponse(game)).ToList();
+      response.Status = 200;
       return response;
     }
     public async Task<Response<GameResponse>> BuscarGamePorIdAsync(int id)
@@ -177,6 +180,7 @@ namespace LudoVault.Application.Services
 
       }
       response.Data = GameMapper.ToResponse(gameModel);
+      response.Status = 200;
       return response;
     }
     public async Task<Response<GameResponse>> AdicionarImagemDeCapaAsync(IFormFile image, int gameId)
@@ -225,6 +229,7 @@ namespace LudoVault.Application.Services
       }
 
       response.Data = GameMapper.ToResponse(game);
+      response.Status = 201;
       return response;
     }
     public async Task<Response<string>> RemoverGameAsync(int gameId)
@@ -257,6 +262,7 @@ namespace LudoVault.Application.Services
       }
       _logger.LogInformation("Jogo {GID}:{GNAME} excluído com sucesso.", game.Id, game.Name);
       response.Data = $"Jogo {game.Name} excluído com sucesso!";
+      response.Status = 200;
       return response;
     }
     public async Task<Response<GameResponse>> RemoverImagemDeCapaAsync(int gameId)
@@ -299,6 +305,7 @@ namespace LudoVault.Application.Services
       }
 
       response.Data = GameMapper.ToResponse(game);
+      response.Status = 200;
       return response;
     }
 
@@ -332,6 +339,7 @@ namespace LudoVault.Application.Services
         AvgRatings = Math.Round(Convert.ToDouble(avgRatings), 1),
         TotalRatings = totalRatings
       };
+      response.Status = 200;
       return response;
     }
   }
