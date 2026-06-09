@@ -1,4 +1,4 @@
-﻿using LudoVault.Infra.Data;
+using LudoVault.Infra.Data;
 using LudoVault.Domain.Model;
 using LudoVault.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +35,12 @@ namespace LudoVault.Infra.Repositories
 
       try
       {
+        var trackedEntity = _dbContext.Users.Local.FirstOrDefault(u => u.Id == user.Id);
+        if (trackedEntity != null)
+        {
+            _dbContext.Entry(trackedEntity).State = EntityState.Detached;
+        }
+
         _dbContext.Users.Update(user);
         await _dbContext.SaveChangesAsync();
         await _dbContext.Database.CommitTransactionAsync();
@@ -83,6 +89,12 @@ namespace LudoVault.Infra.Repositories
 
       try
       {
+        var trackedEntity = _dbContext.Users.Local.FirstOrDefault(u => u.Id == user.Id);
+        if (trackedEntity != null)
+        {
+            _dbContext.Entry(trackedEntity).State = EntityState.Detached;
+        }
+
         _dbContext.Users.Update(user);
         await _dbContext.SaveChangesAsync();
         await _dbContext.Database.CommitTransactionAsync();
@@ -140,6 +152,12 @@ namespace LudoVault.Infra.Repositories
 
       try
       {
+        var trackedEntity = _dbContext.UserLists.Local.FirstOrDefault(l => l.Id == list.Id);
+        if (trackedEntity != null)
+        {
+            _dbContext.Entry(trackedEntity).State = EntityState.Detached;
+        }
+
         _dbContext.UserLists.Update(list);
         await _dbContext.SaveChangesAsync();
         await _dbContext.Database.CommitTransactionAsync();
@@ -364,6 +382,12 @@ namespace LudoVault.Infra.Repositories
 
       try
       {
+        var trackedEntity = _dbContext.Ratings.Local.FirstOrDefault(r => r.Id == rating.Id);
+        if (trackedEntity != null)
+        {
+            _dbContext.Entry(trackedEntity).State = EntityState.Detached;
+        }
+
         _dbContext.Ratings.Update(rating);
         await _dbContext.SaveChangesAsync();
         await _dbContext.Database.CommitTransactionAsync();

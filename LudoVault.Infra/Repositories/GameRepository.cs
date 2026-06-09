@@ -1,4 +1,4 @@
-﻿using LudoVault.Infra.Data;
+using LudoVault.Infra.Data;
 using LudoVault.Domain.Model;
 using LudoVault.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +62,12 @@ namespace LudoVault.Infra.Repositories
           genre.GameId = game.Id;
 
         // Atualiza o Game e adiciona as novas relações
+        var trackedEntity = _dbContext.Games.Local.FirstOrDefault(g => g.Id == game.Id);
+        if (trackedEntity != null)
+        {
+            _dbContext.Entry(trackedEntity).State = EntityState.Detached;
+        }
+
         _dbContext.Games.Update(game);
         if (game.GamePlatforms.Count > 0)
           _dbContext.GamePlatforms.AddRange(game.GamePlatforms);
@@ -144,6 +150,12 @@ namespace LudoVault.Infra.Repositories
 
       try
       {
+        var trackedEntity = _dbContext.Games.Local.FirstOrDefault(g => g.Id == game.Id);
+        if (trackedEntity != null)
+        {
+            _dbContext.Entry(trackedEntity).State = EntityState.Detached;
+        }
+
         _dbContext.Games
           .Update(game);
         await _dbContext.SaveChangesAsync();

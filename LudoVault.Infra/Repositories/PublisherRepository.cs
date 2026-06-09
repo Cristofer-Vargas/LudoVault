@@ -1,4 +1,4 @@
-﻿using LudoVault.Infra.Data;
+using LudoVault.Infra.Data;
 using LudoVault.Domain.Model;
 using LudoVault.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +35,12 @@ namespace LudoVault.Infra.Repositories
 
       try
       {
+        var trackedEntity = _dbContext.Publishers.Local.FirstOrDefault(p => p.Id == publisher.Id);
+        if (trackedEntity != null)
+        {
+            _dbContext.Entry(trackedEntity).State = EntityState.Detached;
+        }
+
         _dbContext.Publishers.Update(publisher);
         await _dbContext.SaveChangesAsync();
         await _dbContext.Database.CommitTransactionAsync();
