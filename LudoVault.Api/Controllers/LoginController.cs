@@ -1,3 +1,4 @@
+using LudoVault.Api.Controllers.Base;
 using LudoVault.Application.DTO.Requests;
 using LudoVault.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,7 @@ namespace LudoVault.Api.Controllers
     [HttpPost]
     public async Task<IActionResult> CreatUser([FromBody] UserRequest user)
     {
-      return Ok(await _userServices.CriarUsuarioAsync(user));
+      return this.GetResponse(await _userServices.CriarUsuarioAsync(user));
     }
   }
 }

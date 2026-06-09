@@ -1,3 +1,4 @@
+using LudoVault.Api.Controllers.Base;
 using LudoVault.Application.DTO.Responses;
 using LudoVault.Application.Interfaces.Services;
 using LudoVault.Application.Validations.Base;
@@ -19,13 +20,13 @@ namespace LudoVault.Api.Controllers
       {
         var response = new Response<GameResponse>();
         response.Report.Add(Report.Create("Nenhum arquivo enviado!", 400));
-        return Ok(response);
+        return this.GetResponse(response);
       }
       if (image.Count > 1)
       {
         var response = new Response<GameResponse>();
         response.Report.Add(Report.Create("É aceito apenas um arquivo!", 400));
-        return Ok(response);
+        return this.GetResponse(response);
       }
 
       var file = image.FirstOrDefault();
@@ -35,17 +36,17 @@ namespace LudoVault.Api.Controllers
       {
         var response = new Response<GameResponse>();
         response.Report.Add(Report.Create("O formato de imagem AVIF não é aceito!", 400));
-        return Ok(response);
+        return this.GetResponse(response);
       }
 
       if (type.FirstOrDefault() == "image")
       {
-        return Ok(await _gameServices.AdicionarImagemDeCapaAsync(file, gameId));
+        return this.GetResponse(await _gameServices.AdicionarImagemDeCapaAsync(file, gameId));
       }
 
       var errorResponse = new Response<GameResponse>();
       errorResponse.Report.Add(Report.Create("Não é possível salvar arquivo diferente de imagem!", 400));
-      return Ok(errorResponse);
+      return this.GetResponse(errorResponse);
     }
 
     [HttpPost("user/{userId}/profile/image")]
@@ -55,13 +56,13 @@ namespace LudoVault.Api.Controllers
       {
         var response = new Response<UserResponse>();
         response.Report.Add(Report.Create("Nenhum arquivo enviado!", 400));
-        return Ok(response);
+        return this.GetResponse(response);
       }
       if (image.Count > 1)
       {
         var response = new Response<UserResponse>();
         response.Report.Add(Report.Create("É aceito apenas um arquivo!", 400));
-        return Ok(response);
+        return this.GetResponse(response);
       }
 
       var file = image.FirstOrDefault();
@@ -71,19 +72,19 @@ namespace LudoVault.Api.Controllers
       {
         var response = new Response<UserResponse>();
         response.Report.Add(Report.Create("O formato de imagem AVIF não é aceito!", 400));
-        return Ok(response);
+        return this.GetResponse(response);
       }
 
       var type = file.ContentType.Split("/").FirstOrDefault();
 
       if (type == "image")
       {
-        return Ok(await _userServices.AdicionarImagemDePerfilAsync(file, userId));
+        return this.GetResponse(await _userServices.AdicionarImagemDePerfilAsync(file, userId));
       }
 
       var errorResponse = new Response<UserResponse>();
       errorResponse.Report.Add(Report.Create("Não é possível salvar arquivo diferente de imagem!", 400));
-      return Ok(errorResponse);
+      return this.GetResponse(errorResponse);
     }
   }
 }

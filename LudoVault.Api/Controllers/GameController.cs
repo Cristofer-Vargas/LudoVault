@@ -1,3 +1,4 @@
+using LudoVault.Api.Controllers.Base;
 using LudoVault.Application.DTO.Requests;
 using LudoVault.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -14,44 +15,44 @@ namespace LudoVault.Api.Controllers
     [HttpGet]
     public async Task<IActionResult> BuscarGames()
     {
-      return Ok(await _gameServices.BuscarTodosGamesAsync());
+      return this.GetResponse(await _gameServices.BuscarTodosGamesAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> BuscarGamePorId(int id)
     {
-      return Ok(await _gameServices.BuscarGamePorIdAsync(id));
+      return this.GetResponse(await _gameServices.BuscarGamePorIdAsync(id));
     }
 
     [HttpPost]
     public async Task<IActionResult> CriarGame([FromBody] GameRequest game)
     {
-      return Ok(await _gameServices.CriarGameAsync(game));
+      return this.GetResponse(await _gameServices.CriarGameAsync(game));
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> AtualizarGame([FromBody] GameRequest game, int id)
     {
-      return Ok(await _gameServices.AtualizarGameAsync(game, id));
+      return this.GetResponse(await _gameServices.AtualizarGameAsync(game, id));
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletarGame(int id)
     {
-      return Ok(await _gameServices.RemoverGameAsync(id));
+      return this.GetResponse(await _gameServices.RemoverGameAsync(id));
     }
 
     [HttpDelete("{gameId}/remove/profile/image")]
     public async Task<IActionResult> RemoverImagemDeCapa(int gameId)
     {
-      return Ok(await _gameServices.RemoverImagemDeCapaAsync(gameId));
+      return this.GetResponse(await _gameServices.RemoverImagemDeCapaAsync(gameId));
     }
 
     // Avaliações de Jogo
     [HttpGet("{id}/ratings")]
     public async Task<IActionResult> BuscarRatingsDeGame(int id)
     {
-      return Ok(await _gameServices.BuscarAvaliacoesPorJogoAsync(id));
+      return this.GetResponse(await _gameServices.BuscarAvaliacoesPorJogoAsync(id));
     }
   }
 }
