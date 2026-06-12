@@ -34,7 +34,7 @@ namespace LudoVault.Infra.Mappings
 
       builder.Property(p => p.LauchedAt)
         .HasColumnName("launched_at")
-        .HasColumnType("DATETIME")
+        .HasColumnType("DATE")
         .IsRequired();
 
       builder.HasOne(p => p.Publisher)
@@ -52,7 +52,7 @@ namespace LudoVault.Infra.Mappings
           Description = "Estados Unidos, 1899. Arthur Morgan e a gangue Van der Linde são forçados a fugir. Com agentes federais e os melhores caçadores de recompensas no seu encalço, a gangue precisa roubar, assaltar e lutar para sobreviver no impiedoso coração dos Estados Unidos. Conforme divisões internas profundas ameaçam despedaçar a gangue, Arthur deve fazer uma escolha entre os seus próprios ideais e a lealdade à gangue que o criou.",
           PublisherId = 1,
           Publisher = null!,
-          LauchedAt = new System.DateTime(2024, 1, 1, 0, 0, 0)
+          LauchedAt = new System.DateOnly(2018, 10, 26)
         });
     }
   }

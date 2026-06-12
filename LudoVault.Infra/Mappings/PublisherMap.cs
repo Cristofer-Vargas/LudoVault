@@ -18,13 +18,13 @@ namespace LudoVault.Infra.Mappings
 
       builder.Property(p => p.FundationAt)
         .HasColumnName("fundation_at")
-        .HasColumnType("DATETIME")
+        .HasColumnType("DATE")
         .IsRequired();
 
       builder.HasData(
-        new PublisherModel { Id = 1, Name = "Rockstar Games", FundationAt = new System.DateTime(2024, 1, 1, 0, 0, 0) },
-        new PublisherModel { Id = 2, Name = "Nintendo", FundationAt = new System.DateTime(2024, 1, 1, 0, 0, 0) },
-        new PublisherModel { Id = 3, Name = "Sony Interactive", FundationAt = new System.DateTime(2024, 1, 1, 0, 0, 0) }
+        new PublisherModel { Id = 1, Name = "Rockstar Games", FundationAt = new System.DateOnly(1998, 12, 1) },
+        new PublisherModel { Id = 2, Name = "Nintendo", FundationAt = new System.DateOnly(1889, 9, 1) },
+        new PublisherModel { Id = 3, Name = "Sony Interactive", FundationAt = new System.DateOnly(1993, 11, 16) }
       );
     }
   }

@@ -61,6 +61,7 @@ O projeto possui regras estritas para a modelagem de dados que **devem ser sempr
 - **Propriedades de Navegação:** **NUNCA utilize o modificador `required`** nas propriedades de navegação dos Models (ex: `public required GameModel Game`). Isso gera erros de compilação (CS9035) ao tentar instanciar a entidade durante os mapeamentos ou seed. Utilize sempre o tipo anulável (ex: `public GameModel? Game { get; set; }`).
 - **Data Inicial (Seed) Constante:** **NUNCA utilize dados dinâmicos como `DateTime.Now` ou `DateTime.UtcNow`** dentro de métodos `.HasData()` nas classes de `Mapping`. O Entity Framework identifica essa mudança a cada run e cria Migrations de snapshot desnecessárias e pendentes. Utilize sempre datas fixas (ex: `new DateTime(2024, 1, 1)`).
 - **Injeção Automática de Maps:** No arquivo de contexto (`MysqlContext.cs`), sempre utilize o método `modelBuilder.ApplyConfigurationsFromAssembly(typeof(MysqlContext).Assembly);` dentro do `OnModelCreating`. Isso garante que todos os arquivos `.Map.cs` do projeto sejam registrados automaticamente.
+- **Gerenciamento de Estado (Identity Map):** Ao atualizar entidades em Repositórios, atente-se aos conflitos de rastreamento. Desanexe entidades previamente rastreadas (via `AsNoTracking()` na leitura ou alterando `State = EntityState.Detached`) para evitar que o Entity Framework lance exceções de colisão de chaves idênticas em memória ao atualizar ou salvar uma nova instância.
 
 ---
 
@@ -102,3 +103,4 @@ O projeto possui regras estritas para a modelagem de dados que **devem ser sempr
 - **Nomenclatura:** PascalCase para classes e métodos, camelCase para variáveis locais e campos privados (com `_`).
 - **Async/Await:** Uso extensivo de programação assíncrona para operações de I/O.
 - **Injeção de Dependência:** Utilizada via construtor (inclusive Primary Constructors do C# 12+).
+- **Status HTTP e Retornos da API:** Siga rigorosamente os padrões HTTP para a estrutura de respostas gerenciada pela classe base `GetHttpResponseFromReports.cs`. Quando necessitar retornar informações como dados ou mensagens, aplique sempre o status HTTP `200 OK` nas modificações ou exclusões. O status HTTP `204 No Content` deve ser usado **apenas e estritamente** quando nenhum corpo (body) for devolvido ao frontend. Para recursos criados, mantenha o `201 Created`.
