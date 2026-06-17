@@ -9,7 +9,7 @@ namespace LudoVault.Api.Configurations
         options.AddPolicy("AllowApp",
                 policy =>
                 {
-                  policy.WithOrigins("http://localhost:4200") // URL do seu APP
+                  policy.WithOrigins("http://127.0.0.1:5500") // URL do seu APP
                                       .AllowAnyHeader()
                                       .AllowAnyMethod();
                 });

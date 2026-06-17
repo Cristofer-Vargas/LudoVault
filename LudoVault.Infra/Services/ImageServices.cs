@@ -13,16 +13,19 @@ namespace LudoVault.Infra.Services
 
     public async Task<string> ConverteParaWebpESalvaImagem(IFormFile imagem, string finalPath)
     {
-      // inves de colocar finalPath por string, definir dinamicamente? para entrar no caminho de user ou game
-      // ou espaço para adições de outros caminhos tambem, futuramente
-      string caminhoGamePasta = Path.Combine(_webHost.WebRootPath, "uploads", $"{finalPath}\\");
-      string nomeArquivo = Guid.NewGuid().ToString() + ".webp";
-      string caminhoCompleto = caminhoGamePasta + nomeArquivo;
-
       if (imagem == null || imagem.Length == 0)
       {
-        return _config["DefaultImages:GameImage"];
+        if (finalPath.Equals("users", StringComparison.OrdinalIgnoreCase))
+        {
+            return _config["ImageProvider:DefaultImages:UserAvatar"] ?? "/uploads/users/default-image.webp";
+        }
+        return _config["ImageProvider:DefaultImages:GameImage"] ?? "/uploads/games/default-image.webp";
       }
+
+      // Constrói o caminho físico absoluto para salvar no disco
+      string caminhoGamePasta = Path.Combine(_webHost.WebRootPath, "uploads", finalPath);
+      string nomeArquivo = Guid.NewGuid().ToString() + ".webp";
+      string caminhoCompleto = Path.Combine(caminhoGamePasta, nomeArquivo);
 
       if (!Directory.Exists(caminhoGamePasta)) Directory.CreateDirectory(caminhoGamePasta);
 
@@ -34,24 +37,29 @@ namespace LudoVault.Infra.Services
           Size = new Size(1080, 0),
           Mode = ResizeMode.Max
         }));
-        await img.SaveAsWebpAsync(caminhoCompleto, new WebpEncoder { Quality = 90 }); // Converte para Webp e salva como Webp para o camingo
-
-      }   // Carrega os Bytes de "imagem" da memória para "stream"
+        await img.SaveAsWebpAsync(caminhoCompleto, new WebpEncoder { Quality = 90 });
+      }
 
       _logger.LogInformation("Imagem [{ImgName}] salva em: {ImgPath}", nomeArquivo, caminhoGamePasta);
-      return caminhoCompleto;
+      string caminhoRelativo = $"/uploads/{finalPath}/{nomeArquivo}";
+      return caminhoRelativo;
     }
 
     public bool ExcluirImagemAsset(string filePath)
     {
-      if (!File.Exists(filePath) || filePath == null)
+      if (string.IsNullOrEmpty(filePath)) return false;
+
+      string relativePath = filePath.TrimStart('/', '\\');
+      string fullPath = Path.Combine(_webHost.WebRootPath, relativePath);
+
+      if (!File.Exists(fullPath))
       {
-        _logger.LogError("Erro ao excluir imagem no caminho: [{ImgPath}] -> Arquivo não existe ou caminho incorreto!", filePath);
+        _logger.LogError("Erro ao excluir imagem no caminho: [{ImgPath}] -> Arquivo não existe ou caminho incorreto!", fullPath);
         return false;
       }
 
-      File.Delete(filePath);
-      _logger.LogInformation("Imagem excluída de: {ImgPath}", filePath);
+      File.Delete(fullPath);
+      _logger.LogInformation("Imagem excluída de: {ImgPath}", fullPath);
       return true;
     }
   }
