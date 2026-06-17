@@ -1,6 +1,0 @@
-fix(images): altera armazenamento para caminho relativo web e corrige fallback
-
-- Modifica `ConverteParaWebpESalvaImagem` para retornar a rota web (caminho relativo) das imagens, e não mais o caminho absoluto do servidor.
-- Ajusta `ExcluirImagemAsset` para reconstruir o caminho físico a partir do caminho relativo durante a deleção.
-- Resolve problema no fallback de imagens default, buscando corretamente o caminho para User e Game de acordo com a configuração em `ImageProvider:DefaultImages`.
-- Atualiza origem permitida na política de CORS (porta alterada de 4200 para 5500).
