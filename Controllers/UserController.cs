@@ -30,13 +30,13 @@ namespace LudoVault.Controllers
       return this.GetResponse(await _userServices.BuscarUsuarioPorIdAsync(id));
     }
 
-    [HttpDelete("{userId}/remove/profile/image")]
+    [HttpDelete("{userId}/profile/image")]
     public async Task<IActionResult> RemoverImagemDePerfil(int userId)
     {
       return this.GetResponse(await _userServices.RemoverImagemDePerfilAsync(userId));
     }
 
-    [HttpDelete("{userId}/delete")]
+    [HttpDelete("{userId}")]
     public async Task<IActionResult> DeletarUsuario(int userId)
     {
       return this.GetResponse(await _userServices.ExcluirUsuarioAsync(userId));
@@ -74,7 +74,7 @@ namespace LudoVault.Controllers
       return this.GetResponse(await _userServices.BuscarListasDeUsuarioAsync(id));
     }
 
-    [HttpPost("{userId}/create/list")]
+    [HttpPost("{userId}/lists")] 
     public async Task<IActionResult> CreateUserList([FromBody] UserListRequest userList, int userId)
     {
       return this.GetResponse(await _userServices.CriarListaAsync(userList, userId));
@@ -86,7 +86,7 @@ namespace LudoVault.Controllers
       return this.GetResponse(await _userServices.AdicionarJogoAListaAsync(listId, gameId, userId));
     }
 
-    [HttpPut("{userId}/update/list/{listId}")]
+    [HttpPut("{userId}/list/{listId}")]
     public async Task<IActionResult> AtualizarUserList([FromBody] UserListRequest userList, int userId, int listId)
     {
       return this.GetResponse(await _userServices.AtualizarListaAsync(userList, userId, listId));
