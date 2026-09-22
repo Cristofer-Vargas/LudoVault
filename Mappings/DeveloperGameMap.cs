@@ -20,8 +20,20 @@ namespace LudoVault.Mappings
         .HasColumnName("developer_id")
         .IsRequired();
 
+      builder.HasOne(dg => dg.Developer)
+        .WithMany(d => d.DeveloperGames)
+        .HasForeignKey(dg => dg.DeveloperId)
+        .HasConstraintName("FK_developer_game_developer")
+        .OnDelete(DeleteBehavior.Restrict);
+
+      builder.HasOne(dg => dg.Game)
+        .WithMany(g => g.DeveloperGames)
+        .HasForeignKey(dg => dg.GameId)
+        .HasConstraintName("FK_developer_game_game")
+        .OnDelete(DeleteBehavior.Cascade);
+
       builder.HasData(
-        new DeveloperGameModel { Id = 1, DeveloperId = 2, GameId = 1 }
+        new DeveloperGameModel { Id = 1, DeveloperId = 2, GameId = 1, Game = null!, Developer = null! }
       );
     }
   }

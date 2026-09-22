@@ -24,7 +24,8 @@ namespace LudoVault.Mappings
       builder.HasData(
         new PublisherModel { Id = 1, Name = "Rockstar Games", FundationAt = new System.DateOnly(1998, 12, 1) },
         new PublisherModel { Id = 2, Name = "Nintendo", FundationAt = new System.DateOnly(1889, 9, 1) },
-        new PublisherModel { Id = 3, Name = "Sony Interactive", FundationAt = new System.DateOnly(1993, 11, 16) }
+        new PublisherModel { Id = 3, Name = "Sony Interactive", FundationAt = new System.DateOnly(1993, 11, 16) },
+        new PublisherModel { Id = 4, Name = "Take-Two Interactive", FundationAt = new System.DateOnly(1992, 12, 31) }
       );
     }
   }

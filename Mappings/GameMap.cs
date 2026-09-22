@@ -28,20 +28,10 @@ namespace LudoVault.Mappings
         .IsUnicode(true)
         .IsRequired();
 
-      builder.Property(p => p.PublisherId)
-        .HasColumnName("publisher_id")
-        .IsRequired();
-
       builder.Property(p => p.LauchedAt)
         .HasColumnName("launched_at")
         .HasColumnType("DATE")
         .IsRequired();
-
-      builder.HasOne(p => p.Publisher)
-        .WithMany(p => p.Games)
-        .HasForeignKey(p => p.PublisherId)
-        .HasConstraintName("FK_game_publisher")
-        .OnDelete(DeleteBehavior.Restrict);
 
       builder.HasData(
         new GameModel
@@ -50,8 +40,6 @@ namespace LudoVault.Mappings
           Name = "Red Dead Redemption 2",
           ImageUrl = "/uploads/games/default-image.webp",
           Description = "Estados Unidos, 1899. Arthur Morgan e a gangue Van der Linde são forçados a fugir. Com agentes federais e os melhores caçadores de recompensas no seu encalço, a gangue precisa roubar, assaltar e lutar para sobreviver no impiedoso coração dos Estados Unidos. Conforme divisões internas profundas ameaçam despedaçar a gangue, Arthur deve fazer uma escolha entre os seus próprios ideais e a lealdade à gangue que o criou.",
-          PublisherId = 1,
-          Publisher = null!,
           LauchedAt = new System.DateOnly(2018, 10, 26)
         });
     }
