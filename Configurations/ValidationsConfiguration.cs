@@ -14,6 +14,7 @@ namespace LudoVault.Configurations
       services.AddScoped<IValidator<UserRatingRequest>, UserRatingValidation>();
       services.AddScoped<IValidator<UserListRequest>, UserListValidation>();
       services.AddScoped<IValidator<PublisherRequest>, PublisherValidation>();
+      services.AddScoped<IValidator<DeveloperRequest>, DeveloperValidation>();
 
       return services;
     }
