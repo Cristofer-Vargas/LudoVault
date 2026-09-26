@@ -15,7 +15,9 @@ namespace LudoVault.Validations
         .Must(GetValidations.NotContainHtml).WithMessage("Nome da developer não pode conter tags HTML.").WithErrorCode("400");
 
       RuleFor(x => x.FundationAt)
-        .NotEmpty().WithMessage("Data de fundação não pode ser vazia.").WithErrorCode("400");
+        .NotNull().WithMessage("A data de fundação é obrigatória.")
+      .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today))
+        .WithMessage("A data de fundação não pode estar no futuro.");
     }
   }
 }

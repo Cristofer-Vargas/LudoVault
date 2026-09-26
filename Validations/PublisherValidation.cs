@@ -13,6 +13,11 @@ namespace LudoVault.Validations
         .MinimumLength(3).WithMessage("Nome da publisher deve ter no mínimo 3 caracteres.").WithErrorCode("400")
         .MaximumLength(60).WithMessage("Nome da publisher deve ter no máximo 60 caracteres.").WithErrorCode("400")
         .Must(GetValidations.NotContainHtml).WithMessage("Nome da publisher não pode conter tags HTML.").WithErrorCode("400");
+
+      RuleFor(x => x.FundationAt)
+        .NotNull().WithMessage("A data de fundação é obrigatória.")
+      .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today))
+        .WithMessage("A data de fundação não pode estar no futuro.");
     }
   }
 }
