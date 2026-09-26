@@ -7,26 +7,28 @@ using LudoVault.Validations;
 using LudoVault.Validations.Base;
 using Microsoft.Extensions.Options;
 using LudoVault.Configurations;
+using LudoVault.Model;
 
 namespace LudoVault.Services
 {
   public class GameServices(IGameRepository gameRepo, IPlatformRepository platformRepo, IGenreRepository genreRepo,
     IPublisherRepository publisherRepo, IImageServices imageServices, IOptions<DefaultImagesOptions> defaultImagesOptions,
-    ILogger<GameServices> logger) : IGameServices
+    IDeveloperRepository developerRepo, ILogger<GameServices> logger) : IGameServices
   {
     private readonly IGameRepository _gameRepository = gameRepo;
     private readonly IPlatformRepository _platformRepository = platformRepo;
     private readonly IGenreRepository _genreRepository = genreRepo;
     private readonly IPublisherRepository _publisherRepository = publisherRepo;
+    private readonly IDeveloperRepository _developerRepository = developerRepo;
     private readonly IImageServices _imageServices = imageServices;
     private readonly DefaultImagesOptions _defaultImages = defaultImagesOptions.Value;
 
     private readonly ILogger<GameServices> _logger = logger;
 
-    private async Task<List<Report>> ValidarPlataformasEGenerosAsync(GameRequest gameRequest, Response<GameResponse> response)
+    private async Task<List<Report>> ValidarEntidadesRelacionadasAsync(GameRequest gameRequest, Response<GameResponse> response)
     {
       var reports = new List<Report>();
-      foreach (var platformId in gameRequest.PlatformIds)
+      foreach (var platformId in gameRequest.PlatformIds.Distinct())
       {
         var platform = await _platformRepository.BuscarPorId(platformId);
         if (platform == null)
@@ -34,12 +36,28 @@ namespace LudoVault.Services
           response.Report.Add(Report.Create($"Plataforma com ID {platformId} não encontrada!", 404));
         }
       }
-      foreach (var genreId in gameRequest.GenreIds)
+      foreach (var genreId in gameRequest.GenreIds.Distinct())
       {
         var genre = await _genreRepository.BuscarPorId(genreId);
         if (genre == null)
         {
           response.Report.Add(Report.Create($"Gênero com ID {genreId} não encontrado!", 404));
+        }
+      }
+      foreach (var publisherId in gameRequest.PublisherIds.Distinct())
+      {
+        var publisher = await _publisherRepository.BuscarPorIdAsync(publisherId);
+        if (publisher == null)
+        {
+          response.Report.Add(Report.Create($"Publisher com ID {publisherId} não encontrado!", 404));
+        }
+      }
+      foreach (var developerId in gameRequest.DeveloperIds.Distinct())
+      {
+        var developer = await _developerRepository.BuscarPorIdAsync(developerId);
+        if (developer == null)
+        {
+          response.Report.Add(Report.Create($"Developer com ID {developerId} não encontrado!", 404));
         }
       }
       return reports;
@@ -56,29 +74,15 @@ namespace LudoVault.Services
       if (!errors.IsSuccessul)
         return new Response<GameResponse>(errors.Report);
 
-      gameRequest.PlatformIds = gameRequest.PlatformIds.Distinct().ToList();
-      gameRequest.GenreIds = gameRequest.GenreIds.Distinct().ToList();
-
-      var platformAndGenreErrors = await ValidarPlataformasEGenerosAsync(gameRequest, response);
-      if (platformAndGenreErrors.Count > 0)
-        return new Response<GameResponse>(platformAndGenreErrors);
-
-      var publisher = await _publisherRepository.BuscarPorIdAsync(gameRequest.PublisherId);
-      if (publisher == null)
-      {
-        response.Report.Add(Report.Create("Não foi possivel encontrar a Publisher informada.", 404));
-      }
+      var listOfReportsFromEntitiesValidation = await ValidarEntidadesRelacionadasAsync(gameRequest, response);
+      if (listOfReportsFromEntitiesValidation.Count > 0)
+        return new Response<GameResponse>(listOfReportsFromEntitiesValidation);
 
       if (!response.IsSuccessul)
         return response;
 
       gameRequest.ImageUrl = _defaultImages.GameImage;
-      var gameModel = GameMapper.ToModel(
-          gameRequest,
-          publisher!,
-          gameRequest.PlatformIds,
-          gameRequest.GenreIds
-          );
+      var gameModel = GameMapper.ToModel(gameRequest);
 
       var game = await _gameRepository.CriarAsync(gameModel);
       if (game == null)
@@ -103,12 +107,9 @@ namespace LudoVault.Services
       if (!errors.IsSuccessul)
         return new Response<GameResponse>(errors.Report);
 
-      gameRequest.PlatformIds = gameRequest.PlatformIds.Distinct().ToList();
-      gameRequest.GenreIds = gameRequest.GenreIds.Distinct().ToList();
-
-      var platformAndGenreErrors = await ValidarPlataformasEGenerosAsync(gameRequest, response);
-      if (platformAndGenreErrors.Count > 0)
-        return new Response<GameResponse>(platformAndGenreErrors);
+      var listOfReportsFromEntitiesValidation = await ValidarEntidadesRelacionadasAsync(gameRequest, response);
+      if (listOfReportsFromEntitiesValidation.Count > 0)
+        return new Response<GameResponse>(listOfReportsFromEntitiesValidation);
 
       var game = await _gameRepository.BuscarPorIdAsync(id);
       if (game == null)
@@ -116,28 +117,28 @@ namespace LudoVault.Services
         response.Report.Add(Report.Create("Jogo não encontrado!", 404));
       }
 
-      var publisher = await _publisherRepository.BuscarPorIdAsync(gameRequest.PublisherId);
-      if (publisher == null)
-      {
-        response.Report.Add(Report.Create("Não foi possivel encontrar a Publisher informada.", 404));
-      }
-
       if (!response.IsSuccessul)
       {
         return response;
       }
 
-      game!.Name = gameRequest.Name;
+      game.Name = gameRequest.Name;
       game.Description = gameRequest.Description;
-      game.PublisherId = gameRequest.PublisherId;
-      game.Publisher = publisher!;
 
-      game.GamePlatforms = gameRequest.PlatformIds
-        .Select(id => PlatformMapper.ToGamePlatformModel(id))
-        .ToList();
-      game.GameGenres = gameRequest.GenreIds
-        .Select(id => GenreMapper.ToGameGenreModel(id))
-        .ToList();
+      // Cada ligacao é uma entidade da tabela intermediária do banco 
+      // onde o ID não contém no game atualizado ou seja, 
+      // remove do jogo esse relacionamento com a entidade
+      foreach (var ligacao in game.GamePlatforms.Where(gp => !gameRequest.PlatformIds.Contains(gp.PlatformId)).ToList())
+        game.GamePlatforms.Remove(ligacao);
+
+      foreach (var ligacao in game.GameGenres.Where(gp => !gameRequest.GenreIds.Contains(gp.GenreId)).ToList())
+        game.GameGenres.Remove(ligacao);
+
+      foreach (var ligacao in game.GameDevelopers.Where(gp => !gameRequest.DeveloperIds.Contains(gp.DeveloperId)).ToList())
+        game.GameDevelopers.Remove(ligacao);
+
+      foreach (var ligacao in game.GamePublishers.Where(gp => !gameRequest.PublisherIds.Contains(gp.PublisherId)).ToList())
+        game.GamePublishers.Remove(ligacao);
 
       var newGame = await _gameRepository.AtualizarAsync(game);
       if (newGame == null)
@@ -163,7 +164,6 @@ namespace LudoVault.Services
         response.Report.Add(Report.Create("Erro interno ou nenhum jogo cadastrado!", 404));
         return response;
       }
-
       response.Data = gamesModel.Select(game => GameMapper.ToResponse(game)).ToList();
       response.Status = 200;
       return response;
@@ -179,6 +179,7 @@ namespace LudoVault.Services
         return response;
 
       }
+      
       response.Data = GameMapper.ToResponse(gameModel);
       response.Status = 200;
       return response;
@@ -328,7 +329,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      var avgRatings = gameRatings.Select(gr => gr.Rating).Average();
+      var avgRatings = gameRatings.Average(gr => gr.Rating);
       var totalRatings = gameRatings.Count;
 
       response.Data = new RatingListUsersResponse

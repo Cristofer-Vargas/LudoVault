@@ -27,7 +27,7 @@ namespace LudoVault.Mappings
         .OnDelete(DeleteBehavior.Restrict);
 
       builder.HasOne(dg => dg.Game)
-        .WithMany(g => g.DeveloperGames)
+        .WithMany(g => g.GameDevelopers)
         .HasForeignKey(dg => dg.GameId)
         .HasConstraintName("FK_developer_game_game")
         .OnDelete(DeleteBehavior.Cascade);

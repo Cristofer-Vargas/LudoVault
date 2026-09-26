@@ -18,9 +18,16 @@ namespace LudoVault.Validations
         .NotEmpty().WithMessage("Descrição não pode ser vazia.").WithErrorCode("400")
         .MaximumLength(500).WithMessage("Descrição do jogo deve conter máximo de 500 caracteres.").WithErrorCode("400")
         .Must(GetValidations.NotContainHtml).WithMessage("Descrição do jogo não pode conter tags HTML.").WithErrorCode("400");
-
-      RuleFor(x => x.PublisherId)
-        .GreaterThan(0).WithMessage("Uma Publisher deve ser informada!").WithErrorCode("400");
+      
+      RuleFor(x => x.PublisherIds)
+        .NotEmpty().WithMessage("Deve ser informado ao menos uma publisher!").WithErrorCode("400");
+      RuleForEach(x => x.PublisherIds)
+        .GreaterThan(0).WithMessage("Id de publisher inválido.").WithErrorCode("400");
+      
+      RuleFor(x => x.DeveloperIds)
+        .NotEmpty().WithMessage("Deve ser informado ao menos uma developer!").WithErrorCode("400");
+      RuleForEach(x => x.DeveloperIds)
+        .GreaterThan(0).WithMessage("Id de developer inválido.").WithErrorCode("400");
 
       RuleFor(x => x.PlatformIds)
         .NotEmpty().WithMessage("Deve ser informado ao menos uma plataforma!").WithErrorCode("400");

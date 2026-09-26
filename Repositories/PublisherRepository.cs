@@ -58,7 +58,8 @@ namespace LudoVault.Repositories
       try
       {
         return await _dbContext.Publishers
-              .Include(p => p.Games)
+              .Include(p => p.PublisherGame)
+                .ThenInclude(pg => pg.Game)
               .FirstOrDefaultAsync(p => p.Id == id);
       }
       catch (Exception e)
@@ -72,7 +73,8 @@ namespace LudoVault.Repositories
       try
       {
         return await _dbContext.Publishers
-            .Include(p => p.Games)
+            .Include(p => p.PublisherGame)
+                .ThenInclude(pg => pg.Game)
             .ToListAsync();
       }
       catch (Exception e)

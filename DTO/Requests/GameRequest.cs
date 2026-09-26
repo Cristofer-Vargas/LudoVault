@@ -7,12 +7,17 @@ namespace LudoVault.DTO.Requests
     public string? Name { get; set; }
     public string ImageUrl { get; set; } = "";
     public string? Description { get; set; }
-    public int PublisherId { get; set; }
 
     [JsonPropertyName("platforms")]
-    public List<int> PlatformIds { get; set; } = [];
+    public HashSet<int> PlatformIds { get; set; } = [];
 
     [JsonPropertyName("genres")]
-    public List<int> GenreIds { get; set; } = [];
+    public HashSet<int> GenreIds { get; set; } = [];
+
+    [JsonPropertyName("publishers")]
+    public HashSet<int> PublisherIds { get; set; } = [];
+
+    [JsonPropertyName("developers")]
+    public HashSet<int> DeveloperIds { get; set; } = [];
   }
 }

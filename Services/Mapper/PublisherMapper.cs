@@ -1,6 +1,7 @@
 ﻿using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
 using LudoVault.Model;
+using LudoVault.Services.Mapper.Interfaces;
 
 namespace LudoVault.Services.Mapper
 {
@@ -14,13 +15,12 @@ namespace LudoVault.Services.Mapper
       };
     }
 
-    public static PublisherResponse ToResponse(PublisherModel publisherModel, List<GameResponse> games)
+    public static PublisherResponse ToResponse(PublisherModel publisherModel)
     {
       return new PublisherResponse()
       {
         Id = publisherModel.Id,
-        Name = publisherModel.Name,
-        Games = games
+        Name = publisherModel.Name
       };
     }
   }

@@ -1,5 +1,6 @@
 using LudoVault.Data;
 using LudoVault.Model;
+using LudoVault.Repositories.Base;
 using LudoVault.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,17 +20,8 @@ namespace LudoVault.Repositories
       {
         await _dbContext.AddAsync(game);
         await _dbContext.SaveChangesAsync();
-
-        foreach (var platform in game.GamePlatforms) { platform.GameId = game.Id; } // Para cada plataforma, e genero
-        foreach (var genre in game.GameGenres) { genre.GameId = game.Id; }          // adiciona o ID do game para preencher no banco
-
-        if (game.GamePlatforms.Count > 0) { _dbContext.GamePlatforms.UpdateRange(game.GamePlatforms); }
-        if (game.GameGenres.Count > 0) { _dbContext.GameGenres.UpdateRange(game.GameGenres); }
-
-        await _dbContext.SaveChangesAsync();
-
         await _dbContext.Database.CommitTransactionAsync();
-        return await BuscarPorIdAsync(game.Id);
+        return game;
       }
       catch (Exception e)
       {
@@ -44,39 +36,14 @@ namespace LudoVault.Repositories
 
       try
       {
-        // Deleta os GamePlatforms e GameGenres ANTIGOS pelo GameId
-        var oldPlatforms = await _dbContext.GamePlatforms
-            .Where(gp => gp.GameId == game.Id)
-            .ToListAsync();
-        _dbContext.GamePlatforms.RemoveRange(oldPlatforms);
+        GameModel gameInDB = await BuscarPorIdAsync(game.Id);
 
-        var oldGenres = await _dbContext.GameGenres
-            .Where(gg => gg.GameId == game.Id)
-            .ToListAsync();
-        _dbContext.GameGenres.RemoveRange(oldGenres);
-
-        // Preenche os IDs das NOVAS relações
-        foreach (var platform in game.GamePlatforms)
-          platform.GameId = game.Id;
-        foreach (var genre in game.GameGenres)
-          genre.GameId = game.Id;
-
-        // Atualiza o Game e adiciona as novas relações
-        var trackedEntity = _dbContext.Games.Local.FirstOrDefault(g => g.Id == game.Id);
-        if (trackedEntity != null)
-        {
-            _dbContext.Entry(trackedEntity).State = EntityState.Detached;
-        }
-
-        _dbContext.Games.Update(game);
-        if (game.GamePlatforms.Count > 0)
-          _dbContext.GamePlatforms.AddRange(game.GamePlatforms);
-        if (game.GameGenres.Count > 0)
-          _dbContext.GameGenres.AddRange(game.GameGenres);
+        if (gameInDB == null)
+          return null;
 
         await _dbContext.SaveChangesAsync();
         await _dbContext.Database.CommitTransactionAsync();
-        return await BuscarPorIdAsync(game.Id);
+        return game;
       }
       catch (Exception e)
       {
@@ -91,7 +58,10 @@ namespace LudoVault.Repositories
       {
         var game = await _dbContext.Games
           .Where(g => g.Id == id)
-          .Include(g => g.Publisher)
+          .Include(g => g.GamePublishers)
+                  .ThenInclude(pg => pg.Publisher)
+          .Include(g => g.GameDevelopers)
+                  .ThenInclude(dg => dg.Developer)
           .Include(g => g.GamePlatforms)
                   .ThenInclude(gp => gp.Platform)
           .Include(g => g.GameGenres)
@@ -111,7 +81,10 @@ namespace LudoVault.Repositories
       try
       {
         List<GameModel> games = await _dbContext.Games
-          .Include(g => g.Publisher)
+          .Include(g => g.GamePublishers)
+                  .ThenInclude(pg => pg.Publisher)
+          .Include(g => g.GameDevelopers)
+                  .ThenInclude(dg => dg.Developer)
           .Include(g => g.GamePlatforms)
                   .ThenInclude(gp => gp.Platform)
           .Include(g => g.GameGenres)

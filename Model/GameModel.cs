@@ -11,7 +11,7 @@ namespace LudoVault.Model
     public List<RatingModel> GameRatings { get; set; } = [];
     public List<UserListItemModel> ListItems { get; set; } = [];
     public List<UserLibraryModel> UserLibraries { get; set; } = [];
-    public List<DeveloperGameModel> DeveloperGames { get; set; } = [];
-    public List<PublisherGameModel> PublisherGame { get; set; } = [];
+    public List<DeveloperGameModel> GameDevelopers { get; set; } = [];
+    public List<PublisherGameModel> GamePublishers { get; set; } = [];
   }
 }

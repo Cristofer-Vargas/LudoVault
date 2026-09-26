@@ -42,7 +42,6 @@ namespace LudoVault.Services.Mapper
         GameId = listItem.Game.Id,
         Name = listItem.Game.Name,
         ImageUrl = listItem.Game.ImageUrl,
-        PublisherName = listItem.Game.Publisher.Name,
         CreatedAt = listItem.AddedAt.ToString()
       };
     }

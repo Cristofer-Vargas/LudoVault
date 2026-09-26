@@ -27,14 +27,14 @@ namespace LudoVault.Mappings
         .OnDelete(DeleteBehavior.Restrict);
 
       builder.HasOne(pg => pg.Game)
-        .WithMany(g => g.PublisherGame)
+        .WithMany(g => g.GamePublishers)
         .HasForeignKey(pg => pg.GameId)
         .HasConstraintName("FK_publisher_game_game")
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.HasData(
         new PublisherGameModel { Id = 1, GameId = 1, PublisherId = 4, Game = null!, Publisher = null! },
-        new PublisherGameModel { Id = 1, GameId = 1, PublisherId = 1, Game = null!, Publisher = null! }
+        new PublisherGameModel { Id = 2, GameId = 1, PublisherId = 1, Game = null!, Publisher = null! }
       );
     }
   }

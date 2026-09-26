@@ -1,25 +1,30 @@
 ﻿using LudoVault.DTO.Requests;
 using LudoVault.DTO.Responses;
 using LudoVault.Model;
+using LudoVault.Services.Mapper.Interfaces;
 
 namespace LudoVault.Services.Mapper
 {
   public static class GameMapper
   {
-    public static GameModel ToModel(GameRequest gameRequest, PublisherModel publisherModel, List<int> platformIds, List<int> genreIds)
+    public static GameModel ToModel(GameRequest gameRequest)
     {
       return new GameModel()
       {
         Name = gameRequest.Name,
         ImageUrl = gameRequest.ImageUrl,
         Description = gameRequest.Description,
-        PublisherId = gameRequest.PublisherId,
-        Publisher = publisherModel,
-        GamePlatforms = platformIds
+        GamePlatforms = gameRequest.PlatformIds
                       .Select(id => new GamePlatformModel { PlatformId = id })
                       .ToList(),
-        GameGenres = genreIds
+        GameGenres = gameRequest.GenreIds
                       .Select(id => new GameGenreModel { GenreId = id })
+                      .ToList(),
+        GamePublishers = gameRequest.PublisherIds
+                      .Select(id => new PublisherGameModel { PublisherId = id })
+                      .ToList(),
+        GameDevelopers = gameRequest.DeveloperIds
+                      .Select(id => new DeveloperGameModel { DeveloperId = id })
                       .ToList()
       };
     }
@@ -31,24 +36,29 @@ namespace LudoVault.Services.Mapper
         Id = game.Id,
         Name = game.Name,
         ImageUrl = game.ImageUrl,
-        Description = game.Description ?? "",
-        PublisherName = game.Publisher?.Name ?? "N/A",
-        Platforms = game.GamePlatforms?
-                      .Where(gp => gp.Platform != null)
-                      .Select(gp => new PlatformResponse
+        Description = game.Description,
+        Platforms = game.GamePlatforms.Select(gp => new PlatformResponse
                       {
-                        Id = gp.Platform!.Id,
+                        Id = gp.Platform.Id,
                         Name = gp.Platform.Name
                       })
                       .ToList() ?? [],
-        Genres = game.GameGenres?
-                      .Where(gg => gg.Genre != null)
-                      .Select(gg => new GenreResponse
+        Genres = game.GameGenres.Select(gg => new GenreResponse
                       {
-                        Id = gg.Genre!.Id,
+                        Id = gg.Genre.Id,
                         Name = gg.Genre.Name
                       })
-                      .ToList() ?? []
+                      .ToList() ?? [],
+        Publishers = game.GamePublishers.Select(gp => new PublisherResponse
+                      {
+                        Id = gp.Publisher.Id,
+                        Name = gp.Publisher.Name
+                      }).ToList() ?? [],
+        Developers = game.GameDevelopers.Select(gd => new DeveloperResponse
+                      {
+                        Id = gd.Developer.Id,
+                        Name = gd.Developer.Name
+                      }).ToList() ?? []
       };
     }
 

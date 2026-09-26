@@ -24,6 +24,7 @@ namespace LudoVault.Configurations
       services.AddScoped<IPlatformRepository, PlatformRepository>();
       services.AddScoped<IGenreRepository, GenreRepository>();
       services.AddScoped<IPublisherRepository, PublisherRepository>();
+      services.AddScoped<IDeveloperRepository, DeveloperRepository>();
 
       return services;
     }

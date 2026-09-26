@@ -33,10 +33,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = PublisherMapper.ToResponse(
-              publisherCreated,
-              publisherCreated.Games.Select(p => GameMapper.ToResponse(p)).ToList());
-
+      response.Data = PublisherMapper.ToResponse(publisherCreated);
       _logger.LogInformation("Publisher {PID}:{PNAME} criada com sucesso.", publisherCreated.Id, publisherCreated.Name);
       response.Status = 201;
       return response;
@@ -67,9 +64,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = PublisherMapper.ToResponse(
-              updatedPublisher,
-              updatedPublisher.Games.Select(GameMapper.ToResponse).ToList());
+      response.Data = PublisherMapper.ToResponse(updatedPublisher);
 
       _logger.LogInformation("Publisher {PID}:{POLDNAME} atualizada para {PNEWNAME}", updatedPublisher.Id, pub.Name, updatedPublisher.Name);
       response.Status = 200;
@@ -80,10 +75,7 @@ namespace LudoVault.Services
       var response = new Response<List<PublisherResponse>>();
       List<PublisherModel> pubModelList = await _publisherRepository.BuscarTodosAsync();
 
-      response.Data = pubModelList.Select(publisher => PublisherMapper.ToResponse(
-              publisher,
-              publisher.Games.Select(GameMapper.ToResponse)
-      .ToList())).ToList();
+      response.Data = pubModelList.Select(publisher => PublisherMapper.ToResponse(publisher)).ToList();
       response.Status = 200;
       return response;
     }
@@ -98,10 +90,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      response.Data = PublisherMapper.ToResponse(
-              publisherModel,
-              publisherModel.Games.Select(GameMapper.ToResponse).ToList()
-              );
+      response.Data = PublisherMapper.ToResponse(publisherModel);
       response.Status = 200;
       return response;
     }

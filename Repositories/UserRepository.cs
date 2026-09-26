@@ -210,7 +210,6 @@ namespace LudoVault.Repositories
         .AsNoTracking()
         .Include(ul => ul.ListItems)
                 .ThenInclude(uli => uli.Game)
-                        .ThenInclude(g => g.Publisher)
         .Where(ul => ul.UserId == userId)
         .AsSplitQuery()
         .ToListAsync();
@@ -310,7 +309,6 @@ namespace LudoVault.Repositories
       {
         return await _dbContext.UserLibrary
               .Include(ul => ul.Game)
-                      .ThenInclude(g => g.Publisher)
               .Include(ul => ul.User)
               .Where(ul => ul.UserId == id)
               .AsSplitQuery()

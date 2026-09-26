@@ -1,4 +1,3 @@
-using LudoVault.Mappings;
 using LudoVault.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +15,7 @@ namespace LudoVault.Data
     // Jogo, Desenvolvedora, Plataforma e Gênero <- Entidade e Associados 
     public DbSet<GameModel> Games { get; set; }
     public DbSet<PublisherModel> Publishers { get; set; }
+    public DbSet<PublisherGameModel> PublisherGame { get; set; }
     public DbSet<DeveloperModel> Developers { get; set; }
     public DbSet<DeveloperGameModel> DeveloperGame { get; set;}
     public DbSet<GamePlatformModel> GamePlatforms { get; set; }
