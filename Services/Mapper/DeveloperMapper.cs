@@ -19,8 +19,7 @@ namespace LudoVault.Services.Mapper
       return new DeveloperResponse()
       {
         Id = developerModel.Id,
-        Name = developerModel.Name,
-        Games = gamesResponse
+        Name = developerModel.Name
       };
     }
   }

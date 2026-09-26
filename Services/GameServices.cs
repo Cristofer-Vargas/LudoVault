@@ -116,6 +116,7 @@ namespace LudoVault.Services
       {
         response.Report.Add(Report.Create("Jogo não encontrado!", 404));
       }
+      var oldGame = game;
 
       if (!response.IsSuccessul)
       {
@@ -143,12 +144,12 @@ namespace LudoVault.Services
       var newGame = await _gameRepository.AtualizarAsync(game);
       if (newGame == null)
       {
-        _logger.LogWarning("Erro ao atualizar jogo {GID}:{GNAME}!", game.Id, game.Name);
-        response.Report.Add(Report.Create($"Erro interno ao atualizar jogo {game.Name}!", 500));
+        _logger.LogWarning("Erro ao atualizar jogo {GID}:{GNAME}!", oldGame.Id, oldGame.Name);
+        response.Report.Add(Report.Create($"Erro interno ao atualizar jogo {oldGame.Name}!", 500));
         return response;
       }
 
-      _logger.LogInformation("Jogo {GID}:{GNAME} atualizado com sucesso.", newGame.Id, newGame.Name);
+      _logger.LogInformation("Jogo {GID}:{GNAME} atualizado com sucesso.", oldGame.Id, oldGame.Name);
       response.Data = GameMapper.ToResponse(newGame);
       response.Status = 200;
       return response;
