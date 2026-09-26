@@ -666,7 +666,7 @@ namespace LudoVault.Services
         return response;
       }
 
-      rating.Rating = userRating.Rating;
+      rating.Rating = userRating.Rating ?? 0m;
       rating.Comment = userRating.Comment;
       var ratingUpdated = await _userRepository.AtualizarAvaliacaoPorIdAsync(rating);
       if (ratingUpdated == null)

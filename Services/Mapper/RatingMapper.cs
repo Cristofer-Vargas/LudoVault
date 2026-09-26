@@ -10,7 +10,7 @@ namespace LudoVault.Services.Mapper
     {
       return new RatingModel
       {
-        Rating = Math.Round(userRating.Rating, 1),
+        Rating = Math.Round(userRating.Rating ?? 0m, 1),
         User = user,
         UserId = user.Id,
         Game = game,
