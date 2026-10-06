@@ -1,6 +1,6 @@
 services:
-  LudoVault:
-    container_name: LudoVault
+  LudoVaultDB:
+    container_name: LudoVaultDB
     image: mysql:latest
     ports:
       - "3306:3306"
@@ -10,6 +10,19 @@ services:
       MYSQL_DATABASE: ${DATABASE_NAME}
     volumes:
       - db_data:/var/lib/mysql
+  
+  LudoVaultApi:
+    container_name: LudoVaultAPI
+    build: .
+    image: ludovault-api
+    restart: always
+    environment:
+      MySqlConnection: "Server=LudoVaultDB;Port=3306;Database=${DATABASE_NAME};User=root;Password=${MYSQL_ROOT_PASSWORD}"
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads_data:/app/wwwroot/uploads
 
 volumes:
   db_data:
+  uploads_data:
